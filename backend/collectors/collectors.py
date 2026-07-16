@@ -230,7 +230,7 @@ class CompanyDiscoveryCollector(BaseCollector):
             )
             description = wiki_data["extract"]
         else:
-            search_desc = await self._search_duckduckgo(f'"{self.company.domain}" OR "{self.company.name}" company overview description founders')
+            search_desc = await self._search_duckduckgo(f'"{self.company.domain}" OR "{self.company.name}" company overview founders headquarters employees')
             # STORE DDG EVIDENCE (Tier 4)
             DataValidationLayer.validate_and_store_evidence(
                 self.db, self.company_id, "https://lite.duckduckgo.com", "Search Engine Context", search_desc, 0.75
@@ -238,7 +238,7 @@ class CompanyDiscoveryCollector(BaseCollector):
             description = search_desc[:1000] if search_desc else f"Sales intelligence profile for {self.company.name}."
 
         # Fetch Financial Evidence
-        financials_desc = await self._search_duckduckgo(f'"{self.company.name}" revenue OR funding OR valuation')
+        financials_desc = await self._search_duckduckgo(f'"{self.company.name}" revenue OR funding OR valuation OR headquarters OR employees')
         if financials_desc:
             DataValidationLayer.validate_and_store_evidence(
                 self.db, self.company_id, "https://lite.duckduckgo.com", "Financial Search Context", financials_desc, 0.70
@@ -258,13 +258,18 @@ class CompanyDiscoveryCollector(BaseCollector):
         
         evidence_records = self.db.query(Evidence).filter(Evidence.company_id == self.company_id).all()
         evidence_text = "\n\n".join([f"Source ({e.category}, Confidence: {e.confidence}, URL: {e.source_url}):\n{e.raw_evidence}" for e in evidence_records])
+        # Truncate evidence to prevent Groq 12000 TPM limit errors (~35k chars)
+        if len(evidence_text) > 35000:
+            evidence_text = evidence_text[:35000] + "\n...[TRUNCATED]"
         
         prompt = (
             f"Analyze the following pieces of evidence collected about the company on domain '{self.company.domain}'.\n\n"
             f"### EVIDENCE ###\n{evidence_text}\n\n"
             "You are an Evidence Validation Engine. Your job is to resolve conflicting facts and extract accurate data. "
-            "Rule: Always trust higher confidence evidence (e.g. Official Homepage) over lower confidence evidence (e.g. DDG Search).\n\n"
-            "Extract the following facts if available: 'Employee Count', 'Revenue', 'Funding', 'Profit/Loss', 'Valuation', 'Founded Year', 'Founders', 'CEO', 'Business Model', 'Industry', 'Headquarters', 'Products', 'Services'.\n\n"
+            "Rule: Always trust higher confidence evidence (e.g. Official Homepage) over lower confidence evidence (e.g. DDG Search).\n"
+            "For 'Headquarters', extract ONLY the exact physical city and country (e.g. 'San Francisco, USA'). Ignore vague regions or incorrect data.\n\n"
+            "You MUST output an object for ALL of the following facts: 'Employee Count', 'Revenue', 'Funding', 'Profit/Loss', 'Valuation', 'Founded Year', 'Founders', 'CEO', 'Business Model', 'Industry', 'Headquarters', 'Products', 'Services'. "
+            "If a fact is completely missing from the evidence and you cannot deduce it, set the fact_value to 'Not Disclosed'.\n\n"
             "Output a JSON array of objects strictly matching this schema:\n"
             "[\n"
             "  {\n"
@@ -323,6 +328,18 @@ class CompanyDiscoveryCollector(BaseCollector):
                 
                 facts = json.loads(clean_text)
                 
+                expected_facts = ['Employee Count', 'Revenue', 'Funding', 'Profit/Loss', 'Valuation', 'Founded Year', 'Founders', 'CEO', 'Business Model', 'Industry', 'Headquarters', 'Products', 'Services']
+                found_facts = {f.get("fact_name", "") for f in facts}
+                for ef in expected_facts:
+                    if ef not in found_facts:
+                        facts.append({
+                            "fact_name": ef,
+                            "fact_value": "Not Disclosed",
+                            "source": "Validation Engine",
+                            "url": "",
+                            "confidence": 0.0
+                        })
+
                 # Delete old facts
                 self.db.query(CompanyFact).filter(CompanyFact.company_id == self.company_id).delete()
                 
