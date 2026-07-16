@@ -247,6 +247,37 @@ class Funding(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     company = relationship("Company", back_populates="funding")
+    
+    # New relationships for acquisitions and IPO info
+    acquisitions = relationship("Acquisition", back_populates="company", cascade="all, delete-orphan")
+    ipo_info = relationship("IPOInfo", back_populates="company", uselist=False, cascade="all, delete-orphan")
+
+class Acquisition(Base):
+    __tablename__ = "acquisitions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    target_name = Column(String, nullable=False)  # Name of the company being acquired
+    amount = Column(Float, nullable=True)
+    currency = Column(String, default="USD")
+    date = Column(DateTime(timezone=True), nullable=True)
+    acquirer_name = Column(String, nullable=True)  # Who is acquiring
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    company = relationship("Company", back_populates="acquisitions")
+
+class IPOInfo(Base):
+    __tablename__ = "ipo_info"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    status = Column(String, nullable=False)  # e.g., "Pending", "Completed", "Cancelled"
+    expected_date = Column(DateTime(timezone=True), nullable=True)
+    valuation = Column(Float, nullable=True)
+    currency = Column(String, default="USD")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    company = relationship("Company", back_populates="ipo_info")
 
 class Source(Base):
     __tablename__ = "sources"

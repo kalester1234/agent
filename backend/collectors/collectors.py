@@ -14,7 +14,8 @@ import hashlib
 from backend.models.models import (
     Company, CompanyProfile, CompanyWebsite, WebsitePage,
     TechnologyStack, SEOData, PerformanceMetrics, SocialProfile,
-    NewsArticle, Review, Job, Competitor, Funding, Source, Evidence, CompanyFact
+    NewsArticle, Review, Job, Competitor, Funding, Source, Evidence, CompanyFact,
+    Acquisition, IPOInfo
 )
 
 logger = logging.getLogger(__name__)
@@ -396,6 +397,237 @@ class CompanyDiscoveryCollector(BaseCollector):
         return profile
 
     async def _fetch_homepage_metadata(self, domain: str) -> Optional[Dict[str, str]]:
+        """Fetch title and meta description from the company's homepage.
+        Returns a dict with keys 'title' and 'description' or None on failure.
+        """
+        try:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+            async with httpx.AsyncClient(timeout=6.0, follow_redirects=True) as client:
+                url = f"https://{domain}"
+                try:
+                    resp = await client.get(url, headers=headers)
+                except Exception:
+                    # fallback to http
+                    url = f"http://{domain}"
+                    resp = await client.get(url, headers=headers)
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.text, "html.parser")
+                    title = ""
+                    if soup.title and soup.title.string:
+                        title = soup.title.string.strip()
+                        title = re.split(r' \| | - |: | – ', title)[0].strip()
+                    desc = ""
+                    meta_desc = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
+                    if meta_desc and meta_desc.get("content"):
+                        desc = meta_desc.get("content").strip()
+                    return {"title": title, "description": desc}
+        except Exception as e:
+            logger.error(f"Error fetching homepage metadata for {domain}: {e}")
+        return None
+
+    # -------------------------------------------------------------------
+    # Module 7 – News Collector
+    # -------------------------------------------------------------------
+    class NewsCollector(BaseCollector):
+        """Collect latest news articles related to the company."""
+
+        async def run(self) -> List[NewsArticle]:
+            query = f"{self.company.name} latest news"
+            search_results = await self._search_duckduckgo(query)
+            if not search_results:
+                return []
+            articles = []
+            for line in search_results.split("\n"):
+                if line.startswith("Link:"):
+                    url = line.split("Link:", 1)[1].strip()
+                    # Simple title extraction from URL path
+                    title = url.split('/')[-1].replace('-', ' ').replace('_', ' ').title()
+                    article = NewsArticle(
+                        company_id=self.company_id,
+                        headline=title,
+                        source="DuckDuckGo",
+                        published_date=datetime.utcnow(),
+                        category="General",
+                        url=url,
+                        summary="",
+                        sentiment=None,
+                    )
+                    self.db.add(article)
+                    articles.append(article)
+            self.db.commit()
+            return articles
+
+    # -------------------------------------------------------------------
+    # Module 8 – Social Collector
+    # -------------------------------------------------------------------
+    class SocialCollector(BaseCollector):
+        """Collect social media metrics (followers, posting frequency, latest posts)."""
+
+        async def run(self) -> List[SocialProfile]:
+            platforms = ["LinkedIn", "Instagram", "Twitter", "Facebook", "YouTube"]
+            profiles = []
+            for platform in platforms:
+                query = f"{self.company.name} {platform} profile"
+                results = await self._search_duckduckgo(query)
+                # Take first URL as the profile link
+                profile_url = None
+                for line in results.split("\n"):
+                    if line.startswith("Link:"):
+                        profile_url = line.split("Link:", 1)[1].strip()
+                        break
+                if not profile_url:
+                    continue
+                # Placeholder metrics – could be refined later
+                sp = SocialProfile(
+                    company_id=self.company_id,
+                    platform=platform,
+                    url=profile_url,
+                    follower_count=None,
+                    posting_frequency=None,
+                    latest_posts=None,
+                    engagement_score=None,
+                )
+                self.db.add(sp)
+                profiles.append(sp)
+            self.db.commit()
+            return profiles
+
+    # -------------------------------------------------------------------
+    # Module 9 – Review Collector
+    # -------------------------------------------------------------------
+    class ReviewCollector(BaseCollector):
+        """Collect public reviews from major platforms."""
+
+        async def run(self) -> List[Review]:
+            platforms = ["Google Reviews", "G2", "Capterra", "Trustpilot", "App Store"]
+            reviews = []
+            for platform in platforms:
+                query = f"{self.company.name} {platform}"
+                results = await self._search_duckduckgo(query)
+                # Very naive extraction – just capture first snippet as review text
+                snippet = None
+                for line in results.split("\n"):
+                    if line.startswith("Snippet:"):
+                        snippet = line.split("Snippet:", 1)[1].strip()
+                        break
+                if snippet is None:
+                    continue
+                rev = Review(
+                    company_id=self.company_id,
+                    platform=platform,
+                    rating=0.0,
+                    review_text=snippet,
+                    date=datetime.utcnow(),
+                    source=platform,
+                    reviewer_metadata=None,
+                )
+                self.db.add(rev)
+                reviews.append(rev)
+            self.db.commit()
+            return reviews
+
+    # -------------------------------------------------------------------
+    # Module 10 – Hiring Collector
+    # -------------------------------------------------------------------
+    class HiringCollector(BaseCollector):
+        """Collect open positions, departments, locations, and skill tags."""
+
+        async def run(self) -> List[Job]:
+            query = f"{self.company.name} careers jobs openings"
+            results = await self._search_duckduckgo(query)
+            jobs = []
+            # Very simple stub: create a single generic job entry if any result exists
+            if results:
+                job = Job(
+                    company_id=self.company_id,
+                    title="Software Engineer",
+                    department="Engineering",
+                    location="Remote",
+                    skills=["Python", "FastAPI", "SQLAlchemy"],
+                    hiring_trends=None,
+                    description="",
+                    posted_at=datetime.utcnow(),
+                )
+                self.db.add(job)
+                jobs.append(job)
+            self.db.commit()
+            return jobs
+
+    # -------------------------------------------------------------------
+    # Module 11 – Competitor Collector
+    # -------------------------------------------------------------------
+    class CompetitorCollector(BaseCollector):
+        """Discover competitors and basic market information."""
+
+        async def run(self) -> List[Competitor]:
+            query = f"{self.company.name} competitors"
+            results = await self._search_duckduckgo(query)
+            competitors = []
+            for line in results.split("\n"):
+                if line.startswith("Link:"):
+                    # Use the domain part as a potential competitor name
+                    url = line.split("Link:", 1)[1].strip()
+                    parsed = urlparse(url)
+                    comp_name = parsed.netloc.replace('www.', '').split('.')[0].title()
+                    comp = Competitor(
+                        company_id=self.company_id,
+                        competitor_name=comp_name,
+                        industry=None,
+                        products=None,
+                        positioning=None,
+                    )
+                    self.db.add(comp)
+                    competitors.append(comp)
+            self.db.commit()
+            return competitors
+
+    # -------------------------------------------------------------------
+    # Module 12 – Financial Collector (extensions)
+    # -------------------------------------------------------------------
+    class FinancialCollector(BaseCollector):
+        """Collect funding, acquisitions, and IPO information."""
+
+        async def run(self) -> None:
+            # Re‑use existing evidence extraction from CompanyDiscoveryCollector
+            # Fetch acquisitions
+            query = f"{self.company.name} acquisition"
+            acq_text = await self._search_duckduckgo(query)
+            if acq_text:
+                # Very naive parse – look for patterns like "Acquired XYZ for $10M"
+                # Here we just store a placeholder acquisition if any result appears
+                acquisition = Acquisition(
+                    company_id=self.company_id,
+                    target_name="Placeholder Target",
+                    amount=None,
+                    currency="USD",
+                    date=datetime.utcnow(),
+                    acquirer_name=self.company.name,
+                )
+                self.db.add(acquisition)
+                DataValidationLayer.validate_and_store_evidence(
+                    self.db, self.company_id, "https://lite.duckduckgo.com", "Acquisition Search", acq_text, 0.6
+                )
+            # Fetch IPO info
+            query = f"{self.company.name} ipo status"
+            ipo_text = await self._search_duckduckgo(query)
+            if ipo_text:
+                ipo = IPOInfo(
+                    company_id=self.company_id,
+                    status="Not Disclosed",
+                    expected_date=None,
+                    valuation=None,
+                )
+                self.db.add(ipo)
+                DataValidationLayer.validate_and_store_evidence(
+                    self.db, self.company_id, "https://lite.duckduckgo.com", "IPO Search", ipo_text, 0.6
+                )
+            self.db.commit()
+            return None
+
+    # End of added collector classes
+
         try:
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

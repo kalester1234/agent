@@ -1,18 +1,20 @@
 #!/bin/bash
 # Start all services
 
-# Start Docker containers (Postgres & Redis)
-docker compose up -d
-
-# Start FastAPI backend
-source backend/venv/bin/activate
+# Activate the correct virtual environment
+source .venv/bin/activate
+# Ensure the project root is in PYTHONPATH for package imports
 export PYTHONPATH=$PWD
 
-# Start celery worker in background
+# Start Docker containers (Postgres & Redis)
+# Note: Docker Compose file should be at project root
+docker compose up -d
+
+# Start Celery worker in background
 celery -A backend.core.celery_app worker --loglevel=info &
 CELERY_PID=$!
 
-# Start Uvicorn
+# Start Uvicorn (FastAPI backend)
 uvicorn backend.main:app --reload --port 8000 &
 UVICORN_PID=$!
 

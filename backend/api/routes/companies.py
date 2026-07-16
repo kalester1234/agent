@@ -7,7 +7,8 @@ from backend.db.database import get_db
 from backend.models.models import (
     Company, CompanyProfile, CompanyWebsite, WebsitePage,
     TechnologyStack, SEOData, PerformanceMetrics, SocialProfile,
-    NewsArticle, Review, Job, Competitor, Funding, Source, Evidence, CrawlJob
+    NewsArticle, Review, Job, Competitor, Funding, Acquisition, IPOInfo,
+    Source, Evidence, CrawlJob
 )
 
 router = APIRouter()
@@ -196,6 +197,123 @@ def get_company_seo(company_id: int, db: Session = Depends(get_db)):
         "score_breakdown":      seo.score_breakdown or {},
         "confidence_score":     seo.confidence_score,
         "evidence_summary":     seo.evidence_summary or []
+    }
+
+@router.get("/{company_id}/news")
+def get_company_news(company_id: int, db: Session = Depends(get_db)):
+    articles = db.query(NewsArticle).filter(NewsArticle.company_id == company_id).all()
+    return [
+        {
+            "id": a.id,
+            "headline": a.headline,
+            "source": a.source,
+            "published_date": a.published_date,
+            "category": a.category,
+            "url": a.url,
+            "summary": a.summary,
+            "sentiment": a.sentiment,
+        }
+        for a in articles
+    ]
+
+@router.get("/{company_id}/social")
+def get_company_social(company_id: int, db: Session = Depends(get_db)):
+    profiles = db.query(SocialProfile).filter(SocialProfile.company_id == company_id).all()
+    return [
+        {
+            "id": p.id,
+            "platform": p.platform,
+            "url": p.url,
+            "follower_count": p.follower_count,
+            "posting_frequency": p.posting_frequency,
+            "latest_posts": p.latest_posts,
+            "engagement_score": p.engagement_score,
+        }
+        for p in profiles
+    ]
+
+@router.get("/{company_id}/reviews")
+def get_company_reviews(company_id: int, db: Session = Depends(get_db)):
+    reviews = db.query(Review).filter(Review.company_id == company_id).all()
+    return [
+        {
+            "id": r.id,
+            "platform": r.platform,
+            "rating": r.rating,
+            "review_text": r.review_text,
+            "date": r.date,
+            "source": r.source,
+            "reviewer_metadata": r.reviewer_metadata,
+        }
+        for r in reviews
+    ]
+
+@router.get("/{company_id}/hiring")
+def get_company_hiring(company_id: int, db: Session = Depends(get_db)):
+    jobs = db.query(Job).filter(Job.company_id == company_id).all()
+    return [
+        {
+            "id": j.id,
+            "title": j.title,
+            "department": j.department,
+            "location": j.location,
+            "skills": j.skills,
+            "hiring_trends": j.hiring_trends,
+            "description": j.description,
+            "posted_at": j.posted_at,
+        }
+        for j in jobs
+    ]
+
+@router.get("/{company_id}/competitors")
+def get_company_competitors(company_id: int, db: Session = Depends(get_db)):
+    comps = db.query(Competitor).filter(Competitor.company_id == company_id).all()
+    return [
+        {
+            "id": c.id,
+            "competitor_name": c.competitor_name,
+            "industry": c.industry,
+            "products": c.products,
+            "positioning": c.positioning,
+        }
+        for c in comps
+    ]
+
+@router.get("/{company_id}/financial")
+def get_company_financial(company_id: int, db: Session = Depends(get_db)):
+    funding = db.query(Funding).filter(Funding.company_id == company_id).all()
+    acquisitions = db.query(Acquisition).filter(Acquisition.company_id == company_id).all()
+    ipo = db.query(IPOInfo).filter(IPOInfo.company_id == company_id).first()
+    return {
+        "funding": [
+            {
+                "id": f.id,
+                "stage": f.stage,
+                "amount": f.amount,
+                "currency": f.currency,
+                "date": f.date,
+                "investors": f.investors,
+            }
+            for f in funding
+        ],
+        "acquisitions": [
+            {
+                "id": a.id,
+                "target_name": a.target_name,
+                "amount": a.amount,
+                "currency": a.currency,
+                "date": a.date,
+                "acquirer_name": a.acquirer_name,
+            }
+            for a in acquisitions
+        ],
+        "ipo": {
+            "id": ipo.id if ipo else None,
+            "status": ipo.status if ipo else None,
+            "expected_date": ipo.expected_date if ipo else None,
+            "valuation": ipo.valuation if ipo else None,
+            "currency": ipo.currency if ipo else None,
+        } if ipo else None,
     }
 
 @router.get("/{company_id}/performance")
