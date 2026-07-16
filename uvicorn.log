@@ -1,0 +1,509 @@
+INFO:     Will watch for changes in these directories: ['/Users/intern/Desktop/vasanth/agent']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [57910] using WatchFiles
+INFO:     Started server process [57912]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60617 - "GET /api/v1/companies/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60671 - "GET /api/v1/pipeline/stream/62214cb2-a301-4a7e-be6c-af16b70d0386 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /api/v1/companies/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60675 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60678 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60679 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60671 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60675 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60678 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60679 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60669 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60671 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60682 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60682 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60682 - "GET /api/v1/companies/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60684 - "GET /api/v1/pipeline/stream/62494321-045a-49f1-a59e-555440af9b41 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60682 - "GET /api/v1/companies/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60724 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60724 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60736 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60724 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60724 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60736 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60684 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60741 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60724 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60684 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60736 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60741 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [57912]
+INFO:     Started server process [58187]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60834 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60834 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/v1/companies/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60842 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60844 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60840 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60847 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60846 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60844 - "GET /api/v1/companies/9/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60840 - "GET /api/v1/companies/9/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60842 - "GET /api/v1/companies/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60846 - "GET /api/v1/companies/9/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60847 - "GET /api/v1/companies/9/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/v1/companies/9/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60844 - "GET /api/v1/companies/9/performance HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58187]
+INFO:     Started server process [58245]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60868 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60868 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60881 - "GET /api/v1/pipeline/stream/c21018c6-0144-427d-b79a-48177cbb167b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "GET /api/v1/companies/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "GET /api/v1/companies/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "GET /api/v1/companies/7/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "GET /api/v1/companies/7/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60911 - "GET /api/v1/companies/7/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60910 - "GET /api/v1/companies/7/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "GET /api/v1/companies/7/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60911 - "GET /api/v1/companies/7/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60910 - "GET /api/v1/companies/7/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60914 - "GET /api/v1/companies/7/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60925 - "GET /api/v1/companies/7/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60927 - "GET /api/v1/companies/7/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60881 - "GET /api/v1/companies/7/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60923 - "GET /api/v1/companies/7/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60929 - "GET /api/v1/companies/7/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60930 - "GET /api/v1/companies/7/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60925 - "GET /api/v1/companies/7/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60927 - "GET /api/v1/companies/7/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60881 - "GET /api/v1/companies/7/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60930 - "GET /api/v1/companies/7/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60929 - "GET /api/v1/companies/7/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60923 - "GET /api/v1/companies/7/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60962 - "GET /api/v1/pipeline/stream/0c030d46-49ec-4740-b981-7706a21993cb HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/companies/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/companies/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60974 - "GET /api/v1/pipeline/stream/d1f25e27-0558-4f53-aee8-435e0705a18a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60960 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61034 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61033 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61033 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61037 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61034 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61037 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61033 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60974 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61043 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61034 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61037 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61028 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61033 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61034 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61043 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60974 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58245]
+INFO:     Started server process [58313]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/test_collector.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58313]
+INFO:     Started server process [58336]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_ddg.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58336]
+INFO:     Started server process [58343]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'dump_ddg.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58343]
+INFO:     Started server process [58358]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'dump_ddg.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58358]
+INFO:     Started server process [58361]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58361]
+INFO:     Started server process [58362]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61149 - "GET /api/v1/pipeline/stream/d1f25e27-0558-4f53-aee8-435e0705a18a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61147 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61147 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61154 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61152 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61157 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61156 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61149 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61147 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61154 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61156 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61157 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61149 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61152 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61170 - "GET /api/v1/pipeline/stream/bd756d55-e3f2-4baf-8612-090fc003e507 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61208 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61206 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61206 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61208 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61206 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61170 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61217 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61208 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61206 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61217 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61170 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61208 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61225 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61225 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61227 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61227 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61233 - "GET /api/v1/pipeline/stream/33b01ebe-f51b-45ed-93b2-017addfebe34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61227 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61247 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61274 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61273 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61247 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61271 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61274 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61247 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61273 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61233 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61281 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61271 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61274 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61247 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61273 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61233 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61281 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61271 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_ddg.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58362]
+INFO:     Started server process [58452]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61329 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61329 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61333 - "GET /api/v1/pipeline/stream/adf4c168-a228-493f-9f05-b050db4b2b32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61367 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61369 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61370 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61365 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61370 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61369 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61365 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61365 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61369 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61370 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61367 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61333 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61365 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61369 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61370 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61367 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61331 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61333 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61425 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61425 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61427 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61431 - "GET /api/v1/pipeline/stream/fdb4657c-b2c8-4348-93fe-4878ac75e719 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61427 - "GET /api/v1/companies/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61427 - "GET /api/v1/companies/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61427 - "GET /api/v1/companies/10/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61463 - "GET /api/v1/companies/10/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61427 - "GET /api/v1/companies/10/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61464 - "GET /api/v1/companies/10/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/10/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61474 - "GET /api/v1/pipeline/stream/4e0ddf43-97ae-4823-9747-ec92e30813ec HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61516 - "GET /api/v1/companies/11/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61517 - "GET /api/v1/companies/11/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61516 - "GET /api/v1/companies/11/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61517 - "GET /api/v1/companies/11/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61525 - "GET /api/v1/companies/11/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61530 - "GET /api/v1/companies/11/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61517 - "GET /api/v1/companies/11/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61516 - "GET /api/v1/companies/11/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61525 - "GET /api/v1/companies/11/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61474 - "GET /api/v1/companies/11/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61530 - "GET /api/v1/companies/11/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61517 - "GET /api/v1/companies/11/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61461 - "GET /api/v1/companies/11/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61474 - "GET /api/v1/companies/11/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61516 - "GET /api/v1/companies/11/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61525 - "GET /api/v1/companies/11/overview HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_ddg.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58452]
+INFO:     Started server process [58513]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_yahoo.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58513]
+INFO:     Started server process [58525]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/test_collector.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58525]
+INFO:     Started server process [58533]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58533]
+INFO:     Started server process [58542]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_wiki.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58542]
+INFO:     Started server process [58549]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_wiki.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58549]
+INFO:     Started server process [58557]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_yahoo2.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58557]
+INFO:     Started server process [58561]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_yahoo3.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58561]
+INFO:     Started server process [58565]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58565]
+INFO:     Started server process [58579]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58579]
+INFO:     Started server process [58580]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61641 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61641 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61647 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61647 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61649 - "GET /api/v1/pipeline/stream/638b1fc7-205f-4d43-bc56-3f02f16a1a48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61647 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61647 - "GET /api/v1/companies/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61685 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61683 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61689 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61683 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61685 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61683 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61689 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61693 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61649 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61685 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61689 - "GET /api/v1/companies/1/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61693 - "GET /api/v1/companies/1/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61683 - "GET /api/v1/companies/1/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61649 - "GET /api/v1/companies/1/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61664 - "GET /api/v1/companies/1/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "GET /api/v1/companies/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61701 - "GET /api/v1/pipeline/stream/a694f24b-28d8-421c-b748-6699928d7dee HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "GET /api/v1/companies/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61696 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61767 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61772 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61767 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61772 - "GET /api/v1/companies/12/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61767 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61701 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61776 - "GET /api/v1/companies/12/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61767 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61776 - "GET /api/v1/companies/12/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61772 - "GET /api/v1/companies/12/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61701 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_ddg4.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58580]
+INFO:     Started server process [58694]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61891 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61891 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61891 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61891 - "GET /api/v1/companies/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61901 - "GET /api/v1/pipeline/stream/a58f3eb0-d0aa-4125-8bdf-6a203b80ca7a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61891 - "GET /api/v1/companies/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61915 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61972 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61974 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61974 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61972 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61982 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61974 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /api/v1/companies/12/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61982 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61988 - "GET /api/v1/companies/12/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61901 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61972 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61974 - "GET /api/v1/companies/12/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /api/v1/companies/12/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61982 - "GET /api/v1/companies/12/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61901 - "GET /api/v1/companies/12/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61988 - "GET /api/v1/companies/12/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61972 - "GET /api/v1/companies/12/website HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_yahoo5.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [58694]
+INFO:     Started server process [59089]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/test_collector.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59089]
+INFO:     Started server process [59165]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

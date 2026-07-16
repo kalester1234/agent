@@ -1,0 +1,143 @@
+ 
+ -------------- celery@iMac.Dlink v5.6.3 (recovery)
+--- ***** ----- 
+-- ******* ---- macOS-26.5.2-arm64-arm-64bit 2026-07-16 12:40:46
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         worker:0x10844e1c0
+- ** ---------- .> transport:   redis://localhost:6380/0
+- ** ---------- .> results:     redis://localhost:6380/0
+- *** --- * --- .> concurrency: 8 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . backend.workers.tasks.discover_company_task
+  . backend.workers.tasks.hiring_and_market_task
+  . backend.workers.tasks.seo_and_tech_task
+  . backend.workers.tasks.social_and_news_task
+  . backend.workers.tasks.trigger_workflow_task
+  . backend.workers.tasks.website_and_tech_task
+
+[2026-07-16 12:40:47,117: INFO/MainProcess] Connected to redis://localhost:6380/0
+[2026-07-16 12:40:47,124: INFO/MainProcess] mingle: searching for neighbors
+[2026-07-16 12:40:48,137: INFO/MainProcess] mingle: all alone
+[2026-07-16 12:40:48,167: INFO/MainProcess] celery@iMac.Dlink ready.
+[2026-07-16 12:40:56,318: INFO/MainProcess] Task backend.workers.tasks.trigger_workflow_task[2f0d362c-8574-443d-9867-15a32455ea3a] received
+[2026-07-16 12:40:56,357: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[8c07bc81-1712-491c-b6d8-a78f9b049593] received
+[2026-07-16 12:40:56,360: INFO/ForkPoolWorker-1] Task: Discover Company for ID: 1
+[2026-07-16 12:40:56,360: INFO/ForkPoolWorker-8] Task backend.workers.tasks.trigger_workflow_task[2f0d362c-8574-443d-9867-15a32455ea3a] succeeded in 0.04054495799999991s: {'job_id': 'abe7437b-181c-46da-964d-15fe499b27a1', 'status': 'workflow_queued'}
+[2026-07-16 12:40:56,399: ERROR/ForkPoolWorker-1] Error in discover_company_task: (sqlite3.OperationalError) no such table: crawl_jobs
+[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
+FROM crawl_jobs 
+WHERE crawl_jobs.id = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[2026-07-16 12:40:56,427: ERROR/ForkPoolWorker-1] Task backend.workers.tasks.discover_company_task[8c07bc81-1712-491c-b6d8-a78f9b049593] raised unexpected: OperationalError('(sqlite3.OperationalError) no such table: crawl_jobs')
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: crawl_jobs
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 38, in discover_company_task
+    update_job_progress(db, job_id, 10.0, "Company Discovery")
+  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 24, in update_job_progress
+    job = db.query(CrawlJob).filter(CrawlJob.id == job_id).first()
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2766, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2864, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
+    return self._execute_internal(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: crawl_jobs
+[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
+FROM crawl_jobs 
+WHERE crawl_jobs.id = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: crawl_jobs
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/celery/app/trace.py", line 585, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/celery/app/trace.py", line 858, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 45, in discover_company_task
+    update_job_progress(db, job_id, 20.0, "Discovery Failed", error_msg=str(e))
+  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 24, in update_job_progress
+    job = db.query(CrawlJob).filter(CrawlJob.id == job_id).first()
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2766, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2864, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
+    return self._execute_internal(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: crawl_jobs
+[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
+FROM crawl_jobs 
+WHERE crawl_jobs.id = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+worker: Warm shutdown (MainProcess)

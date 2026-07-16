@@ -1,0 +1,853 @@
+"use client";
+
+import { useEffect, useState, use } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import {
+  Loader2, ArrowLeft, RefreshCw, Globe, Building2, MapPin,
+  Share2, Sparkles, ExternalLink, Code2, Cpu,
+  BarChart2, CreditCard, MessageSquare, Shield, Type, Server,
+  ChevronDown, ChevronUp, Layout, FileText, Briefcase, Phone,
+  BookOpen, Megaphone, Lock, CheckCircle2, XCircle, AlertTriangle,
+  Search, Link2, Tag, List, Hash
+} from "lucide-react";
+import Link from "next/link";
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+interface SocialProfile { id: number; platform: string; url: string; }
+interface WebPage { id: number; url: string; title: string; meta_description: string; page_type: string; content_snippet: string; structured_data: any; }
+interface TechItem { name: string; version: string | null; }
+interface TechStack { [category: string]: TechItem[]; }
+
+const PAGE_TYPE_ICONS: Record<string, any> = {
+  home: Globe, about: Building2, products: Briefcase, services: Cpu,
+  pricing: CreditCard, blog: BookOpen, resources: FileText, press: Megaphone,
+  careers: Briefcase, contact: Phone, legal: Lock, privacy: Shield, other: FileText,
+};
+
+const PAGE_TYPE_COLORS: Record<string, string> = {
+  home: "bg-indigo-100 text-indigo-700 border-indigo-200",
+  about: "bg-violet-100 text-violet-700 border-violet-200",
+  products: "bg-blue-100 text-blue-700 border-blue-200",
+  services: "bg-cyan-100 text-cyan-700 border-cyan-200",
+  pricing: "bg-emerald-100 text-emerald-700 border-emerald-200",
+  blog: "bg-amber-100 text-amber-700 border-amber-200",
+  resources: "bg-orange-100 text-orange-700 border-orange-200",
+  press: "bg-rose-100 text-rose-700 border-rose-200",
+  careers: "bg-pink-100 text-pink-700 border-pink-200",
+  contact: "bg-teal-100 text-teal-700 border-teal-200",
+  legal: "bg-slate-100 text-slate-600 border-slate-200",
+  privacy: "bg-slate-100 text-slate-600 border-slate-200",
+  other: "bg-gray-100 text-gray-600 border-gray-200",
+};
+
+const TECH_CATEGORY_ICONS: Record<string, any> = {
+  Frontend: Code2, Backend: Server, CMS: Layout, Analytics: BarChart2,
+  CDN: Globe, Hosting: Globe, Payment: CreditCard, "Chat/Support": MessageSquare,
+  Fonts: Type, "Security Headers": Shield,
+};
+
+const TECH_CATEGORY_COLORS: Record<string, string> = {
+  Frontend: "bg-indigo-50 border-indigo-200 text-indigo-800",
+  Backend: "bg-violet-50 border-violet-200 text-violet-800",
+  CMS: "bg-blue-50 border-blue-200 text-blue-800",
+  Analytics: "bg-amber-50 border-amber-200 text-amber-800",
+  CDN: "bg-cyan-50 border-cyan-200 text-cyan-800",
+  Hosting: "bg-teal-50 border-teal-200 text-teal-800",
+  Payment: "bg-emerald-50 border-emerald-200 text-emerald-800",
+  "Chat/Support": "bg-orange-50 border-orange-200 text-orange-800",
+  Fonts: "bg-pink-50 border-pink-200 text-pink-800",
+  "Security Headers": "bg-slate-50 border-slate-200 text-slate-700",
+};
+
+const PAGE_TYPE_ORDER = ["home","about","products","services","pricing","blog","resources","press","careers","contact","legal","privacy","other"];
+const TECH_CATEGORY_ORDER = ["Frontend","Backend","Hosting","CDN","CMS","Analytics","Payment","Chat/Support","Fonts","Security Headers"];
+
+export default function ProfilePage({ params }: PageProps) {
+  const { id: companyId } = use(params);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const jobId = searchParams.get("job_id");
+
+  const [crawlProgress, setCrawlProgress] = useState(0.0);
+  const [crawlStatus, setCrawlStatus] = useState("Loading...");
+  const [currentTask, setCurrentTask] = useState("");
+  const [isCrawling, setIsCrawling] = useState(false);
+
+  const [basicInfo, setBasicInfo] = useState<any>(null);
+  const [overview, setOverview] = useState<any>(null);
+  const [socials, setSocials] = useState<SocialProfile[]>([]);
+  const [webPages, setWebPages] = useState<WebPage[]>([]);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+  const [techStack, setTechStack] = useState<TechStack>({});
+  const [seoData, setSeoData] = useState<any>(null);
+  const [performance, setPerformance] = useState<any>(null);
+
+  const [loading, setLoading] = useState({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true });
+
+  useEffect(() => {
+    fetchBasicInfo();
+    if (jobId) {
+      setIsCrawling(true);
+      const es = new EventSource(`http://localhost:8000/api/v1/pipeline/stream/${jobId}`);
+      es.onmessage = (e) => {
+        const payload = JSON.parse(e.data);
+        if (payload.event === "job.progress") {
+          const { progress, current_task, status } = payload.data;
+          setCrawlProgress(progress); setCrawlStatus(status); setCurrentTask(current_task);
+          if (progress >= 20.0) fetchOverview();
+          if (progress >= 60.0) { fetchWebsite(); fetchTech(); }
+          if (progress >= 70.0) fetchSocials();
+          if (progress >= 75.0) { fetchSeo(); fetchPerformance(); }
+          if (progress >= 100.0) {
+            setIsCrawling(false); es.close();
+            fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance();
+          }
+        } else if (payload.event === "report.completed") {
+          setIsCrawling(false); setCrawlProgress(100.0); es.close();
+          fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance();
+        } else if (payload.event === "pipeline.failed") {
+          setIsCrawling(false); setCrawlStatus("failed"); es.close();
+        }
+      };
+      es.onerror = () => { setIsCrawling(false); es.close(); };
+      return () => es.close();
+    } else {
+      setCrawlProgress(100.0);
+      fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance();
+    }
+  }, [companyId, jobId]);
+
+  const fetchBasicInfo = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}`);
+      if (res.ok) {
+        const data = await res.json(); setBasicInfo(data);
+        if (data.status === "completed") setCrawlProgress(100.0);
+        else { setCrawlProgress(data.progress); setCrawlStatus(data.status); setCurrentTask(data.current_task); }
+      }
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, basic: false })); }
+  };
+
+  const fetchOverview = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/overview`);
+      if (res.ok) setOverview(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, overview: false })); }
+  };
+
+  const fetchSocials = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/social`);
+      if (res.ok) setSocials(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, social: false })); }
+  };
+
+  const fetchWebsite = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/website`);
+      if (res.ok) {
+        const pages: WebPage[] = await res.json();
+        pages.sort((a, b) => {
+          const ai = PAGE_TYPE_ORDER.indexOf(a.page_type), bi = PAGE_TYPE_ORDER.indexOf(b.page_type);
+          return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        });
+        setWebPages(pages);
+      }
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, website: false })); }
+  };
+
+  const fetchTech = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/technology`);
+      if (res.ok) setTechStack(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, tech: false })); }
+  };
+
+  const fetchSeo = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/seo`);
+      if (res.ok) setSeoData(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, seo: false })); }
+  };
+
+  const fetchPerformance = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/companies/${companyId}/performance`);
+      if (res.ok) setPerformance(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, performance: false })); }
+  };
+
+  const reCrawlCompany = async () => {
+    if (!basicInfo) return;
+    try {
+      setIsCrawling(true);
+      setLoading({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true });
+      const res = await fetch("http://localhost:8000/api/v1/pipeline/start", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ domain: basicInfo.domain }),
+      });
+      if (res.ok) { const data = await res.json(); router.push(`/dashboard/profile/${companyId}?job_id=${data.job_id}`); }
+    } catch (err) { console.error(err); setIsCrawling(false); }
+  };
+
+  const toggleCard = (key: string) => {
+    setExpandedCards(prev => { const n = new Set(prev); n.has(key) ? n.delete(key) : n.add(key); return n; });
+  };
+
+  const linkedinProfile = socials.find(s => s.platform.toLowerCase() === "linkedin");
+  const otherSocials = socials.filter(s => s.platform.toLowerCase() !== "linkedin");
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <Link href="/dashboard" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
+          <ArrowLeft className="h-4 w-4" /> Back to Dashboard
+        </Link>
+        <button onClick={reCrawlCompany} disabled={isCrawling}
+          className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-50 transition-colors">
+          <RefreshCw className={`h-4 w-4 ${isCrawling ? "animate-spin" : ""}`} /> Refresh Discovery
+        </button>
+      </div>
+
+      {/* Progress Banner */}
+      {isCrawling && (
+        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 mb-8 shadow-sm">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-bold text-indigo-900 flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin text-indigo-600" /> Company Discovery in Progress
+            </span>
+            <span className="text-sm font-extrabold text-indigo-600">{crawlProgress.toFixed(0)}%</span>
+          </div>
+          <div className="w-full bg-indigo-200/50 h-2.5 rounded-full overflow-hidden mb-3">
+            <div className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style={{ width: `${crawlProgress}%` }}></div>
+          </div>
+          <p className="text-xs text-indigo-700">Current stage: <span className="font-semibold">{currentTask || "Queued"}</span></p>
+        </div>
+      )}
+
+      {/* ── Module 1: Company Discovery ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8 border-b border-slate-100 flex items-center gap-5">
+          <div className="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-black text-2xl shadow-sm">
+            {basicInfo?.name?.[0] || "C"}
+          </div>
+          <div>
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
+              {loading.basic ? "Resolving Company..." : basicInfo?.name}
+            </h1>
+            <p className="text-slate-500 text-sm font-medium mt-0.5">{basicInfo?.domain}</p>
+          </div>
+        </div>
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-indigo-600" /> Module 1: Company Discovery
+          </h2>
+          <div className="border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+            <div className="divide-y divide-slate-100 bg-white">
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Official Name</div>
+                <div className="col-span-2 text-sm font-extrabold text-slate-800">
+                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-2/3 animate-pulse"></div> : basicInfo?.name}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website</div>
+                <div className="col-span-2 text-sm">
+                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : (
+                    <a href={`https://${basicInfo?.domain}`} target="_blank" rel="noopener noreferrer"
+                      className="text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1.5 hover:underline">
+                      <Globe className="h-4 w-4 text-indigo-500" /> https://{basicInfo?.domain}
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Industry</div>
+                <div className="col-span-2 text-sm font-bold text-slate-700">
+                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/3 animate-pulse"></div> : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-full text-xs font-bold">
+                      <Building2 className="h-3.5 w-3.5" /> {overview?.industry || "Technology"}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Country</div>
+                <div className="col-span-2 text-sm font-bold text-slate-700">
+                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/4 animate-pulse"></div> : (
+                    <span className="inline-flex items-center gap-1.5 text-slate-700">
+                      <MapPin className="h-4 w-4 text-rose-500" /> {overview?.country || "N/A"}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
+                <div className="col-span-2 text-sm font-medium">
+                  {loading.social ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : linkedinProfile ? (
+                    <a href={linkedinProfile.url} target="_blank" rel="noopener noreferrer"
+                      className="text-indigo-600 font-bold hover:underline flex items-center gap-1.5">
+                      <svg className="h-4 w-4 text-indigo-500 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                      LinkedIn Page
+                    </a>
+                  ) : <span className="text-slate-400 italic">Not found</span>}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Social Profiles</div>
+                <div className="col-span-2 text-sm">
+                  {loading.social ? (
+                    <div className="flex gap-2">
+                      <div className="h-6 bg-slate-100 rounded-full w-12 animate-pulse"></div>
+                      <div className="h-6 bg-slate-100 rounded-full w-16 animate-pulse"></div>
+                    </div>
+                  ) : otherSocials.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {otherSocials.map((prof, idx) => (
+                        <a key={idx} href={prof.url} target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded-full text-xs font-bold transition-colors">
+                          <Share2 className="h-3 w-3" /> {prof.platform}
+                        </a>
+                      ))}
+                    </div>
+                  ) : <span className="text-slate-400 italic">No additional social profiles found</span>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Module 2: Website Intelligence ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+            <Globe className="h-5 w-5 text-violet-600" /> Module 2: Website Intelligence
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">Discovered pages with structured content extraction.</p>
+
+          {loading.website ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="rounded-2xl border border-slate-100 p-4 animate-pulse">
+                  <div className="h-4 bg-slate-100 rounded w-1/3 mb-3"></div>
+                  <div className="h-3 bg-slate-100 rounded w-full mb-2"></div>
+                  <div className="h-3 bg-slate-100 rounded w-4/5"></div>
+                </div>
+              ))}
+            </div>
+          ) : webPages.length === 0 ? (
+            <div className="text-center py-10 text-slate-400 italic">No pages discovered yet. Run a crawl to populate this section.</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {webPages.map((page) => {
+                const Icon = PAGE_TYPE_ICONS[page.page_type] || FileText;
+                const colorClass = PAGE_TYPE_COLORS[page.page_type] || PAGE_TYPE_COLORS.other;
+                const isExpanded = expandedCards.has(page.url);
+                const hasStructured = page.structured_data && (
+                  (page.structured_data.items?.length > 0) ||
+                  (page.structured_data.plans?.length > 0) ||
+                  (page.structured_data.paragraphs?.length > 0)
+                );
+                return (
+                  <div key={page.url} className="rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    <div className="p-4">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${colorClass}`}>
+                          <Icon className="h-3 w-3" />
+                          {page.page_type.charAt(0).toUpperCase() + page.page_type.slice(1)}
+                        </span>
+                        <a href={page.url} target="_blank" rel="noopener noreferrer"
+                          className="shrink-0 text-slate-400 hover:text-indigo-600 transition-colors">
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                      <p className="text-sm font-bold text-slate-800 mb-1 line-clamp-1">{page.title || page.url}</p>
+                      {page.content_snippet && (
+                        <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{page.content_snippet}</p>
+                      )}
+                    </div>
+                    {hasStructured && (
+                      <>
+                        <button onClick={() => toggleCard(page.url)}
+                          className="w-full flex items-center justify-between px-4 py-2 bg-slate-50 border-t border-slate-100 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors">
+                          <span>
+                            {page.page_type === "pricing" ? "View Pricing Plans" :
+                             page.page_type === "about" ? "View About Content" : "View Products / Services"}
+                          </span>
+                          {isExpanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                        </button>
+                        {isExpanded && (
+                          <div className="px-4 pb-4 pt-3 border-t border-slate-100 bg-slate-50/50">
+                            {page.structured_data.paragraphs?.map((para: string, i: number) => (
+                              <p key={i} className="text-xs text-slate-600 leading-relaxed mb-2">{para}</p>
+                            ))}
+                            {page.structured_data.items?.map((item: any, i: number) => (
+                              <div key={i} className="mb-3 pb-3 border-b border-slate-100 last:border-0">
+                                <p className="text-xs font-bold text-slate-800">{item.name}</p>
+                                <p className="text-xs text-slate-500 mt-0.5">{item.description}</p>
+                              </div>
+                            ))}
+                            {page.structured_data.plans?.length > 0 && (
+                              <div className="grid grid-cols-1 gap-3">
+                                {page.structured_data.plans.map((plan: any, i: number) => (
+                                  <div key={i} className="rounded-xl border border-slate-200 bg-white p-3">
+                                    <div className="flex items-center justify-between mb-1">
+                                      <p className="text-xs font-extrabold text-slate-800">{plan.name}</p>
+                                      {plan.price && (
+                                        <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">{plan.price}</span>
+                                      )}
+                                    </div>
+                                    {plan.features && (
+                                      <ul className="mt-1 space-y-0.5">
+                                        {plan.features.slice(0, 5).map((f: string, j: number) => (
+                                          <li key={j} className="text-xs text-slate-500 flex items-start gap-1">
+                                            <CheckCircle2 className="h-3 w-3 text-emerald-500 mt-0.5 shrink-0" /> {f}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Module 3: Technology Stack ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+            <Cpu className="h-5 w-5 text-emerald-600" /> Module 3: Technology Stack
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">Detected via HTML signals, HTTP response headers, font CDNs, and security headers.</p>
+
+          {loading.tech ? (
+            <div className="space-y-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="h-3 bg-slate-100 rounded w-24 mb-2"></div>
+                  <div className="flex gap-2 flex-wrap">
+                    {[...Array(3)].map((_, j) => <div key={j} className="h-7 bg-slate-100 rounded-full w-24"></div>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : Object.keys(techStack).length === 0 ? (
+            <div className="text-center py-10 text-slate-400 italic">No technology data available yet.</div>
+          ) : (
+            <div className="space-y-5">
+              {[...TECH_CATEGORY_ORDER, ...Object.keys(techStack).filter(c => !TECH_CATEGORY_ORDER.includes(c))]
+                .filter(cat => techStack[cat])
+                .map(category => {
+                  const Icon = TECH_CATEGORY_ICONS[category] || Cpu;
+                  const colorClass = TECH_CATEGORY_COLORS[category] || "bg-gray-50 border-gray-200 text-gray-700";
+                  return (
+                    <div key={category}>
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <Icon className="h-3.5 w-3.5 text-slate-500" />
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{category}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {techStack[category].map((tech, i) => (
+                          <span key={i} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border ${colorClass}`}>
+                            {tech.name}
+                            {tech.version && <span className="opacity-60 text-[10px]">v{tech.version}</span>}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Module 4: SEO Analysis ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+            <Search className="h-5 w-5 text-rose-500" /> Module 4: SEO Analysis
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">Titles, descriptions, robots, sitemap, schema, Open Graph, headings, and broken links.</p>
+
+          {loading.seo ? (
+            <div className="space-y-4 animate-pulse">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-12 bg-slate-100 rounded-xl"></div>
+              ))}
+            </div>
+          ) : !seoData ? (
+            <div className="text-center py-10 text-slate-400 italic">No SEO data available yet. Run a crawl to populate this section.</div>
+          ) : (
+            <div className="space-y-6">
+
+              {/* SEO Score Gauge */}
+              <div className="flex items-center gap-6 p-5 rounded-2xl border border-slate-200 bg-slate-50">
+                <div className="relative w-20 h-20 shrink-0">
+                  <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none" stroke="#e2e8f0" strokeWidth="3.5"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke={seoData.score >= 75 ? "#10b981" : seoData.score >= 50 ? "#f59e0b" : "#ef4444"}
+                      strokeWidth="3.5"
+                      strokeDasharray={`${seoData.score}, 100`}/>
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className={`text-xl font-black ${seoData.score >= 75 ? "text-emerald-600" : seoData.score >= 50 ? "text-amber-600" : "text-red-500"}`}>
+                      {seoData.score}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p className="font-extrabold text-slate-900 text-base">
+                      {seoData.score >= 75 ? "Good SEO" : seoData.score >= 50 ? "Needs Improvement" : "Poor SEO"}
+                    </p>
+                    {seoData.confidence_score && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+                        {Math.round(seoData.confidence_score * 100)}% Confidence
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">Score out of 100</p>
+                  
+                  {/* Evidence Score Breakdown */}
+                  {seoData.evidence_summary && seoData.evidence_summary.length > 0 && (
+                    <div className="mt-3 space-y-1">
+                      {seoData.evidence_summary.map((ev: string, i: number) => (
+                        <p key={i} className={`text-xs font-medium ${ev.startsWith('✓') ? 'text-emerald-600' : 'text-red-500'}`}>{ev}</p>
+                      ))}
+                    </div>
+                  )}
+                  {seoData.score_breakdown && (
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {Object.entries(seoData.score_breakdown).map(([k, v]: any) => (
+                        <span key={k} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${v > 0 ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-600"}`}>
+                          {k.replace(/_/g," ")}: {v}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Meta Info */}
+              <div className="border border-slate-200 rounded-2xl overflow-hidden">
+                <div className="divide-y divide-slate-100">
+                  {[
+                    { label: "Title", icon: Tag, value: seoData.meta_title, mono: false },
+                    { label: "Meta Description", icon: FileText, value: seoData.meta_description, mono: false },
+                    { label: "Canonical URL", icon: Link2, value: seoData.canonical_url, mono: true },
+                  ].map(({ label, icon: Icon, value, mono }) => (
+                    <div key={label} className="grid grid-cols-3 p-4 items-start gap-2">
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 pt-0.5">
+                        <Icon className="h-3.5 w-3.5" /> {label}
+                      </div>
+                      <div className={`col-span-2 text-sm ${mono ? "font-mono text-indigo-700 break-all" : "text-slate-700"}`}>
+                        {value || <span className="text-slate-400 italic">Not found</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Schema Types */}
+              {seoData.schema_types?.length > 0 && (
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1"><Hash className="h-3.5 w-3.5"/> Schema.org Types</p>
+                  <div className="flex flex-wrap gap-2">
+                    {seoData.schema_types.map((t: string, i: number) => (
+                      <span key={i} className="px-3 py-1 bg-violet-50 border border-violet-200 text-violet-700 text-xs font-bold rounded-full">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Open Graph + Twitter Cards side by side */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Open Graph */}
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1">
+                    <Globe className="h-3.5 w-3.5"/> Open Graph
+                  </p>
+                  {Object.keys(seoData.open_graph_tags || {}).length > 0 ? (
+                    <div className="space-y-1.5">
+                      {Object.entries(seoData.open_graph_tags).slice(0, 6).map(([k, v]: any) => (
+                        <div key={k} className="flex gap-2">
+                          <span className="text-[10px] font-mono text-slate-400 shrink-0 pt-0.5 w-24 truncate">{k}</span>
+                          <span className="text-xs text-slate-700 line-clamp-1">{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : <p className="text-xs text-slate-400 italic">No OG tags found</p>}
+                </div>
+
+                {/* Twitter Cards */}
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1">
+                    <MessageSquare className="h-3.5 w-3.5"/> Twitter Cards
+                  </p>
+                  {Object.keys(seoData.twitter_card_tags || {}).length > 0 ? (
+                    <div className="space-y-1.5">
+                      {Object.entries(seoData.twitter_card_tags).slice(0, 6).map(([k, v]: any) => (
+                        <div key={k} className="flex gap-2">
+                          <span className="text-[10px] font-mono text-slate-400 shrink-0 pt-0.5 w-24 truncate">{k}</span>
+                          <span className="text-xs text-slate-700 line-clamp-1">{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : <p className="text-xs text-slate-400 italic">No Twitter card tags found</p>}
+                </div>
+              </div>
+
+              {/* Headings Structure */}
+              {seoData.headings_structure && Object.keys(seoData.headings_structure).length > 0 && (
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1"><List className="h-3.5 w-3.5"/> Headings Structure</p>
+                  <div className="space-y-3">
+                    {["h1","h2","h3"].map(tag => {
+                      const items: string[] = seoData.headings_structure[tag] || [];
+                      if (!items.length) return null;
+                      const colors: Record<string, string> = { h1: "bg-indigo-50 text-indigo-700 border-indigo-200", h2: "bg-violet-50 text-violet-700 border-violet-200", h3: "bg-slate-50 text-slate-600 border-slate-200" };
+                      return (
+                        <div key={tag}>
+                          <span className={`inline-block text-[10px] font-black uppercase px-2 py-0.5 rounded border ${colors[tag]} mb-1`}>{tag.toUpperCase()}</span>
+                          <ul className="space-y-0.5 ml-2">
+                            {items.slice(0, 5).map((h, i) => <li key={i} className="text-xs text-slate-600 truncate">• {h}</li>)}
+                            {items.length > 5 && <li className="text-xs text-slate-400 italic">+{items.length-5} more</li>}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Robots + Sitemap */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1"><Shield className="h-3.5 w-3.5"/> Robots.txt</p>
+                  {seoData.robots_txt ? (
+                    <pre className="text-[10px] font-mono text-slate-600 whitespace-pre-wrap max-h-28 overflow-y-auto bg-slate-50 rounded-lg p-2">{seoData.robots_txt.slice(0, 500)}</pre>
+                  ) : <p className="text-xs text-slate-400 italic">Not found</p>}
+                </div>
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1"><Globe className="h-3.5 w-3.5"/> Sitemap</p>
+                  {seoData.sitemap_url && (
+                    <a href={seoData.sitemap_url} target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-mono text-indigo-600 hover:underline break-all block mb-2">{seoData.sitemap_url}</a>
+                  )}
+                  <p className="text-xs text-slate-500">{seoData.sitemap_urls?.length || 0} URLs indexed</p>
+                </div>
+              </div>
+
+              {/* Broken Links */}
+              <div className="border border-slate-200 rounded-2xl p-4">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1">
+                  {seoData.broken_links_count > 0
+                    ? <XCircle className="h-3.5 w-3.5 text-red-500"/>
+                    : <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500"/>}
+                  Broken Links ({seoData.broken_links_count})
+                </p>
+                {seoData.broken_links_count === 0 ? (
+                  <p className="text-xs text-emerald-600 font-semibold">✓ No broken links detected</p>
+                ) : (
+                  <div className="space-y-1.5 max-h-36 overflow-y-auto">
+                    {seoData.broken_links_detail?.map((link: any, i: number) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-50 border border-red-200 text-red-600">{link.status_code || "ERR"}</span>
+                        <span className="text-xs font-mono text-slate-600 truncate">{link.url}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Module 5: Performance ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+            <BarChart2 className="h-5 w-5 text-blue-500" /> Module 5: Performance Collection
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">Core Web Vitals, page weight, compression, and image optimization scores.</p>
+
+          {loading.performance || (isCrawling && !performance) ? (
+            <div className="space-y-4 animate-pulse">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-12 bg-slate-100 rounded-xl"></div>
+              ))}
+            </div>
+          ) : !performance ? (
+            <div className="text-center py-10 text-slate-400 italic">No Performance data available yet.</div>
+          ) : (
+            <div className="space-y-6">
+              {/* Performance Score Gauge */}
+              <div className="flex items-center gap-6 p-5 rounded-2xl border border-slate-200 bg-slate-50">
+                <div className="relative w-20 h-20 shrink-0">
+                  <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e2e8f0" strokeWidth="3.5"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                      stroke={performance.performance_score >= 80 ? "#10b981" : performance.performance_score >= 50 ? "#f59e0b" : "#ef4444"}
+                      strokeWidth="3.5" strokeDasharray={`${performance.performance_score}, 100`}/>
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className={`text-xl font-black ${performance.performance_score >= 80 ? "text-emerald-600" : performance.performance_score >= 50 ? "text-amber-600" : "text-red-500"}`}>
+                      {Math.round(performance.performance_score)}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p className="font-extrabold text-slate-900 text-base">Overall Performance</p>
+                    {performance.confidence_score && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+                        {Math.round(performance.confidence_score * 100)}% Confidence
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">Simulated Score out of 100</p>
+                  
+                  {/* Evidence Score Breakdown */}
+                  {performance.evidence_summary && performance.evidence_summary.length > 0 && (
+                    <div className="mt-3 space-y-1">
+                      {performance.evidence_summary.map((ev: string, i: number) => (
+                        <p key={i} className={`text-xs font-medium ${ev.startsWith('✓') ? 'text-emerald-600' : ev.startsWith('✗') ? 'text-red-500' : 'text-blue-500'}`}>{ev}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="border border-slate-200 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Core Web Vitals (Est.)</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">LCP:</span>
+                      <span className="font-bold text-slate-900">{performance.core_web_vitals?.LCP || "N/A"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">FID:</span>
+                      <span className="font-bold text-slate-900">{performance.core_web_vitals?.FID || "N/A"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">CLS:</span>
+                      <span className="font-bold text-slate-900">{performance.core_web_vitals?.CLS || "N/A"}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border border-slate-200 rounded-2xl p-4 flex flex-col justify-center">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Payload & Caching</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">Page Weight:</span>
+                      <span className="font-bold text-slate-900">{(performance.page_weight_bytes / 1024).toFixed(1)} KB</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">Compression:</span>
+                      <span className={`font-bold ${performance.compression_enabled ? "text-emerald-600" : "text-red-500"}`}>
+                        {performance.compression_enabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 font-medium">Caching Score:</span>
+                      <span className="font-bold text-slate-900">{performance.caching_score}/100</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image Optimization */}
+              <div className="border border-slate-200 rounded-2xl p-4">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1">
+                  Image Optimization
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div className={`h-full ${performance.image_optimization_score >= 80 ? "bg-emerald-500" : performance.image_optimization_score >= 50 ? "bg-amber-500" : "bg-red-500"}`} 
+                         style={{ width: `${performance.image_optimization_score}%` }}></div>
+                  </div>
+                  <span className="text-sm font-bold text-slate-700">{Math.round(performance.image_optimization_score)}/100</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Module 6: Company Info ── */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-6">
+        <div className="p-8">
+          <h2 className="text-lg font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-indigo-600" /> Module 6: Company Information
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">Deep extraction of company financials, founders, products, and services.</p>
+
+          {loading.overview || (isCrawling && (!overview?.facts || overview.facts.length === 0)) ? (
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse">
+             {[...Array(6)].map((_, i) => (
+               <div key={i} className="h-32 bg-slate-100 rounded-xl"></div>
+             ))}
+           </div>
+          ) : !overview?.facts || overview.facts.length === 0 ? (
+            <div className="text-center py-10 text-slate-400 italic">No validated facts available yet. Run a company discovery scan to populate this section.</div>
+          ) : (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {overview.facts.map((fact: any, i: number) => (
+                  <div key={i} className="border border-slate-200 rounded-xl p-4 bg-white shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <div className="absolute top-0 right-0 px-2 py-1 bg-slate-50 border-b border-l border-slate-200 rounded-bl-lg">
+                        <span className="text-[10px] font-black text-slate-400">
+                          {Math.round(fact.confidence * 100)}% VERIFIED
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{fact.fact_name}</p>
+                      <p className="font-bold text-slate-800 text-base mb-4 break-words whitespace-pre-wrap">{fact.fact_value}</p>
+                    </div>
+                    <div className="pt-3 border-t border-slate-100">
+                      <p className="text-[10px] text-slate-500 font-medium">Source:</p>
+                      {fact.url && fact.url.startsWith("http") ? (
+                        <a href={fact.url} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-indigo-600 hover:underline truncate block">
+                          {fact.source}
+                        </a>
+                      ) : (
+                        <span className="text-xs font-semibold text-slate-600 block truncate">{fact.source}</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+    </div>
+  );
+}
