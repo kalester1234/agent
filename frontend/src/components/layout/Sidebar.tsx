@@ -1,69 +1,107 @@
+"use client";
+
 import Link from "next/link";
-import { LayoutDashboard, FileText, Bookmark, BarChart2, MessageSquare, Download, Settings, CreditCard } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Search,
+  Bookmark,
+  Clock,
+  Target,
+  Plus
+} from "lucide-react";
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'New Analysis', href: '/dashboard', icon: BarChart2 },
-  { name: 'Reports', href: '/dashboard/coming-soon', icon: FileText },
-  { name: 'Saved Companies', href: '/dashboard/coming-soon', icon: Bookmark },
-  { name: 'Compare', href: '/dashboard/coming-soon', icon: LayoutDashboard },
-  { name: 'AI Chat', href: '/dashboard/coming-soon', icon: MessageSquare },
-  { name: 'Exports', href: '/dashboard/coming-soon', icon: Download },
-];
-
-const secondaryNavigation = [
-  { name: 'Workspace', href: '/dashboard/coming-soon', icon: LayoutDashboard },
-  { name: 'Billing', href: '/dashboard/coming-soon', icon: CreditCard },
-  { name: 'Settings', href: '/dashboard/coming-soon', icon: Settings },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Search", href: "/dashboard/search", icon: Search },
+  { name: "Saved Companies", href: "/dashboard/saved", icon: Bookmark },
+  { name: "Analysis History", href: "/dashboard/history", icon: Clock },
+  { name: "Opportunity Radar", href: "/dashboard/opportunities", icon: Target },
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
   return (
-    <div className="flex h-full w-64 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-16 items-center px-6 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white font-black tracking-tighter text-sm">
-            S
-          </div>
-          <span className="text-xl font-extrabold tracking-tight text-slate-900 font-sans">
-            Surge Startups
+    <div
+      className="flex h-full flex-col border-r"
+      style={{
+        width: "240px",
+        minWidth: "240px",
+        background: "#FFFFFF",
+        borderColor: "var(--border-default)",
+      }}
+    >
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-5 py-6">
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0"
+          style={{ background: "var(--brand-primary)" }}
+        ></div>
+        <div className="flex flex-col">
+          <span
+            className="text-base font-bold leading-tight"
+            style={{ color: "var(--brand-primary)", letterSpacing: "-0.01em" }}
+          >
+            SurgeStartups
+          </span>
+          <span
+            className="text-[10px] font-semibold"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Intelligence Engine
           </span>
         </div>
       </div>
-      <div className="flex flex-1 flex-col overflow-y-auto">
-        <nav className="flex-1 space-y-1 px-4 py-4">
-          <p className="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Main</p>
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <Icon className="mr-3 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" />
-                {item.name}
-              </Link>
-            );
-          })}
-          
-          <div className="mt-8 mb-2">
-            <p className="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Workspace</p>
-            {secondaryNavigation.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-                >
-                  <Icon className="mr-3 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
+
+      {/* Nav */}
+      <div className="flex flex-1 flex-col overflow-y-auto px-4 py-2 gap-1">
+        {navigation.map((item) => {
+          const Icon = item.icon;
+          const isActive =
+            pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href + "/"));
+
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150"
+              style={{
+                background: isActive ? "var(--brand-primary-light)" : "transparent",
+                color: isActive ? "var(--brand-primary)" : "var(--text-secondary)",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "var(--surface-subtle)";
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "transparent";
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
+                }
+              }}
+            >
+              <Icon
+                className="h-4 w-4 flex-shrink-0"
+                style={{ strokeWidth: 2 }}
+              />
+              {item.name}
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Bottom Button */}
+      <div className="px-4 py-5">
+        <Link
+          href="/dashboard"
+          className="flex w-full items-center justify-center gap-2 py-2.5 rounded-md text-xs font-semibold text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-mid)] transition-colors duration-150 shadow-sm"
+        >
+          <Plus className="h-4 w-4" />
+          New Analysis
+        </Link>
       </div>
     </div>
   );

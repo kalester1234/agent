@@ -47,10 +47,10 @@ def chat_with_report(chat_message: ChatMessage):
         print(f"🤖 [GEMINI CHAT] Processing question: '{chat_message.message}'")
         print(f"=======================================================\n")
         
-        if not settings.GEMINI_API_KEY:
+        if not settings.get_gemini_api_key:
             raise Exception("Gemini API key is not configured")
             
-        client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        client = genai.Client(api_key=settings.get_gemini_api_key)
         response = client.models.generate_content(
             model='gemini-2.5-flash',
             contents=prompt

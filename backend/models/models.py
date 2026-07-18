@@ -42,6 +42,71 @@ class Company(Base):
     evidence = relationship("Evidence", back_populates="company", cascade="all, delete-orphan")
     facts = relationship("CompanyFact", back_populates="company", cascade="all, delete-orphan")
     crawl_jobs = relationship("CrawlJob", back_populates="company", cascade="all, delete-orphan")
+    
+    # New relationships for acquisitions and IPO info
+    acquisitions = relationship("Acquisition", back_populates="company", cascade="all, delete-orphan")
+    ipo_info = relationship("IPOInfo", back_populates="company", uselist=False, cascade="all, delete-orphan")
+    pain_points = relationship("PainPoint", back_populates="company", cascade="all, delete-orphan")
+    executives = relationship("KeyExecutive", back_populates="company", cascade="all, delete-orphan")
+    pricing_tiers = relationship("PricingTier", back_populates="company", cascade="all, delete-orphan")
+    compliance = relationship("CompliancePosture", back_populates="company", uselist=False, cascade="all, delete-orphan")
+    study = relationship("CompanyStudy", back_populates="company", uselist=False, cascade="all, delete-orphan")
+    opportunities = relationship("Opportunity", back_populates="company", cascade="all, delete-orphan")
+
+class CompanyStudy(Base):
+    __tablename__ = "company_studies"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    executive_summary = Column(Text, nullable=True)
+    market_position = Column(Text, nullable=True)
+    risks_and_opportunities = Column(Text, nullable=True)
+    conclusion = Column(Text, nullable=True)
+    generated_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    company = relationship("Company", back_populates="study")
+
+class Opportunity(Base):
+    __tablename__ = "opportunities"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    title = Column(String, nullable=False)
+    impact = Column(String, nullable=False) # High, Critical, Medium
+    type = Column(String, nullable=False)   # Strategic, Defensive, Operational
+    description = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    company = relationship("Company", back_populates="opportunities")
+
+class KeyExecutive(Base):
+    __tablename__ = "key_executives"
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    name = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+    linkedin_url = Column(String, nullable=True)
+    company = relationship("Company", back_populates="executives")
+
+class PricingTier(Base):
+    __tablename__ = "pricing_tiers"
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    tier_name = Column(String, nullable=False)
+    price = Column(String, nullable=False)
+    features = Column(JSON, nullable=True)
+    company = relationship("Company", back_populates="pricing_tiers")
+
+class CompliancePosture(Base):
+    __tablename__ = "compliance_posture"
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), unique=True, nullable=False)
+    soc2 = Column(Boolean, default=False)
+    gdpr = Column(Boolean, default=False)
+    hipaa = Column(Boolean, default=False)
+    iso27001 = Column(Boolean, default=False)
+    other_certifications = Column(JSON, nullable=True)
+    company = relationship("Company", back_populates="compliance")
 
 class CompanyProfile(Base):
     __tablename__ = "company_profiles"
@@ -185,6 +250,7 @@ class NewsArticle(Base):
     category = Column(String, index=True, nullable=True) # Funding, Partnership, Acquisition, Leadership Changes, etc.
     url = Column(String, nullable=True)
     summary = Column(Text, nullable=True)
+    full_content = Column(Text, nullable=True)
     sentiment = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -247,10 +313,6 @@ class Funding(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     company = relationship("Company", back_populates="funding")
-    
-    # New relationships for acquisitions and IPO info
-    acquisitions = relationship("Acquisition", back_populates="company", cascade="all, delete-orphan")
-    ipo_info = relationship("IPOInfo", back_populates="company", uselist=False, cascade="all, delete-orphan")
 
 class Acquisition(Base):
     __tablename__ = "acquisitions"
@@ -331,3 +393,18 @@ class CrawlJob(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     company = relationship("Company", back_populates="crawl_jobs")
+
+class PainPoint(Base):
+    __tablename__ = "pain_points"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    category = Column(String, index=True, nullable=False)  # e.g. Customer Experience, Technical, Hiring, Financial
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=False)
+    severity = Column(String, nullable=False, default="Medium")  # Low, Medium, High, Critical
+    source = Column(String, nullable=True)  # reviews, news, hiring, financial
+    evidence = Column(Text, nullable=True)  # supporting text
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    company = relationship("Company", back_populates="pain_points")

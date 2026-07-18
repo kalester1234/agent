@@ -8,7 +8,7 @@ from backend.models.models import (
     Company, CompanyProfile, CompanyWebsite, WebsitePage,
     TechnologyStack, SEOData, PerformanceMetrics, SocialProfile,
     NewsArticle, Review, Job, Competitor, Funding, Acquisition, IPOInfo,
-    Source, Evidence, CrawlJob
+    Source, Evidence, CrawlJob, PainPoint
 )
 
 router = APIRouter()
@@ -211,10 +211,25 @@ def get_company_news(company_id: int, db: Session = Depends(get_db)):
             "category": a.category,
             "url": a.url,
             "summary": a.summary,
+            "full_content": a.full_content,
             "sentiment": a.sentiment,
         }
         for a in articles
     ]
+
+@router.get("/{company_id}/study")
+def get_company_study(company_id: int, db: Session = Depends(get_db)):
+    from backend.models.models import CompanyStudy
+    study = db.query(CompanyStudy).filter(CompanyStudy.company_id == company_id).first()
+    if not study:
+        return None
+    return {
+        "executive_summary": study.executive_summary,
+        "market_position": study.market_position,
+        "risks_and_opportunities": study.risks_and_opportunities,
+        "conclusion": study.conclusion,
+        "generated_at": study.generated_at
+    }
 
 @router.get("/{company_id}/social")
 def get_company_social(company_id: int, db: Session = Depends(get_db)):
@@ -247,6 +262,29 @@ def get_company_reviews(company_id: int, db: Session = Depends(get_db)):
         }
         for r in reviews
     ]
+
+@router.get("/{company_id}/executives")
+def get_company_executives(company_id: int, db: Session = Depends(get_db)):
+    from backend.models.models import KeyExecutive
+    executives = db.query(KeyExecutive).filter(KeyExecutive.company_id == company_id).all()
+    return [{"name": e.name, "title": e.title, "linkedin_url": e.linkedin_url} for e in executives]
+
+@router.get("/{company_id}/pricing")
+def get_company_pricing(company_id: int, db: Session = Depends(get_db)):
+    from backend.models.models import PricingTier
+    tiers = db.query(PricingTier).filter(PricingTier.company_id == company_id).all()
+    return [{"tier_name": t.tier_name, "price": t.price, "features": t.features} for t in tiers]
+
+@router.get("/{company_id}/compliance")
+def get_company_compliance(company_id: int, db: Session = Depends(get_db)):
+    from backend.models.models import CompliancePosture
+    c = db.query(CompliancePosture).filter(CompliancePosture.company_id == company_id).first()
+    if not c:
+        return None
+    return {
+        "soc2": c.soc2, "gdpr": c.gdpr, "hipaa": c.hipaa, 
+        "iso27001": c.iso27001, "other_certifications": c.other_certifications
+    }
 
 @router.get("/{company_id}/hiring")
 def get_company_hiring(company_id: int, db: Session = Depends(get_db)):
@@ -453,3 +491,64 @@ def get_company_sources(company_id: int, db: Session = Depends(get_db)):
             for e in evidence
         ]
     }
+
+@router.get("/{company_id}/pain-points")
+def get_pain_points(company_id: int, db: Session = Depends(get_db)):
+    pps = db.query(PainPoint).filter(PainPoint.company_id == company_id).order_by(PainPoint.created_at.desc()).all()
+    return [
+        {
+            "id": pp.id,
+            "category": pp.category,
+            "title": pp.title,
+            "description": pp.description,
+            "severity": pp.severity,
+            "source": pp.source,
+            "evidence": pp.evidence,
+            "created_at": pp.created_at,
+        }
+        for pp in pps
+    ]
+
+@router.post("/{company_id}/pain-points/analyze")
+async def analyze_pain_points(company_id: int, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    from backend.collectors.pain_point_collector import run_pain_point_analysis
+    results = await run_pain_point_analysis(company_id, db)
+    return {
+        "status": "ok",
+        "count": len(results),
+        "pain_points": [
+            {
+                "id": pp.id,
+                "category": pp.category,
+                "title": pp.title,
+                "description": pp.description,
+                "severity": pp.severity,
+                "source": pp.source,
+                "evidence": pp.evidence,
+            }
+            for pp in results
+        ]
+    }
+
+from pydantic import BaseModel
+from fastapi.responses import StreamingResponse
+class ChatRequest(BaseModel):
+    messages: List[Dict[str, str]]
+
+@router.post("/{company_id}/chat")
+async def chat_with_company(company_id: int, req: ChatRequest, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+        
+    from backend.agents.chat_agent import ChatAgent
+    agent = ChatAgent()
+    
+    # Return a StreamingResponse directly from the generator
+    return StreamingResponse(
+        agent.chat_stream(company_id, db, req.messages),
+        media_type="text/event-stream"
+    )

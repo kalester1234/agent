@@ -3,24 +3,20 @@
 
 # Activate the correct virtual environment
 source .venv/bin/activate
-# Ensure the project root is in PYTHONPATH for package imports
 export PYTHONPATH=$PWD
 
 # Start Docker containers (Postgres & Redis)
-# Note: Docker Compose file should be at project root
 docker compose up -d
 
-# Start Celery worker in background
-celery -A backend.core.celery_app worker --loglevel=info &
+# We pipe outputs through awk to prefix them and disable Next.js TTY clearing
+celery -A backend.core.celery_app worker --loglevel=info 2>&1 | awk '{print "\033[34m[CELERY]\033[0m " $0}' &
 CELERY_PID=$!
 
-# Start Uvicorn (FastAPI backend)
-uvicorn backend.main:app --reload --port 8000 &
+uvicorn backend.main:app --reload --port 8000 2>&1 | awk '{print "\033[32m[UVICORN]\033[0m " $0}' &
 UVICORN_PID=$!
 
-# Start Next.js frontend
 cd frontend
-npm run dev &
+npm run dev 2>&1 | awk '{print "\033[35m[NEXTJS]\033[0m " $0}' &
 NEXT_PID=$!
 cd ..
 
@@ -29,6 +25,6 @@ echo "Frontend: http://localhost:3000"
 echo "Backend: http://localhost:8000/docs"
 echo "Press Ctrl+C to stop all services."
 
-# Trap Ctrl+C to kill background processes
-trap "kill $CELERY_PID $UVICORN_PID $NEXT_PID; exit" INT
+# Trap Ctrl+C to kill all child processes
+trap "kill 0" INT
 wait

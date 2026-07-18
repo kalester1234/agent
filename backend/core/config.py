@@ -21,6 +21,23 @@ class Settings(BaseSettings):
     GROQ_API_KEY: Optional[str] = None
     OPENROUTER_API_KEY: Optional[str] = None
     CEREBRAS_API_KEY: Optional[str] = None
+    SERPER_API_KEY: Optional[str] = None
+    
+    @property
+    def get_gemini_api_key(self) -> Optional[str]:
+        if not self.GEMINI_API_KEY:
+            return None
+        import random
+        keys = [k.strip() for k in self.GEMINI_API_KEY.split(',') if k.strip()]
+        return random.choice(keys) if keys else None
+        
+    @property
+    def get_groq_api_key(self) -> Optional[str]:
+        if not self.GROQ_API_KEY:
+            return None
+        import random
+        keys = [k.strip() for k in self.GROQ_API_KEY.split(',') if k.strip()]
+        return random.choice(keys) if keys else None
     
     class Config:
         case_sensitive = True

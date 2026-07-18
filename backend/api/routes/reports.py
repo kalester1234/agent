@@ -142,3 +142,13 @@ def get_report(report_id: int, db: Session = Depends(get_db)):
         "status": status,
         "report": assembled_report
     }
+
+@router.delete("/{report_id}")
+def delete_report(report_id: int, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == report_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    
+    db.delete(company)
+    db.commit()
+    return {"status": "success", "message": "Report deleted successfully"}

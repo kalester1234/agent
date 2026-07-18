@@ -46,7 +46,7 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
   startJob: async (domain: string) => {
     get().reset();
     try {
-      const res = await fetch('http://localhost:8000/api/v1/pipeline/start', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/pipeline/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ domain }),
@@ -58,7 +58,7 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
       set({ jobId: job_id, status: 'started' });
 
       // Start SSE
-      const eventSource = new EventSource(`http://localhost:8000/api/v1/pipeline/stream/${job_id}`);
+      const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/pipeline/stream/${job_id}`);
 
       eventSource.onmessage = (e) => {
         const data = JSON.parse(e.data);

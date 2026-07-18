@@ -1,10 +1,10 @@
  
  -------------- celery@iMac.Dlink v5.6.3 (recovery)
 --- ***** ----- 
--- ******* ---- macOS-26.5.2-arm64-arm-64bit 2026-07-16 12:40:46
+-- ******* ---- macOS-26.5.2-arm64-arm-64bit 2026-07-18 13:06:09
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         worker:0x10844e1c0
+- ** ---------- .> app:         worker:0x108fb6f10
 - ** ---------- .> transport:   redis://localhost:6380/0
 - ** ---------- .> results:     redis://localhost:6380/0
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -15,129 +15,560 @@
                 
 
 [tasks]
+  . backend.workers.tasks.deep_analysis_task
   . backend.workers.tasks.discover_company_task
   . backend.workers.tasks.hiring_and_market_task
+  . backend.workers.tasks.opportunity_generation_task
+  . backend.workers.tasks.pain_point_analysis_task
   . backend.workers.tasks.seo_and_tech_task
+  . backend.workers.tasks.seo_collector_task
   . backend.workers.tasks.social_and_news_task
   . backend.workers.tasks.trigger_workflow_task
   . backend.workers.tasks.website_and_tech_task
 
-[2026-07-16 12:40:47,117: INFO/MainProcess] Connected to redis://localhost:6380/0
-[2026-07-16 12:40:47,124: INFO/MainProcess] mingle: searching for neighbors
-[2026-07-16 12:40:48,137: INFO/MainProcess] mingle: all alone
-[2026-07-16 12:40:48,167: INFO/MainProcess] celery@iMac.Dlink ready.
-[2026-07-16 12:40:56,318: INFO/MainProcess] Task backend.workers.tasks.trigger_workflow_task[2f0d362c-8574-443d-9867-15a32455ea3a] received
-[2026-07-16 12:40:56,357: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[8c07bc81-1712-491c-b6d8-a78f9b049593] received
-[2026-07-16 12:40:56,360: INFO/ForkPoolWorker-1] Task: Discover Company for ID: 1
-[2026-07-16 12:40:56,360: INFO/ForkPoolWorker-8] Task backend.workers.tasks.trigger_workflow_task[2f0d362c-8574-443d-9867-15a32455ea3a] succeeded in 0.04054495799999991s: {'job_id': 'abe7437b-181c-46da-964d-15fe499b27a1', 'status': 'workflow_queued'}
-[2026-07-16 12:40:56,399: ERROR/ForkPoolWorker-1] Error in discover_company_task: (sqlite3.OperationalError) no such table: crawl_jobs
-[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
-FROM crawl_jobs 
-WHERE crawl_jobs.id = ?
- LIMIT ? OFFSET ?]
-[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
-[2026-07-16 12:40:56,427: ERROR/ForkPoolWorker-1] Task backend.workers.tasks.discover_company_task[8c07bc81-1712-491c-b6d8-a78f9b049593] raised unexpected: OperationalError('(sqlite3.OperationalError) no such table: crawl_jobs')
+[2026-07-18 13:06:09,479: INFO/MainProcess] Connected to redis://localhost:6380/0
+[2026-07-18 13:06:09,483: INFO/MainProcess] mingle: searching for neighbors
+[2026-07-18 13:06:10,496: INFO/MainProcess] mingle: all alone
+[2026-07-18 13:06:10,520: INFO/MainProcess] celery@iMac.Dlink ready.
+[2026-07-18 13:10:35,999: INFO/MainProcess] Task backend.workers.tasks.trigger_workflow_task[7f7074f9-baa0-422b-9838-ccc2d25351f3] received
+[2026-07-18 13:10:36,032: INFO/ForkPoolWorker-8] Task backend.workers.tasks.trigger_workflow_task[7f7074f9-baa0-422b-9838-ccc2d25351f3] succeeded in 0.029170041999975638s: {'job_id': '41a51b9c-3b5d-4b57-9446-451d79ca69c3', 'status': 'workflow_queued'}
+[2026-07-18 13:11:25,158: INFO/MainProcess] Task backend.workers.tasks.website_and_tech_task[6c37b1c5-8c0a-402f-9cb7-04f068e6f635] received
+[2026-07-18 13:11:25,166: INFO/ForkPoolWorker-8] Task: Website & Tech Detection for ID: 1
+[2026-07-18 13:11:25,235: INFO/ForkPoolWorker-8] Running Website Crawler for Pepul
+[2026-07-18 13:11:25,282: INFO/ForkPoolWorker-8] Running Tech Detector for Pepul
+[2026-07-18 13:11:25,286: INFO/ForkPoolWorker-8] Running Performance Collector for Pepul
+[2026-07-18 13:11:25,599: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:11:25,601: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:11:25,603: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:11:25,731: INFO/ForkPoolWorker-8] Tech detected for Pepul: [('jQuery', 'Frontend'), ('Ember.js', 'Frontend'), ('Google Analytics 4', 'Analytics'), ('Google Tag Manager', 'Analytics'), ('Microsoft Clarity', 'Analytics'), ('AWS CloudFront', 'CDN'), ('Cloudflare', 'CDN'), ('Strict Transport Security, X Content Type Options', 'Security Headers')]
+[2026-07-18 13:11:26,071: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/contact "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,074: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,083: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/pricing "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,086: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/privacy "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,102: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/resources "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,116: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,151: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/careers "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,153: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/legal "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,154: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog "HTTP/1.1 301 Moved Permanently"
+[2026-07-18 13:11:26,154: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/press "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,179: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/services "HTTP/1.1 302 Found"
+[2026-07-18 13:11:26,474: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,476: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog/ "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,477: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:11:26,536: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,538: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:11:26,612: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:11:26,614: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:11:27,026: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/products "HTTP/1.1 302 Found"
+[2026-07-18 13:11:27,126: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:11:27,129: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("CEO" OR "CTO" OR "Founder" OR "VP") site:linkedin.com/in OR site:pepul.com/about
+[2026-07-18 13:11:27,532: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 200 OK"
+[2026-07-18 13:11:27,550: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" pricing tiers OR "pricing" site:pepul.com/pricing
+[2026-07-18 13:11:27,599: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 200 OK"
+[2026-07-18 13:11:27,611: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("SOC2" OR "GDPR" OR "HIPAA" OR "ISO 27001" OR "compliance") site:pepul.com/security
+[2026-07-18 13:11:27,718: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:27,721: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:27,808: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22CEO%22+OR+%22CTO%22+OR+%22Founder%22+OR+%22VP%22)+site:linkedin.com/in+OR+site:pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,047: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22SOC2%22+OR+%22GDPR%22+OR+%22HIPAA%22+OR+%22ISO+27001%22+OR+%22compliance%22)+site:pepul.com/security "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,210: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+pricing+tiers+OR+%22pricing%22+site:pepul.com/pricing "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,283: ERROR/ForkPoolWorker-8] [ERROR] ExecutiveCollector failed: 'ExecutiveCollector' object has no attribute '_call_llm'
+[2026-07-18 13:11:28,375: ERROR/ForkPoolWorker-8] [ERROR] PricingCollector failed: 'PricingCollector' object has no attribute '_call_llm'
+[2026-07-18 13:11:28,674: ERROR/ForkPoolWorker-8] [ERROR] ComplianceCollector failed: 'ComplianceCollector' object has no attribute '_call_llm'
+[2026-07-18 13:11:28,719: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,722: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,745: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:28,748: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:29,739: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:11:29,859: INFO/ForkPoolWorker-8] Task backend.workers.tasks.website_and_tech_task[6c37b1c5-8c0a-402f-9cb7-04f068e6f635] succeeded in 4.694198625000013s: None
+[2026-07-18 13:12:16,650: INFO/MainProcess] Task backend.workers.tasks.deep_analysis_task[b4e8e795-044d-46dd-938d-66bea32cbb86] received
+[2026-07-18 13:12:16,655: INFO/ForkPoolWorker-8] Task: Deep Company Analysis for ID: 1
+[2026-07-18 13:12:16,668: INFO/ForkPoolWorker-8] Running Study Collector (Deep Analysis) for Pepul
+[2026-07-18 13:12:18,409: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:12:18,442: INFO/MainProcess] Task backend.workers.tasks.opportunity_generation_task[5c6b6b1e-aa5b-4661-b5cf-4a51828d3919] received
+[2026-07-18 13:12:18,443: INFO/ForkPoolWorker-8] Task backend.workers.tasks.deep_analysis_task[b4e8e795-044d-46dd-938d-66bea32cbb86] succeeded in 1.7883012500000177s: None
+[2026-07-18 13:12:18,447: INFO/ForkPoolWorker-1] Task: Generating Opportunities for ID: 1
+[2026-07-18 13:12:18,514: INFO/ForkPoolWorker-1] Running Opportunity Collector for Pepul
+[2026-07-18 13:12:19,953: INFO/ForkPoolWorker-1] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:12:19,981: INFO/ForkPoolWorker-1] Job 41a51b9c-3b5d-4b57-9446-451d79ca69c3 marked completed for company 1
+[2026-07-18 13:12:19,992: INFO/ForkPoolWorker-1] Task backend.workers.tasks.opportunity_generation_task[5c6b6b1e-aa5b-4661-b5cf-4a51828d3919] succeeded in 1.5468550829999685s: None
+[2026-07-18 13:17:03,074: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[b7670676-215c-4e71-bb31-35a1948e925e] received
+[2026-07-18 13:17:03,081: INFO/ForkPoolWorker-8] Task: Discover Company for ID: 1
+[2026-07-18 13:17:03,097: INFO/ForkPoolWorker-8] Running Company Discovery Collector for Pepul
+[2026-07-18 13:17:03,261: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:17:04,150: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Pepul%20company&utf8=&format=json "HTTP/1.1 200 OK"
+[2026-07-18 13:17:04,643: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=St.%20Erkenwald%20(poem)&format=json "HTTP/1.1 200 OK"
+[2026-07-18 13:17:06,245: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:06,504: WARNING/ForkPoolWorker-8] /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+
+[2026-07-18 13:17:06,526: WARNING/ForkPoolWorker-8] /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+[2026-07-18 13:17:06,537: WARNING/ForkPoolWorker-8] /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+
+[2026-07-18 13:17:06,602: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:17:22,647: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:17:22,673: INFO/ForkPoolWorker-8] Fact 'Revenue' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:17:22,674: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Revenue amount financial
+[2026-07-18 13:17:24,596: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:24,916: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.instagram.com/p/C83sI9CPggv/ "HTTP/1.1 200 OK"
+[2026-07-18 13:17:25,223: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.crunchbase.com/organization/pepul "HTTP/1.1 403 Forbidden"
+[2026-07-18 13:17:25,240: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:17:26,951: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:17:27,454: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:17:27,457: INFO/ForkPoolWorker-8] Fact 'Profit/Loss' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:17:27,458: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Profit/Loss amount financial
+[2026-07-18 13:17:29,317: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:29,889: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.investopedia.com/terms/p/plstatement.asp "HTTP/1.1 200 OK"
+[2026-07-18 13:17:32,463: INFO/ForkPoolWorker-8] HTTP Request: GET https://oregonsbdc.org/how-to-read-a-profit-and-loss-statement/ "HTTP/1.1 403 Forbidden"
+[2026-07-18 13:17:32,483: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:17:34,534: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:17:34,787: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:17:34,791: INFO/ForkPoolWorker-8] Fact 'Valuation' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:17:34,792: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Valuation amount financial
+[2026-07-18 13:17:36,624: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:36,716: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cbinsights.com/company/pepul/financials "HTTP/1.1 200 OK"
+[2026-07-18 13:17:36,877: INFO/ForkPoolWorker-8] HTTP Request: GET https://tracxn.com/d/companies/pepul/__FdxGtpW6yPPHeU42dtA2BFb3X90JKp14O5vxZbUpRpY "HTTP/1.1 200 OK"
+[2026-07-18 13:17:36,969: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:17:40,931: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:17:41,386: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:17:41,389: INFO/ForkPoolWorker-8] Fact 'CEO' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:17:41,390: INFO/ForkPoolWorker-8] AI targeted search query: Pepul CEO name linkedin
+[2026-07-18 13:17:43,469: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:44,538: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/company/pepul "HTTP/1.1 200 OK"
+[2026-07-18 13:17:46,207: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/in/sureshceo "HTTP/1.1 200 OK"
+[2026-07-18 13:17:46,928: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:17:47,180: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 400 Bad Request"
+[2026-07-18 13:17:47,184: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+[2026-07-18 13:17:47,667: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:17:47,694: INFO/ForkPoolWorker-8] Task backend.workers.tasks.discover_company_task[b7670676-215c-4e71-bb31-35a1948e925e] succeeded in 44.61559158299997s: None
+[2026-07-18 13:17:51,600: INFO/MainProcess] Task backend.workers.tasks.seo_collector_task[ac9efa08-390f-41a4-a6d5-cd078adf1f5e] received
+[2026-07-18 13:17:51,607: INFO/ForkPoolWorker-8] Task: SEO Collection for ID: 1
+[2026-07-18 13:17:51,626: INFO/ForkPoolWorker-8] Running SEO Collector for Pepul
+[2026-07-18 13:17:52,004: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/robots.txt "HTTP/1.1 200 OK"
+[2026-07-18 13:17:52,052: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/sitemap.xml "HTTP/1.1 200 OK"
+[2026-07-18 13:17:52,125: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/sitemap_index.xml "HTTP/1.1 302 Found"
+[2026-07-18 13:17:52,500: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:17:52,631: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/sitemap/sitemap.xml "HTTP/1.1 302 Found"
+[2026-07-18 13:17:52,948: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:17:52,992: INFO/ForkPoolWorker-8] SEO score for Pepul: 95/100 | broken links: 0
+[2026-07-18 13:17:52,999: INFO/MainProcess] Task backend.workers.tasks.social_and_news_task[d22d5cf2-d776-4189-b250-67da8bbc130c] received
+[2026-07-18 13:17:52,999: INFO/ForkPoolWorker-8] Task backend.workers.tasks.seo_collector_task[ac9efa08-390f-41a4-a6d5-cd078adf1f5e] succeeded in 1.3925868750000063s: None
+[2026-07-18 13:17:53,001: INFO/ForkPoolWorker-1] Task: Social & News Aggregation for ID: 1
+[2026-07-18 13:17:53,017: INFO/ForkPoolWorker-1] Running Social Collector for Pepul
+[2026-07-18 13:17:53,034: INFO/ForkPoolWorker-1] Running News Collector for Pepul
+[2026-07-18 13:17:53,043: INFO/ForkPoolWorker-1] Running Review Collector for Pepul
+[2026-07-18 13:17:53,961: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/search?q=Pepul&hl=en-US&gl=US&ceid=US:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:54,060: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcDBwOUN1cG13REtpRFNoazZObkVYNVFCNDdFWGZuR2R2TXhrOGpncjNkeWxuSldvZ2NKTWtsT1F5RHdxa1BOdDJ5RS1aOUFmSWdEYWFQdXRSMWVVS0FMZm5NczZPcTFxWlNPenZkZk9lU0QxbFdOcUZscUUtUklqYzZXOFNxWHF6T3Uw?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:17:54,259: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcDBwOUN1cG13REtpRFNoazZObkVYNVFCNDdFWGZuR2R2TXhrOGpncjNkeWxuSldvZ2NKTWtsT1F5RHdxa1BOdDJ5RS1aOUFmSWdEYWFQdXRSMWVVS0FMZm5NczZPcTFxWlNPenZkZk9lU0QxbFdOcUZscUUtUklqYzZXOFNxWHF6T3Uw?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:54,609: INFO/ForkPoolWorker-1] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:54,654: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMitgFBVV95cUxPVHdCMDFteXljT0M5UFhGQUJSTV94RW9IaGtzLXB1cHY2R3NnX3V5ZmR1cS04blNLZUtzVkRabW9DQklNOHQyVEdqb0ZVaHczYzJtTlo1dU5RbE1CdEpkUXlaV0FYZHZGT2VGUENxemVSUUxneEN4SFZkdnl4WXN3UktmSHhVa0sxaXRKY0VnRXl3WnFxQjFLQlItQWhVZzZXQ1ZfLWN4OUZ5YkFBTHJKVlVSNzY0UQ?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:17:54,983: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMitgFBVV95cUxPVHdCMDFteXljT0M5UFhGQUJSTV94RW9IaGtzLXB1cHY2R3NnX3V5ZmR1cS04blNLZUtzVkRabW9DQklNOHQyVEdqb0ZVaHczYzJtTlo1dU5RbE1CdEpkUXlaV0FYZHZGT2VGUENxemVSUUxneEN4SFZkdnl4WXN3UktmSHhVa0sxaXRKY0VnRXl3WnFxQjFLQlItQWhVZzZXQ1ZfLWN4OUZ5YkFBTHJKVlVSNzY0UQ?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:54,999: INFO/ForkPoolWorker-1] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:55,160: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZ20ydVQ5MkY4QjZpdUU3YnppbkY1QWdialFfSWl1TjJHN2s3OFdwa09VNmlWQkVpcTM4Tlo1amJjcUNoTVluZWk3c1lYVFFUVHhVSG1vYTRTT0ZIZkRvZTFSemtRSGxKTUFldERDbDlkVFJCUEF5b3d1UGlUNjRNZnE3aV9qclJBZkNBSzduZ3FyeklyUm41NGRuVUg5VGVCdV9OWmxudFJ6R0J1dGJxMGJfdFZpNWE2WVJ0dUJRb0dQTU83RERNb09lMmFJTy1VNUdV?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:17:55,326: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZ20ydVQ5MkY4QjZpdUU3YnppbkY1QWdialFfSWl1TjJHN2s3OFdwa09VNmlWQkVpcTM4Tlo1amJjcUNoTVluZWk3c1lYVFFUVHhVSG1vYTRTT0ZIZkRvZTFSemtRSGxKTUFldERDbDlkVFJCUEF5b3d1UGlUNjRNZnE3aV9qclJBZkNBSzduZ3FyeklyUm41NGRuVUg5VGVCdV9OWmxudFJ6R0J1dGJxMGJfdFZpNWE2WVJ0dUJRb0dQTU83RERNb09lMmFJTy1VNUdV?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:55,634: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMinAFBVV95cUxQQ3pQVFBpN0RDOGN2N1B0UDh2dkxxekZLMXpmekwxcGRSZDBuX0Q2b0lOU1dkODJBVGN0aUZuR016SGRtc2RMM3lVd1VyV0o5OGUza2g4X0JhaFVvNXhyUGx2OUctdFVqaGJaMEktZVJEVHlMcWt4dGZ0Y3FEcUIzelpyWVE4dng5QmhiWXJHU3Vhc0l5RS12VHY4OUw?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:17:56,027: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMinAFBVV95cUxQQ3pQVFBpN0RDOGN2N1B0UDh2dkxxekZLMXpmekwxcGRSZDBuX0Q2b0lOU1dkODJBVGN0aUZuR016SGRtc2RMM3lVd1VyV0o5OGUza2g4X0JhaFVvNXhyUGx2OUctdFVqaGJaMEktZVJEVHlMcWt4dGZ0Y3FEcUIzelpyWVE4dng5QmhiWXJHU3Vhc0l5RS12VHY4OUw?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:56,207: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMipAFBVV95cUxPVnRuWm1VbkJISG41dUNLejE4MW4wZDhKOGJxZTkxbEhSZDFnaGJ2eFZYUGpvOC1maW1SbWZXOEQyMnFuVlp1S3phOHVMNjk0UFVMSW5CaVY2eXYxN0g1b1lqMU1uSnZrVGl0WkFaOHVpU0NiNVhfa1FaUExDQlAzVmNCbzJXN1Bkdm82ZXNqT2xnQTdYcWxpbjlheTVJZW1XUXlJSg?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:17:56,311: INFO/ForkPoolWorker-1] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:17:56,395: INFO/ForkPoolWorker-1] HTTP Request: GET https://news.google.com/rss/articles/CBMipAFBVV95cUxPVnRuWm1VbkJISG41dUNLejE4MW4wZDhKOGJxZTkxbEhSZDFnaGJ2eFZYUGpvOC1maW1SbWZXOEQyMnFuVlp1S3phOHVMNjk0UFVMSW5CaVY2eXYxN0g1b1lqMU1uSnZrVGl0WkFaOHVpU0NiNVhfa1FaUExDQlAzVmNCbzJXN1Bkdm82ZXNqT2xnQTdYcWxpbjlheTVJZW1XUXlJSg?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:17:56,643: INFO/ForkPoolWorker-1] Task backend.workers.tasks.social_and_news_task[d22d5cf2-d776-4189-b250-67da8bbc130c] succeeded in 3.6429321250000157s: None
+[2026-07-18 13:18:23,838: INFO/MainProcess] Task backend.workers.tasks.pain_point_analysis_task[ca62f7ec-0c8f-4b07-bb68-106ae160a36e] received
+[2026-07-18 13:18:23,844: INFO/ForkPoolWorker-8] Task: AI Pain Point Analysis for ID: 1
+[2026-07-18 13:18:24,333: INFO/ForkPoolWorker-8] Calling LLM for pain point analysis on Pepul...
+[2026-07-18 13:18:24,432: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 13:18:24,433: WARNING/ForkPoolWorker-8] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 13:18:25,728: INFO/ForkPoolWorker-8] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:19:12,313: INFO/ForkPoolWorker-8] AI generated 8 pain points.
+[2026-07-18 13:19:12,331: INFO/ForkPoolWorker-8] Task backend.workers.tasks.pain_point_analysis_task[ca62f7ec-0c8f-4b07-bb68-106ae160a36e] succeeded in 48.489251416s: None
+[2026-07-18 13:20:59,732: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[c85bcfab-60ba-49e4-a5d5-b5624dc98a70] received
+[2026-07-18 13:20:59,738: INFO/ForkPoolWorker-8] Task: Discover Company for ID: 1
+[2026-07-18 13:20:59,749: INFO/ForkPoolWorker-8] Running Company Discovery Collector for Pepul
+[2026-07-18 13:21:00,054: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:21:00,611: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Pepul%20company&utf8=&format=json "HTTP/1.1 200 OK"
+[2026-07-18 13:21:00,934: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=St.%20Erkenwald%20(poem)&format=json "HTTP/1.1 200 OK"
+[2026-07-18 13:21:02,740: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:02,768: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:21:20,581: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:21:20,585: INFO/ForkPoolWorker-8] Fact 'Revenue' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:21:20,585: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Revenue amount financial
+[2026-07-18 13:21:22,599: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:22,954: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.instagram.com/p/C83sI9CPggv/ "HTTP/1.1 200 OK"
+[2026-07-18 13:21:23,375: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.crunchbase.com/organization/pepul "HTTP/1.1 403 Forbidden"
+[2026-07-18 13:21:23,396: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:21:26,446: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:21:27,060: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:21:27,066: INFO/ForkPoolWorker-8] Fact 'Profit/Loss' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:21:27,068: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Profit/Loss amount financial
+[2026-07-18 13:21:28,891: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:29,416: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.investopedia.com/terms/p/plstatement.asp "HTTP/1.1 200 OK"
+[2026-07-18 13:21:29,605: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-117' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
 Traceback (most recent call last):
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
-    self.dialect.do_execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.OperationalError: no such table: crawl_jobs
-
-The above exception was the direct cause of the following exception:
-
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-18 13:21:29,622: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-118' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
 Traceback (most recent call last):
-  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 38, in discover_company_task
-    update_job_progress(db, job_id, 10.0, "Company Discovery")
-  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 24, in update_job_progress
-    job = db.query(CrawlJob).filter(CrawlJob.id == job_id).first()
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2766, in first
-    return self.limit(1)._iter().first()  # type: ignore
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2864, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
-    return self._execute_internal(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2271, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
-    result = conn.execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
-    return meth(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
-    return self._exec_single_context(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
-    self.dialect.do_execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: crawl_jobs
-[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
-FROM crawl_jobs 
-WHERE crawl_jobs.id = ?
- LIMIT ? OFFSET ?]
-[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-18 13:21:30,007: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.paychex.com/articles/finance/how-to-create-a-profit-and-loss-statement-for-small-businesses "HTTP/1.1 200 OK"
+[2026-07-18 13:21:30,111: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:21:32,388: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:21:33,114: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:21:33,117: INFO/ForkPoolWorker-8] Fact 'Valuation' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:21:33,117: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Valuation amount financial
+[2026-07-18 13:21:35,214: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:35,476: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cbinsights.com/company/pepul/financials "HTTP/1.1 200 OK"
+[2026-07-18 13:21:35,895: INFO/ForkPoolWorker-8] HTTP Request: GET https://tracxn.com/d/companies/pepul/__FdxGtpW6yPPHeU42dtA2BFb3X90JKp14O5vxZbUpRpY "HTTP/1.1 200 OK"
+[2026-07-18 13:21:36,026: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:21:36,417: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 400 Bad Request"
+[2026-07-18 13:21:36,421: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+[2026-07-18 13:21:36,785: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 13:21:36,786: ERROR/ForkPoolWorker-8] Error using Groq for targeted search: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kxj4m930ew18wfyc3kns7th1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99908, Requested 2087. Please try again in 28m43.679999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-07-18 13:21:36,786: INFO/ForkPoolWorker-8] Fact 'Founded Year' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:21:36,786: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Founded Year
+[2026-07-18 13:21:38,919: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:40,469: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/in/sureshceo "HTTP/1.1 200 OK"
+[2026-07-18 13:21:41,724: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/ "HTTP/1.1 200 OK"
+[2026-07-18 13:21:41,781: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 13:21:45,146: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,267: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 13:21:45,270: ERROR/ForkPoolWorker-8] Error using Groq for targeted search: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kxj4m930ew18wfyc3kns7th1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99898, Requested 2333. Please try again in 32m7.584s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-07-18 13:21:45,272: INFO/ForkPoolWorker-8] Fact 'CEO' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 13:21:45,273: INFO/ForkPoolWorker-8] AI targeted search query: Pepul CEO name linkedin
+[2026-07-18 13:21:45,286: WARNING/ForkPoolWorker-8] [TIMEOUT] CompanyDiscovery timed out after 45s — skipping.
+[2026-07-18 13:21:45,288: ERROR/ForkPoolWorker-8] Task was destroyed but it is pending!
+task: <Task pending name='Task-133' coro=<BaseApiClient.aclose() running at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/google/genai/_api_client.py:1812>>
+[2026-07-18 13:21:45,288: WARNING/ForkPoolWorker-8] /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py:667: RuntimeWarning: coroutine 'BaseApiClient.aclose' was never awaited
+  self._ready.clear()
 
-During handling of the above exception, another exception occurred:
-
+[2026-07-18 13:21:45,303: INFO/ForkPoolWorker-8] Task backend.workers.tasks.discover_company_task[c85bcfab-60ba-49e4-a5d5-b5624dc98a70] succeeded in 45.560593500000095s: None
+[2026-07-18 13:21:45,303: INFO/MainProcess] Task backend.workers.tasks.website_and_tech_task[82e910a7-32c2-4532-b49f-5dd10200d7a5] received
+[2026-07-18 13:21:45,305: INFO/ForkPoolWorker-8] Task: Website & Tech Detection for ID: 1
+[2026-07-18 13:21:45,312: INFO/ForkPoolWorker-8] Running Website Crawler for Pepul
+[2026-07-18 13:21:45,319: INFO/ForkPoolWorker-8] Running Tech Detector for Pepul
+[2026-07-18 13:21:45,325: INFO/ForkPoolWorker-8] Running Performance Collector for Pepul
+[2026-07-18 13:21:45,678: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,682: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,684: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,761: INFO/ForkPoolWorker-8] Tech detected for Pepul: [('Google Analytics 4', 'Analytics'), ('Google Tag Manager', 'Analytics'), ('Microsoft Clarity', 'Analytics'), ('Cloudflare', 'CDN'), ('Strict Transport Security, X Content Type Options', 'Security Headers'), ('HTML / Vanilla JS', 'Frontend')]
+[2026-07-18 13:21:45,849: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/pricing "HTTP/1.1 302 Found"
+[2026-07-18 13:21:45,874: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/legal "HTTP/1.1 302 Found"
+[2026-07-18 13:21:45,876: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/privacy "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,900: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog "HTTP/1.1 301 Moved Permanently"
+[2026-07-18 13:21:45,902: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/resources "HTTP/1.1 302 Found"
+[2026-07-18 13:21:45,903: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/press "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,909: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/contact "HTTP/1.1 302 Found"
+[2026-07-18 13:21:45,915: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/careers "HTTP/1.1 302 Found"
+[2026-07-18 13:21:45,920: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:21:45,977: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,310: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog/ "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,789: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,792: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,794: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/services "HTTP/1.1 302 Found"
+[2026-07-18 13:21:46,795: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:21:46,805: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:21:46,929: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,930: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:46,931: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:21:47,359: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:21:47,360: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:21:47,361: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("CEO" OR "CTO" OR "Founder" OR "VP") site:linkedin.com/in OR site:pepul.com/about
+[2026-07-18 13:21:47,364: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" pricing tiers OR "pricing" site:pepul.com/pricing
+[2026-07-18 13:21:47,514: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:21:47,515: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("SOC2" OR "GDPR" OR "HIPAA" OR "ISO 27001" OR "compliance") site:pepul.com/security
+[2026-07-18 13:21:47,780: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/products "HTTP/1.1 302 Found"
+[2026-07-18 13:21:47,802: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:21:47,827: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,044: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+pricing+tiers+OR+%22pricing%22+site:pepul.com/pricing "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,045: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22CEO%22+OR+%22CTO%22+OR+%22Founder%22+OR+%22VP%22)+site:linkedin.com/in+OR+site:pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,301: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22SOC2%22+OR+%22GDPR%22+OR+%22HIPAA%22+OR+%22ISO+27001%22+OR+%22compliance%22)+site:pepul.com/security "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,467: ERROR/ForkPoolWorker-8] [ERROR] ExecutiveCollector failed: 'ExecutiveCollector' object has no attribute '_call_llm'
+[2026-07-18 13:21:48,467: ERROR/ForkPoolWorker-8] [ERROR] PricingCollector failed: 'PricingCollector' object has no attribute '_call_llm'
+[2026-07-18 13:21:48,520: ERROR/ForkPoolWorker-8] [ERROR] ComplianceCollector failed: 'ComplianceCollector' object has no attribute '_call_llm'
+[2026-07-18 13:21:48,820: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,823: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,824: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:48,825: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:49,014: INFO/MainProcess] Task backend.workers.tasks.seo_collector_task[766cf6ac-409a-4d06-a698-65362461ce59] received
+[2026-07-18 13:21:49,014: INFO/ForkPoolWorker-8] Task backend.workers.tasks.website_and_tech_task[82e910a7-32c2-4532-b49f-5dd10200d7a5] succeeded in 3.7072669170000836s: None
+[2026-07-18 13:21:49,016: INFO/ForkPoolWorker-1] Task: SEO Collection for ID: 1
+[2026-07-18 13:21:49,026: INFO/ForkPoolWorker-1] Running SEO Collector for Pepul
+[2026-07-18 13:21:49,368: INFO/ForkPoolWorker-1] HTTP Request: GET https://pepul.com/robots.txt "HTTP/1.1 200 OK"
+[2026-07-18 13:21:49,369: INFO/ForkPoolWorker-1] HTTP Request: GET https://pepul.com/sitemap.xml "HTTP/1.1 200 OK"
+[2026-07-18 13:21:49,477: INFO/ForkPoolWorker-1] HTTP Request: GET https://pepul.com/sitemap_index.xml "HTTP/1.1 302 Found"
+[2026-07-18 13:21:49,928: INFO/ForkPoolWorker-1] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:49,983: INFO/ForkPoolWorker-1] HTTP Request: GET https://pepul.com/sitemap/sitemap.xml "HTTP/1.1 302 Found"
+[2026-07-18 13:21:50,073: INFO/ForkPoolWorker-1] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:21:50,105: INFO/ForkPoolWorker-1] SEO score for Pepul: 95/100 | broken links: 0
+[2026-07-18 13:21:50,113: INFO/ForkPoolWorker-1] Task backend.workers.tasks.seo_collector_task[766cf6ac-409a-4d06-a698-65362461ce59] succeeded in 1.0962228340000593s: None
+[2026-07-18 13:22:05,291: INFO/MainProcess] Task backend.workers.tasks.trigger_workflow_task[e3467f02-db9f-4a61-a60d-1b67a8682b56] received
+[2026-07-18 13:22:05,325: INFO/ForkPoolWorker-8] Task backend.workers.tasks.trigger_workflow_task[e3467f02-db9f-4a61-a60d-1b67a8682b56] succeeded in 0.025548374999971202s: {'job_id': 'c8917a06-7f06-447f-b3bd-d00fffd6b36f', 'status': 'workflow_queued'}
+[2026-07-18 13:22:50,509: INFO/MainProcess] Task backend.workers.tasks.website_and_tech_task[cc31400d-8dee-4921-9414-7d0283b95e11] received
+[2026-07-18 13:22:50,513: INFO/ForkPoolWorker-8] Task: Website & Tech Detection for ID: 1
+[2026-07-18 13:22:50,530: INFO/ForkPoolWorker-8] Running Website Crawler for Pepul
+[2026-07-18 13:22:50,540: INFO/ForkPoolWorker-8] Running Tech Detector for Pepul
+[2026-07-18 13:22:50,544: INFO/ForkPoolWorker-8] Running Performance Collector for Pepul
+[2026-07-18 13:22:50,937: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:22:50,940: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:22:50,951: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:22:50,978: INFO/ForkPoolWorker-8] Tech detected for Pepul: [('Google Analytics 4', 'Analytics'), ('Google Tag Manager', 'Analytics'), ('Microsoft Clarity', 'Analytics'), ('Cloudflare', 'CDN'), ('Strict Transport Security, X Content Type Options', 'Security Headers'), ('HTML / Vanilla JS', 'Frontend')]
+[2026-07-18 13:22:51,339: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,343: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/legal "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,345: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/products "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,346: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog "HTTP/1.1 301 Moved Permanently"
+[2026-07-18 13:22:51,372: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/press "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,374: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/contact "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,376: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/resources "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,379: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/careers "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,379: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/services "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,418: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,424: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/pricing "HTTP/1.1 302 Found"
+[2026-07-18 13:22:51,429: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:22:51,432: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,434: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/privacy "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,742: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com/blog/ "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,753: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,855: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,858: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,861: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:22:51,969: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:51,972: WARNING/ForkPoolWorker-8] Serper search returned empty or failed. Falling back to DuckDuckGo.
+[2026-07-18 13:22:52,008: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:22:52,013: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("CEO" OR "CTO" OR "Founder" OR "VP") site:linkedin.com/in OR site:pepul.com/about
+[2026-07-18 13:22:52,300: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:22:52,302: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" ("SOC2" OR "GDPR" OR "HIPAA" OR "ISO 27001" OR "compliance") site:pepul.com/security
+[2026-07-18 13:22:52,405: INFO/ForkPoolWorker-8] HTTP Request: POST https://lite.duckduckgo.com/lite/ "HTTP/1.1 202 Accepted"
+[2026-07-18 13:22:52,408: INFO/ForkPoolWorker-8] Using Yahoo Search fallback for query: "Pepul" pricing tiers OR "pricing" site:pepul.com/pricing
+[2026-07-18 13:22:52,791: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22SOC2%22+OR+%22GDPR%22+OR+%22HIPAA%22+OR+%22ISO+27001%22+OR+%22compliance%22)+site:pepul.com/security "HTTP/1.1 200 OK"
+[2026-07-18 13:22:52,793: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+(%22CEO%22+OR+%22CTO%22+OR+%22Founder%22+OR+%22VP%22)+site:linkedin.com/in+OR+site:pepul.com/about "HTTP/1.1 200 OK"
+[2026-07-18 13:22:52,799: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:52,802: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:53,046: ERROR/ForkPoolWorker-8] [ERROR] ExecutiveCollector failed: 'ExecutiveCollector' object has no attribute '_call_llm'
+[2026-07-18 13:22:53,341: INFO/ForkPoolWorker-8] HTTP Request: GET https://search.yahoo.com/search?p=%22Pepul%22+pricing+tiers+OR+%22pricing%22+site:pepul.com/pricing "HTTP/1.1 200 OK"
+[2026-07-18 13:22:53,343: ERROR/ForkPoolWorker-8] [ERROR] ComplianceCollector failed: 'ComplianceCollector' object has no attribute '_call_llm'
+[2026-07-18 13:22:53,842: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:53,883: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:53,884: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/404 "HTTP/1.1 200 OK"
+[2026-07-18 13:22:53,888: ERROR/ForkPoolWorker-8] [ERROR] PricingCollector failed: 'PricingCollector' object has no attribute '_call_llm'
+[2026-07-18 13:22:53,994: INFO/ForkPoolWorker-8] Task backend.workers.tasks.website_and_tech_task[cc31400d-8dee-4921-9414-7d0283b95e11] succeeded in 3.4813148750000664s: None
+[2026-07-18 13:22:55,688: INFO/MainProcess] Task backend.workers.tasks.social_and_news_task[9290b938-b67d-4163-ad43-b88272f17f86] received
+[2026-07-18 13:22:55,689: INFO/ForkPoolWorker-8] Task: Social & News Aggregation for ID: 1
+[2026-07-18 13:22:55,696: INFO/ForkPoolWorker-8] Running Social Collector for Pepul
+[2026-07-18 13:22:55,704: INFO/ForkPoolWorker-8] Running News Collector for Pepul
+[2026-07-18 13:22:55,718: INFO/ForkPoolWorker-8] Running Review Collector for Pepul
+[2026-07-18 13:22:56,492: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/search?q=Pepul&hl=en-US&gl=US&ceid=US:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:56,579: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcDBwOUN1cG13REtpRFNoazZObkVYNVFCNDdFWGZuR2R2TXhrOGpncjNkeWxuSldvZ2NKTWtsT1F5RHdxa1BOdDJ5RS1aOUFmSWdEYWFQdXRSMWVVS0FMZm5NczZPcTFxWlNPenZkZk9lU0QxbFdOcUZscUUtUklqYzZXOFNxWHF6T3Uw?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:22:56,988: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcDBwOUN1cG13REtpRFNoazZObkVYNVFCNDdFWGZuR2R2TXhrOGpncjNkeWxuSldvZ2NKTWtsT1F5RHdxa1BOdDJ5RS1aOUFmSWdEYWFQdXRSMWVVS0FMZm5NczZPcTFxWlNPenZkZk9lU0QxbFdOcUZscUUtUklqYzZXOFNxWHF6T3Uw?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:57,184: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMitgFBVV95cUxPVHdCMDFteXljT0M5UFhGQUJSTV94RW9IaGtzLXB1cHY2R3NnX3V5ZmR1cS04blNLZUtzVkRabW9DQklNOHQyVEdqb0ZVaHczYzJtTlo1dU5RbE1CdEpkUXlaV0FYZHZGT2VGUENxemVSUUxneEN4SFZkdnl4WXN3UktmSHhVa0sxaXRKY0VnRXl3WnFxQjFLQlItQWhVZzZXQ1ZfLWN4OUZ5YkFBTHJKVlVSNzY0UQ?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:22:57,307: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMitgFBVV95cUxPVHdCMDFteXljT0M5UFhGQUJSTV94RW9IaGtzLXB1cHY2R3NnX3V5ZmR1cS04blNLZUtzVkRabW9DQklNOHQyVEdqb0ZVaHczYzJtTlo1dU5RbE1CdEpkUXlaV0FYZHZGT2VGUENxemVSUUxneEN4SFZkdnl4WXN3UktmSHhVa0sxaXRKY0VnRXl3WnFxQjFLQlItQWhVZzZXQ1ZfLWN4OUZ5YkFBTHJKVlVSNzY0UQ?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:57,519: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:57,521: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:57,686: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZ20ydVQ5MkY4QjZpdUU3YnppbkY1QWdialFfSWl1TjJHN2s3OFdwa09VNmlWQkVpcTM4Tlo1amJjcUNoTVluZWk3c1lYVFFUVHhVSG1vYTRTT0ZIZkRvZTFSemtRSGxKTUFldERDbDlkVFJCUEF5b3d1UGlUNjRNZnE3aV9qclJBZkNBSzduZ3FyeklyUm41NGRuVUg5VGVCdV9OWmxudFJ6R0J1dGJxMGJfdFZpNWE2WVJ0dUJRb0dQTU83RERNb09lMmFJTy1VNUdV?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:22:58,034: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMi0wFBVV95cUxOZ20ydVQ5MkY4QjZpdUU3YnppbkY1QWdialFfSWl1TjJHN2s3OFdwa09VNmlWQkVpcTM4Tlo1amJjcUNoTVluZWk3c1lYVFFUVHhVSG1vYTRTT0ZIZkRvZTFSemtRSGxKTUFldERDbDlkVFJCUEF5b3d1UGlUNjRNZnE3aV9qclJBZkNBSzduZ3FyeklyUm41NGRuVUg5VGVCdV9OWmxudFJ6R0J1dGJxMGJfdFZpNWE2WVJ0dUJRb0dQTU83RERNb09lMmFJTy1VNUdV?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:58,207: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMinAFBVV95cUxQQ3pQVFBpN0RDOGN2N1B0UDh2dkxxekZLMXpmekwxcGRSZDBuX0Q2b0lOU1dkODJBVGN0aUZuR016SGRtc2RMM3lVd1VyV0o5OGUza2g4X0JhaFVvNXhyUGx2OUctdFVqaGJaMEktZVJEVHlMcWt4dGZ0Y3FEcUIzelpyWVE4dng5QmhiWXJHU3Vhc0l5RS12VHY4OUw?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:22:58,337: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMinAFBVV95cUxQQ3pQVFBpN0RDOGN2N1B0UDh2dkxxekZLMXpmekwxcGRSZDBuX0Q2b0lOU1dkODJBVGN0aUZuR016SGRtc2RMM3lVd1VyV0o5OGUza2g4X0JhaFVvNXhyUGx2OUctdFVqaGJaMEktZVJEVHlMcWt4dGZ0Y3FEcUIzelpyWVE4dng5QmhiWXJHU3Vhc0l5RS12VHY4OUw?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:58,688: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMipAFBVV95cUxPVnRuWm1VbkJISG41dUNLejE4MW4wZDhKOGJxZTkxbEhSZDFnaGJ2eFZYUGpvOC1maW1SbWZXOEQyMnFuVlp1S3phOHVMNjk0UFVMSW5CaVY2eXYxN0g1b1lqMU1uSnZrVGl0WkFaOHVpU0NiNVhfa1FaUExDQlAzVmNCbzJXN1Bkdm82ZXNqT2xnQTdYcWxpbjlheTVJZW1XUXlJSg?oc=5 "HTTP/1.1 302 Found"
+[2026-07-18 13:22:58,692: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 13:22:58,819: INFO/ForkPoolWorker-8] HTTP Request: GET https://news.google.com/rss/articles/CBMipAFBVV95cUxPVnRuWm1VbkJISG41dUNLejE4MW4wZDhKOGJxZTkxbEhSZDFnaGJ2eFZYUGpvOC1maW1SbWZXOEQyMnFuVlp1S3phOHVMNjk0UFVMSW5CaVY2eXYxN0g1b1lqMU1uSnZrVGl0WkFaOHVpU0NiNVhfa1FaUExDQlAzVmNCbzJXN1Bkdm82ZXNqT2xnQTdYcWxpbjlheTVJZW1XUXlJSg?oc=5&hl=en-IN&gl=IN&ceid=IN:en "HTTP/1.1 200 OK"
+[2026-07-18 13:22:59,888: INFO/ForkPoolWorker-8] Task backend.workers.tasks.social_and_news_task[9290b938-b67d-4163-ad43-b88272f17f86] succeeded in 4.1984907909999265s: None
+[2026-07-18 13:23:42,683: INFO/MainProcess] Task backend.workers.tasks.pain_point_analysis_task[5d866a33-d56c-4826-824e-b4250fb734bd] received
+[2026-07-18 13:23:42,699: INFO/ForkPoolWorker-8] Task: AI Pain Point Analysis for ID: 1
+[2026-07-18 13:23:42,745: INFO/ForkPoolWorker-8] Calling LLM for pain point analysis on Pepul...
+[2026-07-18 13:23:42,859: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 13:23:42,860: WARNING/ForkPoolWorker-8] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 13:23:44,360: INFO/ForkPoolWorker-8] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 13:24:11,554: INFO/ForkPoolWorker-8] AI generated 8 pain points.
+[2026-07-18 13:24:11,628: INFO/ForkPoolWorker-8] Task backend.workers.tasks.pain_point_analysis_task[5d866a33-d56c-4826-824e-b4250fb734bd] succeeded in 28.930257499999925s: None
+[2026-07-18 13:24:11,629: INFO/MainProcess] Task backend.workers.tasks.deep_analysis_task[3625d3ab-3a13-40f4-8d69-bcfe7029bb66] received
+[2026-07-18 13:24:11,634: INFO/ForkPoolWorker-8] Task: Deep Company Analysis for ID: 1
+[2026-07-18 13:24:11,641: INFO/ForkPoolWorker-8] Running Study Collector (Deep Analysis) for Pepul
+[2026-07-18 13:24:11,724: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 13:24:11,725: ERROR/ForkPoolWorker-8] Error generating company study: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kxj4m930ew18wfyc3kns7th1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99729, Requested 658. Please try again in 5m34.368s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-07-18 13:24:11,732: INFO/ForkPoolWorker-8] Task backend.workers.tasks.deep_analysis_task[3625d3ab-3a13-40f4-8d69-bcfe7029bb66] succeeded in 0.09830641700000342s: None
+[2026-07-18 14:34:11,449: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[ba227b2d-7145-4fb5-bfa9-e4e12bef01f0] received
+[2026-07-18 14:34:11,454: INFO/ForkPoolWorker-8] Task: Discover Company for ID: 1
+[2026-07-18 14:34:11,481: INFO/ForkPoolWorker-8] Running Company Discovery Collector for Pepul
+[2026-07-18 14:34:11,852: INFO/ForkPoolWorker-8] HTTP Request: GET https://pepul.com "HTTP/1.1 200 OK"
+[2026-07-18 14:34:12,628: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Pepul%20company&utf8=&format=json "HTTP/1.1 200 OK"
+[2026-07-18 14:34:12,638: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-275' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
 Traceback (most recent call last):
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
-    self.dialect.do_execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.OperationalError: no such table: crawl_jobs
-
-The above exception was the direct cause of the following exception:
-
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-18 14:34:12,643: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-276' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
 Traceback (most recent call last):
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/celery/app/trace.py", line 585, in trace_task
-    R = retval = fun(*args, **kwargs)
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/celery/app/trace.py", line 858, in __protected_call__
-    return self.run(*args, **kwargs)
-  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 45, in discover_company_task
-    update_job_progress(db, job_id, 20.0, "Discovery Failed", error_msg=str(e))
-  File "/Users/intern/Desktop/vasanth/agent/backend/workers/tasks.py", line 24, in update_job_progress
-    job = db.query(CrawlJob).filter(CrawlJob.id == job_id).first()
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2766, in first
-    return self.limit(1)._iter().first()  # type: ignore
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2864, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
-    return self._execute_internal(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2271, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
-    result = conn.execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
-    return meth(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
-    return self._exec_single_context(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
-    self.dialect.do_execute(
-  File "/Users/intern/Desktop/vasanth/agent/backend/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: crawl_jobs
-[SQL: SELECT crawl_jobs.id AS crawl_jobs_id, crawl_jobs.company_id AS crawl_jobs_company_id, crawl_jobs.status AS crawl_jobs_status, crawl_jobs.progress AS crawl_jobs_progress, crawl_jobs.current_task AS crawl_jobs_current_task, crawl_jobs.error_message AS crawl_jobs_error_message, crawl_jobs.created_at AS crawl_jobs_created_at, crawl_jobs.updated_at AS crawl_jobs_updated_at 
-FROM crawl_jobs 
-WHERE crawl_jobs.id = ?
- LIMIT ? OFFSET ?]
-[parameters: ('abe7437b-181c-46da-964d-15fe499b27a1', 1, 0)]
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
-
-worker: Warm shutdown (MainProcess)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-18 14:34:12,932: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=St.%20Erkenwald%20(poem)&format=json "HTTP/1.1 200 OK"
+[2026-07-18 14:34:15,120: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:15,149: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:35,799: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 14:34:35,808: INFO/ForkPoolWorker-8] Fact 'Revenue' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 14:34:35,809: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Revenue amount financial
+[2026-07-18 14:34:37,386: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:37,490: INFO/ForkPoolWorker-8] HTTP Request: GET https://tracxn.com/d/companies/pepul/__FdxGtpW6yPPHeU42dtA2BFb3X90JKp14O5vxZbUpRpY "HTTP/1.1 200 OK"
+[2026-07-18 14:34:37,653: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cbinsights.com/company/pepul/financials "HTTP/1.1 200 OK"
+[2026-07-18 14:34:37,690: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:38,003: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:38,006: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 21.978259016s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '21s'}]}}
+[2026-07-18 14:34:38,488: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:34:38,493: INFO/ForkPoolWorker-8] Fact 'Profit/Loss' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 14:34:38,494: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Profit/Loss amount financial
+[2026-07-18 14:34:40,416: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:40,621: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.investopedia.com/terms/p/plstatement.asp "HTTP/1.1 403 Forbidden"
+[2026-07-18 14:34:40,980: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.paychex.com/articles/finance/how-to-create-a-profit-and-loss-statement-for-small-businesses "HTTP/1.1 200 OK"
+[2026-07-18 14:34:41,136: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:43,157: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-18 14:34:43,563: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:34:43,566: INFO/ForkPoolWorker-8] Fact 'Valuation' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 14:34:43,566: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Valuation amount financial
+[2026-07-18 14:34:45,146: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:45,287: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cbinsights.com/company/pepul/financials "HTTP/1.1 200 OK"
+[2026-07-18 14:34:45,484: INFO/ForkPoolWorker-8] HTTP Request: GET https://tracxn.com/d/companies/pepul/__FdxGtpW6yPPHeU42dtA2BFb3X90JKp14O5vxZbUpRpY "HTTP/1.1 200 OK"
+[2026-07-18 14:34:45,602: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:45,940: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:45,944: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14.043221262s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '14s'}]}}
+[2026-07-18 14:34:46,592: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:34:46,596: INFO/ForkPoolWorker-8] Fact 'Founded Year' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 14:34:46,597: INFO/ForkPoolWorker-8] AI targeted search query: Pepul Founded Year
+[2026-07-18 14:34:48,292: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:48,600: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.pepul.com/ "HTTP/1.1 200 OK"
+[2026-07-18 14:34:50,039: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/in/sureshceo "HTTP/1.1 200 OK"
+[2026-07-18 14:34:50,766: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:51,178: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:51,181: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 8.806838204s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '8s'}]}}
+[2026-07-18 14:34:51,467: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:51,469: ERROR/ForkPoolWorker-8] Error using Groq for targeted search: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kxj4m930ew18wfyc3kns7th1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99941, Requested 1973. Please try again in 27m33.696s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-07-18 14:34:51,470: INFO/ForkPoolWorker-8] Fact 'CEO' is missing for Pepul. Triggering AI targeted search.
+[2026-07-18 14:34:51,471: INFO/ForkPoolWorker-8] AI targeted search query: Pepul CEO name linkedin
+[2026-07-18 14:34:53,544: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:34:54,753: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/company/pepul "HTTP/1.1 200 OK"
+[2026-07-18 14:34:55,977: INFO/ForkPoolWorker-8] HTTP Request: GET https://in.linkedin.com/in/sureshceo "HTTP/1.1 200 OK"
+[2026-07-18 14:34:56,547: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-18 14:34:56,880: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:56,883: ERROR/ForkPoolWorker-8] Error using Gemini for targeted search: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 3.08024522s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}
+[2026-07-18 14:34:57,043: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2026-07-18 14:34:57,044: ERROR/ForkPoolWorker-8] Error using Groq for targeted search: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kxj4m930ew18wfyc3kns7th1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99934, Requested 2113. Please try again in 29m28.608s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-07-18 14:34:57,067: INFO/ForkPoolWorker-8] Task backend.workers.tasks.discover_company_task[ba227b2d-7145-4fb5-bfa9-e4e12bef01f0] succeeded in 45.61558141600017s: None
+[2026-07-18 14:35:06,900: INFO/MainProcess] Task backend.workers.tasks.hiring_and_market_task[5771aa3f-f0c8-44ec-889b-2616e92a043d] received
+[2026-07-18 14:35:06,904: INFO/ForkPoolWorker-8] Task: Hiring and Market Analysis for ID: 1
+[2026-07-18 14:35:06,912: INFO/ForkPoolWorker-8] Running Hiring Collector for Pepul
+[2026-07-18 14:35:06,916: INFO/ForkPoolWorker-8] Running Competitor Collector for Pepul
+[2026-07-18 14:35:06,919: INFO/ForkPoolWorker-8] Running Financial Collector for Pepul
+[2026-07-18 14:35:08,599: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:35:08,728: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:35:08,916: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 14:35:08,918: WARNING/ForkPoolWorker-8] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 14:35:08,955: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 14:35:08,957: WARNING/ForkPoolWorker-8] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 14:35:09,420: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-18 14:35:09,639: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 14:35:09,641: WARNING/ForkPoolWorker-8] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 14:35:10,343: INFO/ForkPoolWorker-8] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:35:10,834: INFO/ForkPoolWorker-8] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:35:12,974: INFO/ForkPoolWorker-8] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:35:33,494: INFO/MainProcess] Task backend.workers.tasks.pain_point_analysis_task[88ca2aa8-7d6e-4257-b6f4-2cc35b7769b7] received
+[2026-07-18 14:35:33,495: INFO/ForkPoolWorker-8] Task backend.workers.tasks.hiring_and_market_task[5771aa3f-f0c8-44ec-889b-2616e92a043d] succeeded in 26.591787708000084s: None
+[2026-07-18 14:35:33,499: INFO/ForkPoolWorker-1] Task: AI Pain Point Analysis for ID: 1
+[2026-07-18 14:35:33,956: INFO/ForkPoolWorker-1] Calling LLM for pain point analysis on Pepul...
+[2026-07-18 14:35:34,042: INFO/ForkPoolWorker-1] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+[2026-07-18 14:35:34,043: WARNING/ForkPoolWorker-1] Error on groq (AuthenticationError). Failing over to openrouter immediately...
+[2026-07-18 14:35:35,000: INFO/ForkPoolWorker-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-18 14:35:54,957: INFO/ForkPoolWorker-1] AI generated 8 pain points.
+[2026-07-18 14:35:54,964: INFO/ForkPoolWorker-1] Task backend.workers.tasks.pain_point_analysis_task[88ca2aa8-7d6e-4257-b6f4-2cc35b7769b7] succeeded in 21.466029750000416s: None
