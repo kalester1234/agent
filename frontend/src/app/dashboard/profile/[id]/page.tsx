@@ -279,7 +279,14 @@ export default function ProfilePage({ params }: PageProps) {
   const fetchPainPoints = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/pain-points`);
-      if (res.ok) setPainPoints(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          setPainPoints(data);
+        } else {
+          analyzePainPoints();
+        }
+      }
     } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, painPoints: false })); }
   };
 
