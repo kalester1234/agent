@@ -28,7 +28,7 @@ def chat_with_report(chat_message: ChatMessage):
     report_json = json.loads(report_data)
     company_name = report_json.get("company", {}).get("name", "the company")
     
-    # Use Ollama to answer the question using the report as context
+    # Use LLM (Gemini) to answer the question using the report as context
     prompt = f"""
     You are an expert business analyst and AI assistant for the Enterprise AI Sales Intelligence Platform.
     Use the following report data about {company_name} to answer the user's question.

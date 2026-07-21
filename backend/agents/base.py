@@ -15,19 +15,12 @@ T = TypeVar('T', bound=BaseModel)
 
 class BaseAgent:
     def __init__(self):
-        # Local Ollama Client (Primary)
-        self.ollama_client = AsyncOpenAI(
-            base_url="http://localhost:11434/v1",
-            api_key="ollama"
-        )
-        self.ollama_model = "llama3.2:latest"
-        
-        # Groq Client (Fallback 1)
+        # Groq Client (Primary)
         self.groq_key = settings.get_groq_api_key
         self.groq_client = AsyncGroq(api_key=self.groq_key) if self.groq_key else None
         self.groq_model = "llama-3.3-70b-versatile"
         
-        # OpenRouter Client (Fallback 2)
+        # OpenRouter Client (Fallback 1)
         self.or_key = settings.OPENROUTER_API_KEY
         self.or_client = AsyncOpenAI(
             base_url="https://openrouter.ai/api/v1",
@@ -43,7 +36,7 @@ class BaseAgent:
         ) if self.cerebras_key else None
         self.cerebras_model = "llama3.1-8b"
 
-    async def _call_llm(self, prompt: str, response_schema: Type[T], preferred_provider: str = "ollama") -> T:
+    async def _call_llm(self, prompt: str, response_schema: Type[T], preferred_provider: str = "groq") -> T:
         if hasattr(response_schema, "model_json_schema"):
             schema_dict = response_schema.model_json_schema()
         else:
@@ -57,36 +50,21 @@ class BaseAgent:
         )
         
         # Determine available providers
-        available_providers = ["ollama"]
+        available_providers = []
         if self.cerebras_client: available_providers.append("cerebras")
         if self.groq_client: available_providers.append("groq")
         if self.or_client: available_providers.append("openrouter")
         
+        if not available_providers:
+            raise ValueError("No LLM API keys provided. Please set GROQ_API_KEY, OPENROUTER_API_KEY, or CEREBRAS_API_KEY.")
+            
         # Prioritize the preferred provider if available, otherwise fallback
         current_provider = preferred_provider if preferred_provider in available_providers else available_providers[0]
         max_retries = 10
         
         for attempt in range(max_retries):
             try:
-                if current_provider == "ollama":
-                    response = await self.ollama_client.chat.completions.create(
-                        model=self.ollama_model,
-                        messages=[
-                            {"role": "system", "content": system_message},
-                            {"role": "user", "content": prompt}
-                        ],
-                        response_format={
-                            "type": "json_schema",
-                            "json_schema": {
-                                "name": response_schema.__name__,
-                                "schema": schema_dict,
-                                "strict": True
-                            }
-                        },
-                        temperature=0.2,
-                    )
-                    result_json = response.choices[0].message.content
-                elif current_provider == "groq":
+                if current_provider == "groq":
                     response = await self.groq_client.chat.completions.create(
                         model=self.groq_model,
                         messages=[
@@ -136,14 +114,12 @@ class BaseAgent:
             except Exception as e:
                 if attempt < max_retries - 1:
                     # Determine next fallback logic
-                    if current_provider == "cerebras" and "ollama" in available_providers:
-                        other_provider = "ollama"
-                    elif current_provider == "ollama" and "groq" in available_providers:
+                    if current_provider == "cerebras" and "groq" in available_providers:
                         other_provider = "groq"
                     elif current_provider == "groq" and "openrouter" in available_providers:
                         other_provider = "openrouter"
                     else:
-                        other_provider = "ollama"
+                        other_provider = "cerebras" if "cerebras" in available_providers else available_providers[0]
                     
                     # If we have a fallback and haven't tried it in this "round" yet, failover instantly
                     if other_provider in available_providers and attempt % len(available_providers) == 0:

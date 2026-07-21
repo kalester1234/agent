@@ -242,8 +242,14 @@ class CompanyDiscoveryCollector(BaseCollector):
             homepage_title = homepage_meta.get("title", "")
             homepage_desc = homepage_meta.get("description", "")
             if homepage_title and len(homepage_title) > 2 and len(homepage_title) < 60:
-                self.company.name = homepage_title
-                self.db.commit()
+                bad_titles = [
+                    "attention required!", "just a moment...", "access denied", 
+                    "403 forbidden", "cloudflare", "site unavailable", 
+                    "not acceptable!", "are you human?", "404 not found"
+                ]
+                if homepage_title.lower() not in bad_titles:
+                    self.company.name = homepage_title
+                    self.db.commit()
             
             # STORE HOMEPAGE EVIDENCE (Tier 1)
             if homepage_desc or homepage_title:
@@ -526,8 +532,14 @@ class CompanyDiscoveryCollector(BaseCollector):
 
             # Fallback to homepage title if name is simple
             if homepage_title and len(homepage_title) > 2 and len(homepage_title) < 60:
-                self.company.name = homepage_title
-                self.db.commit()
+                bad_titles = [
+                    "attention required!", "just a moment...", "access denied", 
+                    "403 forbidden", "cloudflare", "site unavailable", 
+                    "not acceptable!", "are you human?", "404 not found"
+                ]
+                if homepage_title.lower() not in bad_titles:
+                    self.company.name = homepage_title
+                    self.db.commit()
 
         self.db.commit()
         self.db.refresh(profile)
