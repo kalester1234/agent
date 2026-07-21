@@ -490,33 +490,33 @@ export default function ProfilePage({ params }: PageProps) {
       <div className="px-4 sm:px-8 lg:px-12 py-10">
         <div className="max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="sticky top-0 z-50 flex flex-wrap justify-between items-center mb-6 py-4 bg-[#FAFAFA]/90 backdrop-blur-md border-b border-slate-200/50 -mx-4 px-4 sm:-mx-8 sm:px-8">
         <Link href="/dashboard" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back to Dashboard
         </Link>
         <div className="flex items-center gap-3">
           <button onClick={() => document.getElementById('competitor-matrix')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 transition-colors">
+            className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300">
             <Users className="h-4 w-4 text-orange-500" /> 
             Competitor Matrix
           </button>
           <button onClick={handleGenerateOutreach} disabled={generatingOutreach || isCrawling}
-            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 transition-colors">
+            className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300">
             <Mail className="h-4 w-4 text-emerald-500" /> 
             Generate Outreach
           </button>
           <button onClick={handleExportPitchDeck} disabled={isExportingPitchDeck || isCrawling}
-            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-50 transition-colors">
+            className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm disabled:opacity-50 transition-all duration-300">
             {isExportingPitchDeck ? <Loader2 className="h-4 w-4 animate-spin" /> : <Presentation className="h-4 w-4 text-purple-600" />} 
             {isExportingPitchDeck ? "Exporting..." : "Export Pitch Deck"}
           </button>
           <button onClick={handleExportPDF} disabled={isExporting || isCrawling}
-            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-50 transition-colors">
+            className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm disabled:opacity-50 transition-all duration-300">
             {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} 
             {isExporting ? "Exporting..." : "Export PDF"}
           </button>
           <button onClick={reCrawlCompany} disabled={isCrawling}
-            className="flex items-center gap-2 border border-[var(--brand-primary)] bg-[var(--brand-primary)] hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-semibold text-white disabled:opacity-50 transition-colors">
+            className="flex items-center gap-2 border border-blue-600/20 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:-translate-y-0.5 shadow-md shadow-blue-500/20 px-4 py-2 rounded-lg text-sm font-semibold text-white disabled:opacity-50 transition-all duration-300">
             <RefreshCw className={`h-4 w-4 ${isCrawling ? "animate-spin" : ""}`} /> Refresh Discovery
           </button>
         </div>
@@ -539,8 +539,104 @@ export default function ProfilePage({ params }: PageProps) {
         </div>
       )}
 
+      {/* ── Module 1: Company Discovery ── */}
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+        <div className="p-8 border-b border-slate-100 flex items-center gap-5">
+          <div className="w-16 h-16 rounded-2xl bg-[var(--brand-primary)] text-white flex items-center justify-center font-black text-2xl shadow-sm">
+            {basicInfo?.name?.[0] || "C"}
+          </div>
+          <div>
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
+              {loading.basic ? "Resolving Company..." : basicInfo?.name}
+            </h1>
+            <p className="text-slate-500 text-sm font-medium mt-0.5">{basicInfo?.domain}</p>
+          </div>
+        </div>
+        <div className="p-8">
+          <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-[var(--brand-primary)]" /> Module 1: Company Discovery
+          </h2>
+          <div className="border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+            <div className="divide-y divide-slate-100 bg-white">
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Official Name</div>
+                <div className="col-span-2 text-sm font-extrabold text-slate-800">
+                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-2/3 animate-pulse"></div> : basicInfo?.name}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website</div>
+                <div className="col-span-2 text-sm">
+                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : (
+                    <a href={`https://${basicInfo?.domain}`} target="_blank" rel="noopener noreferrer"
+                      className="text-[var(--brand-primary)] hover:text-[var(--text-secondary)] font-bold flex items-center gap-1.5 hover:underline">
+                      <Globe className="h-4 w-4 text-blue-500" /> https://{basicInfo?.domain}
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Industry</div>
+                <div className="col-span-2 text-sm font-bold text-slate-700">
+                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/3 animate-pulse"></div> : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[var(--text-secondary)] border border-blue-100 rounded-full text-xs font-bold">
+                      <Building2 className="h-3.5 w-3.5" /> {overview?.industry || "Technology"}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Country</div>
+                <div className="col-span-2 text-sm font-bold text-slate-700">
+                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/4 animate-pulse"></div> : (
+                    <span className="inline-flex items-center gap-1.5 text-slate-700">
+                      <MapPin className="h-4 w-4 text-rose-500" /> {overview?.country || "N/A"}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
+                <div className="col-span-2 text-sm font-medium">
+                  {loading.social ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : linkedinProfile ? (
+                    <a href={linkedinProfile.url} target="_blank" rel="noopener noreferrer"
+                      className="text-[var(--brand-primary)] font-bold hover:underline flex items-center gap-1.5">
+                      <svg className="h-4 w-4 text-blue-500 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                      LinkedIn Page
+                    </a>
+                  ) : <span className="text-slate-400 italic">Not found</span>}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 p-4 items-center">
+                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Social Profiles</div>
+                <div className="col-span-2 text-sm">
+                  {loading.social ? (
+                    <div className="flex gap-2">
+                      <div className="h-6 bg-slate-100 rounded-full w-12 animate-pulse"></div>
+                      <div className="h-6 bg-slate-100 rounded-full w-16 animate-pulse"></div>
+                    </div>
+                  ) : otherSocials.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {otherSocials.map((prof, idx) => (
+                        <a key={idx} href={prof.url} target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded-full text-xs font-bold transition-colors">
+                          <Share2 className="h-3 w-3" /> {prof.platform}
+                        </a>
+                      ))}
+                    </div>
+                  ) : <span className="text-slate-400 italic">No additional social profiles found</span>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
       {/* ── Module 6: Company Info ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Building2 className="h-5 w-5 text-[var(--brand-primary)]" /> Overview
@@ -711,7 +807,7 @@ export default function ProfilePage({ params }: PageProps) {
       </div>
 
       {/* ── News ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Newspaper className="h-5 w-5 text-[var(--brand-primary)]" /> News
@@ -771,7 +867,7 @@ export default function ProfilePage({ params }: PageProps) {
         </div>
       </div>
       {/* ── Pain Points ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] flex items-center gap-2">
@@ -879,7 +975,7 @@ export default function ProfilePage({ params }: PageProps) {
 
 
       {/* ── Competitor Matrix ── */}
-      <div id="competitor-matrix" className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div id="competitor-matrix" className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Users className="h-5 w-5 text-[var(--brand-primary)]" /> Competitor Matrix
@@ -924,7 +1020,7 @@ export default function ProfilePage({ params }: PageProps) {
       </div>
 
       {/* ── Module 8: Hiring & Market ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Briefcase className="h-5 w-5 text-[var(--brand-primary)]" /> Hiring
@@ -967,103 +1063,8 @@ export default function ProfilePage({ params }: PageProps) {
         </div>
       </div>
 
-{/* ── Module 1: Company Discovery ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
-        <div className="p-8 border-b border-slate-100 flex items-center gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-[var(--brand-primary)] text-white flex items-center justify-center font-black text-2xl shadow-sm">
-            {basicInfo?.name?.[0] || "C"}
-          </div>
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-              {loading.basic ? "Resolving Company..." : basicInfo?.name}
-            </h1>
-            <p className="text-slate-500 text-sm font-medium mt-0.5">{basicInfo?.domain}</p>
-          </div>
-        </div>
-        <div className="p-8">
-          <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-[var(--brand-primary)]" /> Module 1: Company Discovery
-          </h2>
-          <div className="border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
-            <div className="divide-y divide-slate-100 bg-white">
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Official Name</div>
-                <div className="col-span-2 text-sm font-extrabold text-slate-800">
-                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-2/3 animate-pulse"></div> : basicInfo?.name}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website</div>
-                <div className="col-span-2 text-sm">
-                  {loading.basic ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : (
-                    <a href={`https://${basicInfo?.domain}`} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--brand-primary)] hover:text-[var(--text-secondary)] font-bold flex items-center gap-1.5 hover:underline">
-                      <Globe className="h-4 w-4 text-blue-500" /> https://{basicInfo?.domain}
-                    </a>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Industry</div>
-                <div className="col-span-2 text-sm font-bold text-slate-700">
-                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/3 animate-pulse"></div> : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[var(--text-secondary)] border border-blue-100 rounded-full text-xs font-bold">
-                      <Building2 className="h-3.5 w-3.5" /> {overview?.industry || "Technology"}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Country</div>
-                <div className="col-span-2 text-sm font-bold text-slate-700">
-                  {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/4 animate-pulse"></div> : (
-                    <span className="inline-flex items-center gap-1.5 text-slate-700">
-                      <MapPin className="h-4 w-4 text-rose-500" /> {overview?.country || "N/A"}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
-                <div className="col-span-2 text-sm font-medium">
-                  {loading.social ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : linkedinProfile ? (
-                    <a href={linkedinProfile.url} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--brand-primary)] font-bold hover:underline flex items-center gap-1.5">
-                      <svg className="h-4 w-4 text-blue-500 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                      LinkedIn Page
-                    </a>
-                  ) : <span className="text-slate-400 italic">Not found</span>}
-                </div>
-              </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Social Profiles</div>
-                <div className="col-span-2 text-sm">
-                  {loading.social ? (
-                    <div className="flex gap-2">
-                      <div className="h-6 bg-slate-100 rounded-full w-12 animate-pulse"></div>
-                      <div className="h-6 bg-slate-100 rounded-full w-16 animate-pulse"></div>
-                    </div>
-                  ) : otherSocials.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {otherSocials.map((prof, idx) => (
-                        <a key={idx} href={prof.url} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded-full text-xs font-bold transition-colors">
-                          <Share2 className="h-3 w-3" /> {prof.platform}
-                        </a>
-                      ))}
-                    </div>
-                  ) : <span className="text-slate-400 italic">No additional social profiles found</span>}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Module 2: Website Intelligence ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+{/* ── Module 2: Website Intelligence ── */}
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Globe className="h-5 w-5 text-[var(--brand-primary)]" /> Module 2: Website Intelligence
@@ -1168,7 +1169,7 @@ export default function ProfilePage({ params }: PageProps) {
       </div>
 
       {/* ── Module 3: Technology Stack ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Cpu className="h-5 w-5 text-emerald-600" /> Module 3: Technology Stack
@@ -1218,7 +1219,7 @@ export default function ProfilePage({ params }: PageProps) {
       </div>
 
       {/* ── Module 4: SEO Analysis ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <Search className="h-5 w-5 text-rose-500" /> Module 4: SEO Analysis
@@ -1425,7 +1426,7 @@ export default function ProfilePage({ params }: PageProps) {
       </div>
 
       {/* ── Module 5: Performance ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+      <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
         <div className="p-8">
           <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
             <BarChart2 className="h-5 w-5 text-blue-500" /> Module 5: Performance Collection
