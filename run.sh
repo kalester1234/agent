@@ -8,6 +8,11 @@ export PYTHONPATH=$PWD
 # Start Docker containers (Postgres & Redis)
 docker compose up -d
 
+echo "Cleaning up any old processes..."
+lsof -ti:8000,3000 | xargs kill -9 2>/dev/null || true
+sleep 1
+
+
 # We pipe outputs through awk to prefix them and disable Next.js TTY clearing
 celery -A backend.core.celery_app worker --loglevel=info 2>&1 | awk '{print "\033[34m[CELERY]\033[0m " $0}' &
 CELERY_PID=$!

@@ -85,19 +85,19 @@
   --sidebar-ring: hsl(221.2 83.2% 53.3%);
 
   /* Custom premium tokens */
-  --brand-primary: #0044CC; /* Deep Blue */
-  --brand-primary-light: #EBF1FF; /* Light Blue BG */
-  --brand-primary-mid: #0055FF;
+  --brand-primary: #4F46E5; /* Indigo 600 */
+  --brand-primary-light: #EEF2FF; /* Indigo 50 */
+  --brand-primary-mid: #6366F1;
   --surface-raised: #FFFFFF;
-  --surface-base: #FAFAFC; /* Slightly off-white */
-  --surface-subtle: #F4F5F8;
-  --text-primary: #1A1C20;
-  --text-secondary: #5C6270;
-  --text-tertiary: #8A92A3;
-  --border-default: #E2E4EB;
-  --border-strong: #C4C8D4;
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
+  --surface-base: #F8FAFC; /* Slate 50 */
+  --surface-subtle: #F1F5F9; /* Slate 100 */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #94A3B8;
+  --border-default: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-lg: 0 12px 40px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
   --shadow-brand: 0 4px 16px -2px rgba(0, 68, 204, 0.25);
 }
