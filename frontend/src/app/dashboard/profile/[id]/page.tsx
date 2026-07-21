@@ -281,13 +281,22 @@ export default function ProfilePage({ params }: PageProps) {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/pain-points`);
       if (res.ok) {
         const data = await res.json();
-        if (data && data.length > 0) {
-          setPainPoints(data);
+        // The API returns an object with a 'pain_points' array
+        if (data && Array.isArray(data.pain_points) && data.pain_points.length > 0) {
+          setPainPoints(data.pain_points);
         } else {
-          analyzePainPoints();
+          // No pain points returned, attempt on-demand analysis
+          await analyzePainPoints();
         }
+      } else {
+        // If GET fails, fallback to on-demand analysis
+        await analyzePainPoints();
       }
-    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, painPoints: false })); }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(p => ({ ...p, painPoints: false }));
+    }
   };
 
   const analyzePainPoints = async () => {

@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto scroll-pt-[100px]">
           {children}
         </main>
       </div>
