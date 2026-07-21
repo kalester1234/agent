@@ -3,7 +3,11 @@ from backend.evidence_engine.resolver import CompanyResolver
 
 async def main():
     resolver = CompanyResolver()
-    domain = await resolver.resolve(name="Apple")
-    print(f"Resolved domain: {domain}")
+    try:
+        domain = await resolver.resolve(name="OpenAI")
+        print(f"Resolved domain: {domain}")
+    except Exception as e:
+        print(f"Error: {e}")
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

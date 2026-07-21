@@ -73,14 +73,14 @@ export default function DashboardPage() {
     <div className="flex w-full h-full animate-fade-in bg-[var(--surface-subtle)]">
       
       {/* Main Content Column */}
-      <div className="flex-1 overflow-y-auto px-10 py-10 max-w-5xl mx-auto">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-10 py-6 sm:py-10 max-w-5xl mx-auto w-full">
         
         {/* Intelligence Discovery Section */}
-        <div className="bg-white rounded-2xl p-8 mb-8 border border-[var(--border-default)] shadow-sm">
-          <h1 className="text-2xl font-bold mb-6 text-[var(--text-primary)]">Intelligence Discovery</h1>
+        <div className="bg-white rounded-2xl p-5 sm:p-8 mb-6 sm:mb-8 border border-[var(--border-default)] shadow-sm">
+          <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-[var(--text-primary)]">Intelligence Discovery</h1>
           
-          <div className="flex items-center bg-[var(--surface-subtle)] rounded-xl p-2 mb-4 border border-[var(--border-default)] focus-within:border-[var(--brand-primary)] focus-within:ring-1 focus-within:ring-[var(--brand-primary)] transition-all">
-            <div className="pl-4 pr-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center bg-transparent sm:bg-[var(--surface-subtle)] rounded-xl p-0 sm:p-2 mb-4 sm:border sm:border-[var(--border-default)] focus-within:border-[var(--brand-primary)] focus-within:ring-1 focus-within:ring-[var(--brand-primary)] transition-all gap-3 sm:gap-0">
+            <div className="hidden sm:block pl-4 pr-3">
               <Sparkles className="h-5 w-5 text-[var(--text-tertiary)]" />
             </div>
             <input
@@ -92,17 +92,17 @@ export default function DashboardPage() {
               }}
               disabled={isProcessing}
               placeholder="Ask anything: 'Find Series A Fintech startups...'"
-              className="flex-1 bg-transparent border-none outline-none text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] disabled:opacity-50"
+              className="flex-1 bg-[var(--surface-subtle)] sm:bg-transparent border border-[var(--border-default)] sm:border-none outline-none text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] disabled:opacity-50 p-3 sm:p-0 rounded-xl sm:rounded-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] sm:focus:ring-0 sm:focus:border-none"
             />
             <button
               onClick={() => handleAnalyze()}
               disabled={isProcessing}
-              className="bg-[var(--brand-primary-light)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white transition-colors px-8 py-3 rounded-lg font-bold text-sm ml-2 flex items-center justify-center min-w-[120px]"
+              className="w-full sm:w-auto bg-[var(--brand-primary-light)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white transition-colors px-8 py-3 rounded-xl sm:rounded-lg font-bold text-sm sm:ml-2 flex items-center justify-center min-w-[120px]"
             >
               {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : "Analyze"}
             </button>
           </div>
-          {error && <p className="text-xs text-red-500 mb-4 ml-2">{error}</p>}
+          {error && <p className="text-xs text-red-500 mb-4 sm:ml-2">{error}</p>}
         </div>
 
         {/* Recently Analyzed */}
@@ -110,18 +110,18 @@ export default function DashboardPage() {
           <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)] mb-4">
             <Activity className="h-5 w-5 text-[var(--brand-primary)]" /> Recently Analyzed
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {loadingHistory ? (
               [1,2,3].map(i => <div key={i} className="h-32 bg-white border border-[var(--border-default)] rounded-xl animate-pulse" />)
             ) : trackedCompanies.length === 0 ? (
-              <p className="text-sm text-[var(--text-tertiary)] italic col-span-3">No recent analysis found.</p>
+              <p className="text-sm text-[var(--text-tertiary)] italic col-span-1 md:col-span-3">No recent analysis found.</p>
             ) : (
               trackedCompanies.map((c) => {
                 return (
                   <Link 
                     href={`/dashboard/profile/${c.id}`} 
                     key={c.id}
-                    className="bg-white border border-[var(--border-default)] rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col justify-between min-h-[140px]"
+                    className="bg-white border border-[var(--border-default)] rounded-xl p-4 sm:p-5 hover:shadow-md transition-shadow flex flex-col justify-between min-h-[140px]"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-4">

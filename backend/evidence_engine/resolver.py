@@ -20,6 +20,21 @@ class CompanyResolver:
         }
 
     async def _search_official(self, name: str) -> Optional[str]:
+        # Try Clearbit Autocomplete API first (no auth required)
+        try:
+            import urllib.parse
+            formatted_name = urllib.parse.quote(name)
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                resp = await client.get(f"https://autocomplete.clearbit.com/v1/companies/suggest?query={formatted_name}")
+                if resp.status_code == 200:
+                    data = resp.json()
+                    if data and isinstance(data, list) and len(data) > 0:
+                        domain = data[0].get("domain")
+                        if domain:
+                            return domain
+        except Exception:
+            pass
+
         query = f'"{name}" official website'
         # Try DuckDuckGo first
         try:

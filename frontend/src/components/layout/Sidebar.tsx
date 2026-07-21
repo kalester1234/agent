@@ -19,7 +19,7 @@ const navigation = [
   { name: "Opportunity Radar", href: "/dashboard/opportunities", icon: Target },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
@@ -65,6 +65,7 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
+              onClick={() => onNavigate && onNavigate()}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150"
               style={{
                 background: isActive ? "var(--brand-primary-light)" : "transparent",

@@ -497,11 +497,11 @@ export default function ProfilePage({ params }: PageProps) {
       <div className="px-4 sm:px-8 lg:px-12 py-10">
         <div className="max-w-5xl mx-auto">
       {/* Header */}
-      <div className="sticky top-0 z-50 flex flex-wrap justify-between items-center mb-6 py-4 bg-[#FAFAFA]/90 backdrop-blur-md border-b border-slate-200/50 -mx-4 px-4 sm:-mx-8 sm:px-8">
-        <Link href="/dashboard" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
+      <div className="sticky top-0 z-50 flex flex-wrap justify-between items-center mb-6 py-4 bg-[#FAFAFA]/90 backdrop-blur-md border-b border-slate-200/50 -mx-4 px-4 sm:-mx-8 sm:px-8 gap-4">
+        <Link href="/dashboard" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors w-full sm:w-auto">
           <ArrowLeft className="h-4 w-4" /> Back to Dashboard
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap pb-2 sm:pb-0 items-center justify-start gap-2 sm:gap-3 w-full sm:w-auto">
           <button onClick={() => document.getElementById('competitor-matrix')?.scrollIntoView({ behavior: 'smooth' })}
             className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300">
             <Users className="h-4 w-4 text-orange-500" /> 
@@ -515,16 +515,16 @@ export default function ProfilePage({ params }: PageProps) {
           <button onClick={handleExportPitchDeck} disabled={isExportingPitchDeck || isCrawling}
             className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm disabled:opacity-50 transition-all duration-300">
             {isExportingPitchDeck ? <Loader2 className="h-4 w-4 animate-spin" /> : <Presentation className="h-4 w-4 text-purple-600" />} 
-            {isExportingPitchDeck ? "Exporting..." : "Export Pitch Deck"}
+            {isExportingPitchDeck ? "Pitch Deck" : "Pitch Deck"}
           </button>
           <button onClick={handleExportPDF} disabled={isExporting || isCrawling}
             className="flex items-center gap-2 border border-slate-200/60 bg-white/50 backdrop-blur hover:bg-white hover:-translate-y-0.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 shadow-sm disabled:opacity-50 transition-all duration-300">
             {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} 
-            {isExporting ? "Exporting..." : "Export PDF"}
+            {isExporting ? "Exporting" : "Export"}
           </button>
           <button onClick={reCrawlCompany} disabled={isCrawling}
             className="flex items-center gap-2 border border-blue-600/20 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:-translate-y-0.5 shadow-md shadow-blue-500/20 px-4 py-2 rounded-lg text-sm font-semibold text-white disabled:opacity-50 transition-all duration-300">
-            <RefreshCw className={`h-4 w-4 ${isCrawling ? "animate-spin" : ""}`} /> Refresh Discovery
+            <RefreshCw className={`h-4 w-4 ${isCrawling ? "animate-spin" : ""}`} /> Refresh
           </button>
         </div>
       </div>
@@ -548,43 +548,43 @@ export default function ProfilePage({ params }: PageProps) {
 
       {/* ── Module 1: Company Discovery ── */}
       <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-slate-200/60 shadow-lg shadow-slate-200/40 overflow-hidden mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
-        <div className="p-8 border-b border-slate-100 flex items-center gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-[var(--brand-primary)] text-white flex items-center justify-center font-black text-2xl shadow-sm">
+        <div className="p-4 sm:p-8 border-b border-slate-100 flex items-center gap-4 sm:gap-5">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-[var(--brand-primary)] text-white flex items-center justify-center font-black text-xl sm:text-2xl shadow-sm">
             {basicInfo?.name?.[0] || "C"}
           </div>
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 truncate">
               {loading.basic ? "Resolving Company..." : basicInfo?.name}
             </h1>
-            <p className="text-slate-500 text-sm font-medium mt-0.5">{basicInfo?.domain}</p>
+            <p className="text-slate-500 text-sm font-medium mt-0.5 truncate">{basicInfo?.domain}</p>
           </div>
         </div>
-        <div className="p-8">
-          <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+        <div className="p-4 sm:p-8">
+          <h2 className="text-lg sm:text-xl font-serif font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-[var(--brand-primary)]" /> Module 1: Company Discovery
           </h2>
           <div className="border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
             <div className="divide-y divide-slate-100 bg-white">
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Official Name</div>
-                <div className="col-span-2 text-sm font-extrabold text-slate-800">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">Official Name</div>
+                <div className="sm:col-span-2 text-sm font-extrabold text-slate-800 break-words">
                   {loading.basic ? <div className="h-4 bg-slate-100 rounded w-2/3 animate-pulse"></div> : basicInfo?.name}
                 </div>
               </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Website</div>
-                <div className="col-span-2 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">Website</div>
+                <div className="sm:col-span-2 text-sm">
                   {loading.basic ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : (
                     <a href={`https://${basicInfo?.domain}`} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--brand-primary)] hover:text-[var(--text-secondary)] font-bold flex items-center gap-1.5 hover:underline">
-                      <Globe className="h-4 w-4 text-blue-500" /> https://{basicInfo?.domain}
+                      className="text-[var(--brand-primary)] hover:text-[var(--text-secondary)] font-bold flex items-center gap-1.5 hover:underline break-all">
+                      <Globe className="h-4 w-4 text-blue-500 flex-shrink-0" /> https://{basicInfo?.domain}
                     </a>
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Industry</div>
-                <div className="col-span-2 text-sm font-bold text-slate-700">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">Industry</div>
+                <div className="sm:col-span-2 text-sm font-bold text-slate-700">
                   {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/3 animate-pulse"></div> : (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[var(--text-secondary)] border border-blue-100 rounded-full text-xs font-bold">
                       <Building2 className="h-3.5 w-3.5" /> {overview?.industry || "Technology"}
@@ -592,9 +592,9 @@ export default function ProfilePage({ params }: PageProps) {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Country</div>
-                <div className="col-span-2 text-sm font-bold text-slate-700">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">Country</div>
+                <div className="sm:col-span-2 text-sm font-bold text-slate-700">
                   {loading.overview ? <div className="h-4 bg-slate-100 rounded w-1/4 animate-pulse"></div> : (
                     <span className="inline-flex items-center gap-1.5 text-slate-700">
                       <MapPin className="h-4 w-4 text-rose-500" /> {overview?.country || "N/A"}
@@ -602,13 +602,13 @@ export default function ProfilePage({ params }: PageProps) {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
-                <div className="col-span-2 text-sm font-medium">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">LinkedIn</div>
+                <div className="sm:col-span-2 text-sm font-medium">
                   {loading.social ? <div className="h-4 bg-slate-100 rounded w-1/2 animate-pulse"></div> : linkedinProfile ? (
                     <a href={linkedinProfile.url} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--brand-primary)] font-bold hover:underline flex items-center gap-1.5">
-                      <svg className="h-4 w-4 text-blue-500 fill-current" viewBox="0 0 24 24">
+                      className="text-[var(--brand-primary)] font-bold hover:underline flex items-center gap-1.5 break-all">
+                      <svg className="h-4 w-4 text-blue-500 fill-current flex-shrink-0" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                       </svg>
                       LinkedIn Page
@@ -616,9 +616,9 @@ export default function ProfilePage({ params }: PageProps) {
                   ) : <span className="text-slate-400 italic">Not found</span>}
                 </div>
               </div>
-              <div className="grid grid-cols-3 p-4 items-center">
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Social Profiles</div>
-                <div className="col-span-2 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-3 p-4 items-start sm:items-center gap-1 sm:gap-0">
+                <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider">Social Profiles</div>
+                <div className="sm:col-span-2 text-sm">
                   {loading.social ? (
                     <div className="flex gap-2">
                       <div className="h-6 bg-slate-100 rounded-full w-12 animate-pulse"></div>
@@ -1039,7 +1039,7 @@ export default function ProfilePage({ params }: PageProps) {
           ) : jobs.length === 0 ? (
             <div className="text-center py-10 text-slate-400 italic">No open job postings found.</div>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {jobs.map((job: any, i: number) => (
                 <div key={i} className="border border-slate-200 rounded-xl p-5 bg-white shadow-sm hover:border-slate-300 transition-colors">
                   <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-3">
@@ -1197,7 +1197,7 @@ export default function ProfilePage({ params }: PageProps) {
           ) : Object.keys(techStack).length === 0 ? (
             <div className="text-center py-10 text-slate-400 italic">No technology data available yet.</div>
           ) : (
-            <div className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...TECH_CATEGORY_ORDER, ...Object.keys(techStack).filter(c => !TECH_CATEGORY_ORDER.includes(c))]
                 .filter(cat => techStack[cat])
                 .map(category => {
