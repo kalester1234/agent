@@ -643,3 +643,355 @@ INFO:     Finished server process [4941]
 INFO:     Started server process [4998]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+INFO:     127.0.0.1:51289 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51291 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51291 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51291 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/pipeline/stream/807c8523-b2f4-4e21-842c-a2106ad2983d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51291 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51333 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51333 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51368 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51384 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51382 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51386 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51387 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51389 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51384 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51389 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51384 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51387 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51400 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51401 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51389 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51384 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51387 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51419 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51421 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51424 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51423 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51417 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51419 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51421 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51424 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51432 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51429 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/collectors/collectors.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4998]
+INFO:     Started server process [23698]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51576 - "GET /api/v1/pipeline/stream/807c8523-b2f4-4e21-842c-a2106ad2983d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51574 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51576 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51580 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51582 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51574 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51583 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51576 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51580 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51582 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51583 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51574 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51580 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51576 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51582 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51574 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51583 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51576 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51580 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/v1/pipeline/stream/807c8523-b2f4-4e21-842c-a2106ad2983d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51600 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51604 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51607 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51609 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51610 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51600 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51604 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51609 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51610 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51600 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51607 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51604 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51609 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51610 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51607 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51600 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51604 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51609 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+Error on groq (AuthenticationError). Failing over to openrouter immediately...
+INFO:     127.0.0.1:51609 - "POST /api/v1/companies/2/pain-points/analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "OPTIONS /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "POST /api/v1/pipeline/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/v1/pipeline/stream/824376e0-a4c8-4eee-b70d-0e1dde0d387d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51722 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51787 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51786 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51785 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51809 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51808 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51803 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51811 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51803 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51809 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51808 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51811 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51808 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51803 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51809 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51811 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51803 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51808 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51809 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51811 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51803 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51843 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51844 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51841 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51846 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51839 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51843 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51844 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51841 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51854 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51851 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51858 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51856 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51945 - "GET /api/v1/opportunities HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51945 - "GET /api/v1/opportunities HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/api/routes/opportunities.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23698]
+INFO:     Started server process [24330]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52021 - "GET /api/v1/opportunities HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52061 - "GET /api/v1/opportunities HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52082 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52084 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52078 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52082 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52078 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52084 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52082 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52078 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52084 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52078 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52070 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52082 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52084 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52078 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52087 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52087 - "GET /api/v1/reports HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/api/routes/companies.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24330]
+INFO:     Started server process [24838]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52173 - "GET /api/v1/reports HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/agents/outreach.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24838]
+INFO:     Started server process [24912]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/api/routes/opportunities.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24912]
+INFO:     Started server process [24920]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in '.venv/lib/python3.9/site-packages/PIL/MicImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/Jpeg2KImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/JpegPresets.py', '.venv/lib/python3.9/site-packages/PIL/PpmImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageStat.py', '.venv/lib/python3.9/site-packages/PIL/GribStubImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/_typing.py', '.venv/lib/python3.9/site-packages/PIL/GdImageFile.py', '.venv/lib/python3.9/site-packages/PIL/ContainerIO.py', '.venv/lib/python3.9/site-packages/PIL/GimpGradientFile.py', '.venv/lib/python3.9/site-packages/PIL/features.py', '.venv/lib/python3.9/site-packages/PIL/Hdf5StubImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/CurImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/_tkinter_finder.py', '.venv/lib/python3.9/site-packages/PIL/JpegImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/TgaImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/_binary.py', '.venv/lib/python3.9/site-packages/PIL/ImageOps.py', '.venv/lib/python3.9/site-packages/PIL/_deprecate.py', '.venv/lib/python3.9/site-packages/PIL/PdfImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/PcxImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageColor.py', '.venv/lib/python3.9/site-packages/PIL/McIdasImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageFile.py', '.venv/lib/python3.9/site-packages/PIL/_version.py', '.venv/lib/python3.9/site-packages/PIL/PcfFontFile.py', '.venv/lib/python3.9/site-packages/PIL/__init__.py', '.venv/lib/python3.9/site-packages/PIL/EpsImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/PaletteFile.py', '.venv/lib/python3.9/site-packages/PIL/Image.py', '.venv/lib/python3.9/site-packages/PIL/ImageCms.py', '.venv/lib/python3.9/site-packages/PIL/ImageShow.py', '.venv/lib/python3.9/site-packages/PIL/ExifTags.py', '.venv/lib/python3.9/site-packages/PIL/SunImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageQt.py', '.venv/lib/python3.9/site-packages/PIL/QoiImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/WmfImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageMorph.py', '.venv/lib/python3.9/site-packages/PIL/TiffImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageGrab.py', '.venv/lib/python3.9/site-packages/PIL/FliImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/GifImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/PsdImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/XpmImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImtImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/FpxImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/IcnsImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/MpoImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/GimpPaletteFile.py', '.venv/lib/python3.9/site-packages/PIL/ImageMode.py', '.venv/lib/python3.9/site-packages/PIL/PdfParser.py', '.venv/lib/python3.9/site-packages/PIL/ImageMath.py', '.venv/lib/python3.9/site-packages/PIL/PalmImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/AvifImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/__main__.py', '.venv/lib/python3.9/site-packages/PIL/ImageFont.py', '.venv/lib/python3.9/site-packages/PIL/MpegImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/FtexImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/XVThumbImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageEnhance.py', '.venv/lib/python3.9/site-packages/PIL/_util.py', '.venv/lib/python3.9/site-packages/PIL/ImageTk.py', '.venv/lib/python3.9/site-packages/PIL/TiffTags.py', '.venv/lib/python3.9/site-packages/PIL/ImagePalette.py', '.venv/lib/python3.9/site-packages/PIL/WalImageFile.py', '.venv/lib/python3.9/site-packages/PIL/WebPImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageTransform.py', '.venv/lib/python3.9/site-packages/PIL/FitsImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/XbmImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/PngImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageDraw.py', '.venv/lib/python3.9/site-packages/PIL/DdsImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/IcoImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/BufrStubImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/GbrImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImagePath.py', '.venv/lib/python3.9/site-packages/PIL/MspImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/BdfFontFile.py', '.venv/lib/python3.9/site-packages/PIL/DcxImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/SpiderImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageDraw2.py', '.venv/lib/python3.9/site-packages/PIL/PcdImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/TarIO.py', '.venv/lib/python3.9/site-packages/PIL/BmpImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/ImageChops.py', '.venv/lib/python3.9/site-packages/PIL/PixarImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/FontFile.py', '.venv/lib/python3.9/site-packages/PIL/report.py', '.venv/lib/python3.9/site-packages/PIL/ImageWin.py', '.venv/lib/python3.9/site-packages/PIL/ImageFilter.py', '.venv/lib/python3.9/site-packages/PIL/ImageSequence.py', '.venv/lib/python3.9/site-packages/PIL/IptcImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/PSDraw.py', '.venv/lib/python3.9/site-packages/PIL/SgiImagePlugin.py', '.venv/lib/python3.9/site-packages/PIL/BlpImagePlugin.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24920]
+WARNING:  WatchFiles detected changes in '.venv/lib/python3.9/site-packages/fontTools/cu2qu/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/merger.py', '.venv/lib/python3.9/site-packages/fontTools/svgLib/path/shapes.py', '.venv/lib/python3.9/site-packages/fontTools/misc/encodingTools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/enumTools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_zipfs.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/macUtils.py', '.venv/lib/python3.9/site-packages/fontTools/qu2cu/qu2cu.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/sbixStrike.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/otData.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_g_c_i_d.py', '.venv/lib/python3.9/site-packages/fontTools/misc/xmlReader.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/D__e_b_g.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/unbuild.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_tempfs.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/F_F_T_M_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_s_b_i_x.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/L_T_S_H_.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/parser.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_f_p_g_m.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/models.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/OTTags.py', '.venv/lib/python3.9/site-packages/fontTools/pens/hashPointPen.py', '.venv/lib/python3.9/site-packages/fontTools/subset/cff.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_B_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/otTables.py', '.venv/lib/python3.9/site-packages/fontTools/misc/classifyTools.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/grUtils.py', '.venv/lib/python3.9/site-packages/fontTools/fontBuilder.py', '.venv/lib/python3.9/site-packages/fontTools/misc/intTools.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_B_D_T_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_m_e_t_a.py', '.venv/lib/python3.9/site-packages/fontTools/misc/arrayTools.py', '.venv/lib/python3.9/site-packages/fontTools/qu2cu/cli.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/S__i_l_l.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/otConverters.py', '.venv/lib/python3.9/site-packages/fontTools/designspaceLib/statNames.py', '.venv/lib/python3.9/site-packages/fontTools/misc/cliTools.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/sbixGlyph.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/reorderGlyphs.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/lexer.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_a_v_a_r.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I__2.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_f_v_a_r.py', '.venv/lib/python3.9/site-packages/fontTools/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/otBase.py', '.venv/lib/python3.9/site-packages/fontTools/pens/pointPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_c_m_a_p.py', '.venv/lib/python3.9/site-packages/fontTools/misc/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/E_B_D_T_.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/featureVars.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/validators.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/svgLib/path/parser.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/subset/util.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolatableHelpers.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/error.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/geometry.py', '.venv/lib/python3.9/site-packages/fontTools/misc/fixedTools.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/merge/cmap.py', '.venv/lib/python3.9/site-packages/fontTools/designspaceLib/types.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/S_I_N_G_.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/width.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/variableScalar.py', '.venv/lib/python3.9/site-packages/fontTools/pens/cocoaPen.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/map.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_D_.py', '.venv/lib/python3.9/site-packages/fontTools/misc/dictTools.py', '.venv/lib/python3.9/site-packages/fontTools/pens/basePen.py', '.venv/lib/python3.9/site-packages/fontTools/encodings/MacRoman.py', '.venv/lib/python3.9/site-packages/fontTools/pens/wxPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/psCharStrings.py', '.venv/lib/python3.9/site-packages/fontTools/misc/vector.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/ufo.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_D_E_F_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_l_c_a_r.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/kerning.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_S_U_B_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_m_a_x_p.py', '.venv/lib/python3.9/site-packages/fontTools/pens/statisticsPen.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/plan.py', '.venv/lib/python3.9/site-packages/fontTools/merge/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_o_p_b_d.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/F__e_a_t.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/location.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_m_o_r_x.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/cu2qu.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_g_v_a_r.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/S_V_G_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/pens/freetypePen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_p_r_o_p.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolatable.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_v_h_e_a.py', '.venv/lib/python3.9/site-packages/fontTools/encodings/codecs.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolatableTestContourOrder.py', '.venv/lib/python3.9/site-packages/fontTools/misc/psOperators.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_P_O_S_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/S__i_l_f.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_c_i_d_g.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/sfnt.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/O_S_2f_2.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_p_r_e_p.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/ast.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_n_a_m_e.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_subfs.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_V_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/D_S_I_G_.py', '.venv/lib/python3.9/site-packages/fontTools/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avarPlanner.py', '.venv/lib/python3.9/site-packages/fontTools/t1Lib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/instancer/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/error.py', '.venv/lib/python3.9/site-packages/fontTools/misc/cython.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/S_T_A_T_.py', '.venv/lib/python3.9/site-packages/fontTools/misc/etree.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/lexer.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/glifLib.py', '.venv/lib/python3.9/site-packages/fontTools/misc/sstruct.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/ttProgram.py', '.venv/lib/python3.9/site-packages/fontTools/pens/filterPen.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/Mirrored.py', '.venv/lib/python3.9/site-packages/fontTools/pens/transformPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/timeTools.py', '.venv/lib/python3.9/site-packages/fontTools/unicode.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/M_E_T_A_.py', '.venv/lib/python3.9/site-packages/fontTools/misc/symfont.py', '.venv/lib/python3.9/site-packages/fontTools/pens/svgPathPen.py', '.venv/lib/python3.9/site-packages/fontTools/agl.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/error.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_h_d_m_x.py', '.venv/lib/python3.9/site-packages/fontTools/qu2cu/benchmark.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/V_O_R_G_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I__5.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_J_.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/misc/macRes.py', '.venv/lib/python3.9/site-packages/fontTools/designspaceLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolatableTestStartingPoint.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_B_L_C_.py', '.venv/lib/python3.9/site-packages/fontTools/pens/recordingPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/asciiTable.py', '.venv/lib/python3.9/site-packages/fontTools/misc/lazyTools.py', '.venv/lib/python3.9/site-packages/fontTools/merge/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_tools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_walk.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/varStore.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_S_.py', '.venv/lib/python3.9/site-packages/fontTools/annotations.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolatablePlot.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/lookupDebugInfo.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/multiVarStore.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I__1.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_c_v_t.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_m_o_r_t.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filenames.py', '.venv/lib/python3.9/site-packages/fontTools/pens/boundsPen.py', '.venv/lib/python3.9/site-packages/fontTools/merge/unicode.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I__0.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_P_K_G_.py', '.venv/lib/python3.9/site-packages/fontTools/svgLib/path/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/pens/qu2cuPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/woff2.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/ttGlyphSet.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_F_F__2.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_b_s_l_n.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/ttFont.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/instancer/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_h_e_a_d.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G__l_o_c.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/ast.py', '.venv/lib/python3.9/site-packages/fontTools/pens/momentsPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/psLib.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_errors.py', '.venv/lib/python3.9/site-packages/fontTools/pens/quartzPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/visitor.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_t_r_a_k.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/E_B_L_C_.py', '.venv/lib/python3.9/site-packages/fontTools/designspaceLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/svgLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/merge/util.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/stat.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_l_o_c_a.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/specializer.py', '.venv/lib/python3.9/site-packages/fontTools/encodings/StandardEncoding.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_f_e_a_t.py', '.venv/lib/python3.9/site-packages/fontTools/svgLib/path/arc.py', '.venv/lib/python3.9/site-packages/fontTools/pens/areaPen.py', '.venv/lib/python3.9/site-packages/fontTools/pens/qtPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/otTraverse.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_C_.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/cli.py', '.venv/lib/python3.9/site-packages/fontTools/misc/iterTools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/treeTools.py', '.venv/lib/python3.9/site-packages/fontTools/qu2cu/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_path.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_P_A_L_.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/converters.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/standardGlyphOrder.py', '.venv/lib/python3.9/site-packages/fontTools/pens/cu2quPen.py', '.venv/lib/python3.9/site-packages/fontTools/pens/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/etree.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_p_o_s_t.py', '.venv/lib/python3.9/site-packages/fontTools/pens/roundingPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_O_L_R_.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/interpolate_layout.py', '.venv/lib/python3.9/site-packages/fontTools/pens/perimeterPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_copy.py', '.venv/lib/python3.9/site-packages/fontTools/afmLib.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/hvar.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_T_F_A_.py', '.venv/lib/python3.9/site-packages/fontTools/mtiLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/misc/py23.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/ScriptExtensions.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/scaleUpem.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_V_A_R_.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_h_h_e_a.py', '.venv/lib/python3.9/site-packages/fontTools/misc/roundTools.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/mvar.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/V_V_A_R_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/ttVisitor.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/cff.py', '.venv/lib/python3.9/site-packages/fontTools/pens/cairoPen.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/filenames.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G_M_A_P_.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/iup.py', '.venv/lib/python3.9/site-packages/fontTools/pens/reportLabPen.py', '.venv/lib/python3.9/site-packages/fontTools/subset/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/plot.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_l_t_a_g.py', '.venv/lib/python3.9/site-packages/fontTools/pens/reverseContourPen.py', '.venv/lib/python3.9/site-packages/fontTools/merge/options.py', '.venv/lib/python3.9/site-packages/fontTools/qu2cu/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/instancer/names.py', '.venv/lib/python3.9/site-packages/fontTools/subset/svg.py', '.venv/lib/python3.9/site-packages/fontTools/pens/teePen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/TupleVariation.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/J_S_T_F_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_c_v_a_r.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/V_D_M_X_.py', '.venv/lib/python3.9/site-packages/fontTools/misc/transform.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_a_n_k_r.py', '.venv/lib/python3.9/site-packages/fontTools/misc/textTools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/xmlWriter.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/M_V_A_R_.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/errors.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/removeOverlaps.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_base.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_osfs.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I_P_.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_k_e_r_n.py', '.venv/lib/python3.9/site-packages/fontTools/merge/tables.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_g_l_y_f.py', '.venv/lib/python3.9/site-packages/fontTools/mtiLib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/CFFToCFF2.py', '.venv/lib/python3.9/site-packages/fontTools/misc/testTools.py', '.venv/lib/python3.9/site-packages/fontTools/misc/eexec.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/build.py', '.venv/lib/python3.9/site-packages/fontTools/misc/plistlib/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_v_m_t_x.py', '.venv/lib/python3.9/site-packages/fontTools/cu2qu/benchmark.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/unbuilder.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/plistlib.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/utils.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/optimize/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/Blocks.py', '.venv/lib/python3.9/site-packages/fontTools/misc/filesystem/_info.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_g_a_s_p.py', '.venv/lib/python3.9/site-packages/fontTools/subset/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/parser.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/V_A_R_C_.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/avar/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/misc/configTools.py', '.venv/lib/python3.9/site-packages/fontTools/pens/explicitClosingLinePen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/macCreatorType.py', '.venv/lib/python3.9/site-packages/fontTools/merge/base.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/builder.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/errors.py', '.venv/lib/python3.9/site-packages/fontTools/pens/ttGlyphPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/bezierTools.py', '.venv/lib/python3.9/site-packages/fontTools/help.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/mutator.py', '.venv/lib/python3.9/site-packages/fontTools/colorLib/table_builder.py', '.venv/lib/python3.9/site-packages/fontTools/encodings/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/H_V_A_R_.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/maxContextCalc.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/_h_m_t_x.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/CFF2ToCFF.py', '.venv/lib/python3.9/site-packages/fontTools/config/__init__.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/builder.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/builder.py', '.venv/lib/python3.9/site-packages/fontTools/pens/t2CharStringPen.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/ttCollection.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/errors.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/pointPen.py', '.venv/lib/python3.9/site-packages/fontTools/misc/loggingTools.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/G__l_a_t.py', '.venv/lib/python3.9/site-packages/fontTools/designspaceLib/split.py', '.venv/lib/python3.9/site-packages/fontTools/cffLib/transforms.py', '.venv/lib/python3.9/site-packages/fontTools/merge/layout.py', '.venv/lib/python3.9/site-packages/fontTools/ttx.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/B_A_S_E_.py', '.venv/lib/python3.9/site-packages/fontTools/pens/pointInsidePen.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/optimize/gpos.py', '.venv/lib/python3.9/site-packages/fontTools/otlLib/optimize/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/T_S_I__3.py', '.venv/lib/python3.9/site-packages/fontTools/feaLib/builder.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/voltToFea.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/C_F_F_.py', '.venv/lib/python3.9/site-packages/fontTools/ufoLib/errors.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/BitmapGlyphMetrics.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/DefaultTable.py', '.venv/lib/python3.9/site-packages/fontTools/unicodedata/Scripts.py', '.venv/lib/python3.9/site-packages/fontTools/voltLib/__main__.py', '.venv/lib/python3.9/site-packages/fontTools/tfmLib.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/instancer/solver.py', '.venv/lib/python3.9/site-packages/fontTools/varLib/instancer/featureVars.py', '.venv/lib/python3.9/site-packages/fontTools/ttLib/tables/M_A_T_H_.py'. Reloading...
+INFO:     Started server process [24961]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in '.venv/lib/python3.9/site-packages/fpdf/actions.py', '.venv/lib/python3.9/site-packages/fpdf/encryption.py', '.venv/lib/python3.9/site-packages/fpdf/text_region.py', '.venv/lib/python3.9/site-packages/fpdf/html.py', '.venv/lib/python3.9/site-packages/fpdf/output.py', '.venv/lib/python3.9/site-packages/fpdf/recorder.py', '.venv/lib/python3.9/site-packages/fpdf/prefs.py', '.venv/lib/python3.9/site-packages/fpdf/drawing.py', '.venv/lib/python3.9/site-packages/defusedxml/ElementTree.py', '.venv/lib/python3.9/site-packages/fpdf/image_parsing.py', '.venv/lib/python3.9/site-packages/fpdf/fonts.py', '.venv/lib/python3.9/site-packages/defusedxml/expatbuilder.py', '.venv/lib/python3.9/site-packages/fpdf/pattern.py', '.venv/lib/python3.9/site-packages/fpdf/sign.py', '.venv/lib/python3.9/site-packages/fpdf/svg.py', '.venv/lib/python3.9/site-packages/fpdf/errors.py', '.venv/lib/python3.9/site-packages/fpdf/bidi.py', '.venv/lib/python3.9/site-packages/defusedxml/cElementTree.py', '.venv/lib/python3.9/site-packages/fpdf/deprecation.py', '.venv/lib/python3.9/site-packages/fpdf/enums.py', '.venv/lib/python3.9/site-packages/fpdf/structure_tree.py', '.venv/lib/python3.9/site-packages/fpdf/fpdf.py', '.venv/lib/python3.9/site-packages/fpdf/unicode_script.py', '.venv/lib/python3.9/site-packages/fpdf/annotations.py', '.venv/lib/python3.9/site-packages/defusedxml/common.py', '.venv/lib/python3.9/site-packages/fpdf/linearization.py', '.venv/lib/python3.9/site-packages/defusedxml/__init__.py', '.venv/lib/python3.9/site-packages/fpdf/table.py', '.venv/lib/python3.9/site-packages/defusedxml/xmlrpc.py', '.venv/lib/python3.9/site-packages/fpdf/graphics_state.py', '.venv/lib/python3.9/site-packages/defusedxml/pulldom.py', '.venv/lib/python3.9/site-packages/fpdf/transitions.py', '.venv/lib/python3.9/site-packages/fpdf/outline.py', '.venv/lib/python3.9/site-packages/fpdf/__init__.py', '.venv/lib/python3.9/site-packages/fpdf/util.py', '.venv/lib/python3.9/site-packages/defusedxml/minidom.py', '.venv/lib/python3.9/site-packages/defusedxml/sax.py', '.venv/lib/python3.9/site-packages/fpdf/image_datastructures.py', '.venv/lib/python3.9/site-packages/fpdf/line_break.py', '.venv/lib/python3.9/site-packages/fpdf/template.py', '.venv/lib/python3.9/site-packages/fpdf/syntax.py', '.venv/lib/python3.9/site-packages/defusedxml/expatreader.py', '.venv/lib/python3.9/site-packages/defusedxml/lxml.py'. Reloading...
+INFO:     Started server process [24962]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [24963]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/api/routes/exports.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24963]
+INFO:     Started server process [24972]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52273 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52293 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52291 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52289 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52294 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52289 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52291 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52293 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52289 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52294 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52291 - "GET /api/v1/companies/2/competitors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52293 - "GET /api/v1/companies/2/website HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/v1/companies/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52289 - "GET /api/v1/companies/2/overview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2/technology HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52291 - "GET /api/v1/companies/2/seo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52294 - "GET /api/v1/companies/2/social HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52293 - "GET /api/v1/companies/2/performance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/v1/companies/2/reviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2/hiring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52291 - "GET /api/v1/companies/2/news HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52294 - "GET /api/v1/companies/2/pain-points HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52293 - "GET /api/v1/companies/2/executives HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/v1/companies/2/pricing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52289 - "GET /api/v1/companies/2/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52280 - "GET /api/v1/companies/2/competitors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52300 - "GET /api/v1/exports/2/pitch-deck HTTP/1.1" 200 OK

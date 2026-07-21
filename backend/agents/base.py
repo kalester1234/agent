@@ -23,7 +23,7 @@ class BaseAgent:
         self.ollama_model = "llama3.2:latest"
         
         # Groq Client (Fallback 1)
-        self.groq_key = settings.GROQ_API_KEY
+        self.groq_key = settings.get_groq_api_key
         self.groq_client = AsyncGroq(api_key=self.groq_key) if self.groq_key else None
         self.groq_model = "llama-3.3-70b-versatile"
         
@@ -33,7 +33,7 @@ class BaseAgent:
             base_url="https://openrouter.ai/api/v1",
             api_key=self.or_key
         ) if self.or_key else None
-        self.or_model = "meta-llama/llama-3.3-70b-instruct"
+        self.or_model = "google/gemini-2.5-flash"
 
         # Cerebras Client (Fast-Track)
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")

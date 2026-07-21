@@ -9,7 +9,21 @@ router = APIRouter()
 def get_opportunities(db: Session = Depends(get_db)):
     # 1. Fetch opportunities
     from backend.models.models import Company
-    opportunities_db = db.query(Opportunity, Company.name).join(Company).order_by(Opportunity.created_at.desc()).all()
+    
+    latest_opp = db.query(Opportunity).order_by(Opportunity.created_at.desc()).first()
+    
+    if latest_opp:
+        latest_company_id = latest_opp.company_id
+        opportunities_db = (
+            db.query(Opportunity, Company.name)
+            .join(Company)
+            .filter(Opportunity.company_id == latest_company_id)
+            .order_by(Opportunity.created_at.desc())
+            .all()
+        )
+    else:
+        opportunities_db = []
+
     opportunities = [
         {
             "id": opp.id,
@@ -40,3 +54,31 @@ def get_opportunities(db: Session = Depends(get_db)):
         "opportunities": opportunities,
         "pipeline": pipeline
     }
+
+@router.post("/{opp_id}/generate-message")
+async def generate_outreach(opp_id: int, db: Session = Depends(get_db)):
+    from fastapi import HTTPException
+    from backend.models.models import Company, PainPoint
+    from backend.agents.outreach import OutreachAgent
+    
+    opp = db.query(Opportunity).filter(Opportunity.id == opp_id).first()
+    if not opp:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+        
+    company = db.query(Company).filter(Company.id == opp.company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+        
+    # Get pain points
+    pain_points_db = db.query(PainPoint).filter(PainPoint.company_id == company.id).all()
+    pain_points = [p.title for p in pain_points_db]
+    
+    agent = OutreachAgent()
+    result = await agent.generate_outreach(
+        company_name=company.name,
+        opportunity_title=opp.title,
+        opportunity_desc=opp.description,
+        pain_points=pain_points
+    )
+    
+    return result

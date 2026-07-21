@@ -8,7 +8,7 @@ from backend.models.models import (
     Company, CompanyProfile, CompanyWebsite, WebsitePage,
     TechnologyStack, SEOData, PerformanceMetrics, SocialProfile,
     NewsArticle, Review, Job, Competitor, Funding, Acquisition, IPOInfo,
-    Source, Evidence, CrawlJob, PainPoint
+    Source, Evidence, CrawlJob, PainPoint, Opportunity
 )
 
 router = APIRouter()
@@ -105,6 +105,7 @@ def get_company_overview(company_id: int, db: Session = Depends(get_db)):
     fact_list = []
     for f in facts:
         fact_list.append({
+            "id": f.id,
             "fact_name": f.fact_name,
             "fact_value": f.fact_value,
             "source": f.source,
@@ -509,7 +510,7 @@ def get_pain_points(company_id: int, db: Session = Depends(get_db)):
         for pp in pps
     ]
 
-@router.post("/{company_id}/pain-points/analyze")
+@router.post("/{company_id}/needs")
 async def analyze_pain_points(company_id: int, db: Session = Depends(get_db)):
     company = db.query(Company).filter(Company.id == company_id).first()
     if not company:
@@ -552,3 +553,71 @@ async def chat_with_company(company_id: int, req: ChatRequest, db: Session = Dep
         agent.chat_stream(company_id, db, req.messages),
         media_type="text/event-stream"
     )
+
+@router.get("/{company_id}/competitors")
+def get_company_competitors(company_id: int, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+        
+    competitors = db.query(Competitor).filter(Competitor.company_id == company_id).all()
+    
+    return [
+        {
+            "id": comp.id,
+            "competitor_name": comp.competitor_name,
+            "industry": comp.industry,
+            "products": comp.products,
+            "positioning": comp.positioning,
+            "created_at": comp.created_at
+        }
+        for comp in competitors
+    ]
+
+@router.post("/{company_id}/generate-message")
+async def generate_company_outreach(company_id: int, db: Session = Depends(get_db)):
+    company = db.query(Company).filter(Company.id == company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+        
+    opp = db.query(Opportunity).filter(Opportunity.company_id == company_id).first()
+    pain_points_db = db.query(PainPoint).filter(PainPoint.company_id == company_id).all()
+    pain_points = [p.title for p in pain_points_db]
+    
+    from backend.agents.outreach import OutreachAgent
+    agent = OutreachAgent()
+    result = await agent.generate_outreach(
+        company_name=company.name,
+        opportunity_title=opp.title if opp else "Strategic Partnership",
+        opportunity_desc=opp.description if opp else "Exploring mutual synergies and potential integration opportunities.",
+        pain_points=pain_points
+    )
+    
+    return result
+
+class FactUpdate(BaseModel):
+    fact_value: str
+
+@router.put("/{company_id}/facts/{fact_id}")
+def update_company_fact(company_id: int, fact_id: int, payload: FactUpdate, db: Session = Depends(get_db)):
+    from backend.models.models import CompanyFact
+    
+    fact = db.query(CompanyFact).filter(CompanyFact.id == fact_id, CompanyFact.company_id == company_id).first()
+    if not fact:
+        raise HTTPException(status_code=404, detail="Fact not found")
+        
+    fact.fact_value = payload.fact_value
+    fact.confidence = 1.0
+    fact.source = "Human Verified"
+    
+    db.commit()
+    db.refresh(fact)
+    
+    return {
+        "id": fact.id,
+        "fact_name": fact.fact_name,
+        "fact_value": fact.fact_value,
+        "source": fact.source,
+        "url": fact.url,
+        "confidence": fact.confidence
+    }

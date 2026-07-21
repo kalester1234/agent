@@ -572,3 +572,211 @@ RuntimeError: Event loop is closed
 [2026-07-18 14:35:35,000: INFO/ForkPoolWorker-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 [2026-07-18 14:35:54,957: INFO/ForkPoolWorker-1] AI generated 8 pain points.
 [2026-07-18 14:35:54,964: INFO/ForkPoolWorker-1] Task backend.workers.tasks.pain_point_analysis_task[88ca2aa8-7d6e-4257-b6f4-2cc35b7769b7] succeeded in 21.466029750000416s: None
+[2026-07-20 10:55:17,464: INFO/MainProcess] Task backend.workers.tasks.discover_company_task[d9d782c2-9a69-474a-a1cd-8b998fb83134] received
+[2026-07-20 10:55:17,566: INFO/ForkPoolWorker-8] Task: Discover Company for ID: 2
+[2026-07-20 10:55:17,645: INFO/ForkPoolWorker-8] Running Company Discovery Collector for Cisco
+[2026-07-20 10:55:18,912: INFO/ForkPoolWorker-8] HTTP Request: GET https://cisco.com "HTTP/1.1 302 Found"
+[2026-07-20 10:55:19,227: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cisco.com/ "HTTP/1.1 403 Forbidden"
+[2026-07-20 10:55:19,267: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-329' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:19,871: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Cisco%20company&utf8=&format=json "HTTP/1.1 200 OK"
+[2026-07-20 10:55:20,422: INFO/ForkPoolWorker-8] HTTP Request: GET https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=Cisco&format=json "HTTP/1.1 200 OK"
+[2026-07-20 10:55:22,520: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-20 10:55:22,563: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-20 10:55:45,434: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-20 10:55:45,445: INFO/ForkPoolWorker-8] Fact 'Funding' is missing for Cisco. Triggering AI targeted search.
+[2026-07-20 10:55:45,446: INFO/ForkPoolWorker-8] AI targeted search query: Cisco Funding amount financial
+[2026-07-20 10:55:47,376: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-20 10:55:47,456: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.cisco.com/site/us/en/about/purpose/community-resilience/social-impact-investments/global-impact-cash-grants.html "HTTP/1.1 403 Forbidden"
+[2026-07-20 10:55:47,576: INFO/ForkPoolWorker-8] HTTP Request: GET https://research.cisco.com/research-funding "HTTP/1.1 200 OK"
+[2026-07-20 10:55:47,638: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-20 10:55:49,092: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-20 10:55:49,295: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-20 10:55:49,303: INFO/ForkPoolWorker-8] Fact 'Profit/Loss' is missing for Cisco. Triggering AI targeted search.
+[2026-07-20 10:55:49,305: INFO/ForkPoolWorker-8] AI targeted search query: Cisco Profit/Loss amount financial
+[2026-07-20 10:55:49,314: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-334' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:49,319: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-335' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:49,322: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-336' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:49,324: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-337' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:49,326: ERROR/ForkPoolWorker-8] Task exception was never retrieved
+future: <Task finished name='Task-338' coro=<AsyncClient.aclose() done, defined at /Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/streams/tls.py", line 241, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/intern/Desktop/vasanth/agent/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1329, in aclose
+    self._transport.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[2026-07-20 10:55:50,727: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-20 10:55:51,037: INFO/ForkPoolWorker-8] HTTP Request: GET https://investor.cisco.com/financials/quarterly-results/default.aspx "HTTP/1.1 200 OK"
+[2026-07-20 10:55:52,070: INFO/ForkPoolWorker-8] HTTP Request: GET https://finance.yahoo.com/quote/CSCO/financials/ "HTTP/1.1 404 Not Found"
+[2026-07-20 10:55:52,087: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-20 10:55:53,743: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-20 10:55:54,030: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-20 10:55:54,033: INFO/ForkPoolWorker-8] Fact 'CEO' is missing for Cisco. Triggering AI targeted search.
+[2026-07-20 10:55:54,034: INFO/ForkPoolWorker-8] AI targeted search query: Cisco CEO name linkedin
+[2026-07-20 10:55:55,739: INFO/ForkPoolWorker-8] HTTP Request: POST https://google.serper.dev/search "HTTP/1.1 200 OK"
+[2026-07-20 10:55:56,759: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.linkedin.com/in/johnchambersjc "HTTP/1.1 200 OK"
+[2026-07-20 10:55:58,577: INFO/ForkPoolWorker-8] HTTP Request: GET https://www.linkedin.com/company/cisco "HTTP/1.1 200 OK"
+[2026-07-20 10:55:58,991: INFO/ForkPoolWorker-8] AFC is enabled with max remote calls: 10.
+[2026-07-20 10:56:01,356: INFO/ForkPoolWorker-8] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[2026-07-20 10:56:01,767: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-20 10:56:01,790: INFO/ForkPoolWorker-8] Task backend.workers.tasks.discover_company_task[d9d782c2-9a69-474a-a1cd-8b998fb83134] succeeded in 44.23503658300615s: None
+[2026-07-20 11:17:29,797: INFO/MainProcess] sync with celery@Vikrams-MAC.local
+[2026-07-20 11:18:02,229: INFO/MainProcess] sync with celery@Vikrams-MAC.local
+[2026-07-20 11:29:22,661: INFO/MainProcess] sync with celery@Vikrams-MAC.local
+
+worker: Warm shutdown (MainProcess)

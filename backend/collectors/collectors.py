@@ -58,10 +58,10 @@ class DataValidationLayer:
         if existing:
             return existing
 
-        # 2. Check for spam (e.g. dummy/placeholder text)
+        # 2. Check for spam (e.g. dummy/placeholder text or PDF binary garbage)
         confidence = base_confidence
         lower_content = cleaned_evidence.lower()
-        spam_keywords = ["lorem ipsum", "dummy text", "placeholder text", "test content"]
+        spam_keywords = ["lorem ipsum", "dummy text", "placeholder text", "test content", "endstream", "endobj", "startxref", "%%eof"]
         if any(keyword in lower_content for keyword in spam_keywords):
             confidence *= 0.1  # Highly reduce confidence if it looks like spam
 
@@ -277,7 +277,7 @@ class CompanyDiscoveryCollector(BaseCollector):
             description = search_desc[:1000] if search_desc else f"Sales intelligence profile for {self.company.name}."
 
         # Fetch Financial Evidence
-        financials_desc = await self._perform_web_search(f'"{self.company.name}" revenue OR funding OR valuation OR headquarters OR employees')
+        financials_desc = await self._perform_web_search(f'"{self.company.name}" "annual revenue" OR "total funding" OR "valuation" financials')
         if financials_desc:
             DataValidationLayer.validate_and_store_evidence(
                 self.db, self.company_id, "https://lite.duckduckgo.com", "Financial Search Context", financials_desc, 0.70
@@ -307,8 +307,13 @@ class CompanyDiscoveryCollector(BaseCollector):
             "You are an Evidence Validation Engine. Your job is to resolve conflicting facts and extract accurate data. "
             "Rule 1: Always trust higher confidence evidence (e.g. Official Homepage) over lower confidence evidence (e.g. DDG Search).\n"
             "Rule 2: If a piece of evidence (like a Wikipedia article) clearly refers to a historical event, a generic noun, or something completely unrelated to a modern company (e.g. a poem or book), IGNORE that evidence entirely.\n"
-            "For 'Headquarters', extract ONLY the exact physical city and country (e.g. 'Chennai, India' or 'San Francisco, USA'). Ignore vague regions or incorrect data.\n\n"
+            "For 'Headquarters', extract ONLY the exact physical city and country (e.g. 'Chennai, India' or 'San Francisco, USA'). Ignore vague regions or incorrect data.\n"
+            "For 'Founded Year', ONLY extract a year if the text explicitly states when the company was founded, launched, or established. DO NOT use copyright years or recent product launch years.\n"
+            "For 'Employee Count', the number MUST be a realistic employee count (between 1 and 3,000,000). If you see an absurd number (e.g. 800 million), it is a parsing error—reject it and output 'Not Disclosed'.\n"
+            f"For 'Revenue', 'Valuation', and 'Funding', you MUST verify that the monetary figure explicitly belongs to '{self.company.name}'. If the number is linked to a competitor, an industry average, or an overarching market size, you MUST reject it and output 'Not Disclosed'. Do not extract generic dates or product prices as company valuation.\n"
+            "For 'Revenue', 'Valuation', and 'Funding', output ONLY the clean, standardized number (e.g., '$21.8M', '$1.2B'). Do not output '$21.8M per year' or 'Estimated $50M'.\n\n"
             "You MUST output an object for ALL of the following facts: 'Employee Count', 'Revenue', 'Funding', 'Profit/Loss', 'Valuation', 'Founded Year', 'Founders', 'CEO', 'Business Model', 'Industry', 'Headquarters', 'Products', 'Services'. "
+            "For 'Profit/Loss', explicitly mention whether the amount is a 'Profit' or a 'Loss' (e.g., 'Profit: $500M' or 'Loss: $50M').\n"
             "If a fact is completely missing from the relevant evidence and you cannot deduce it, set the fact_value to 'Not Disclosed'.\n\n"
             "Output a JSON array of objects strictly matching this schema:\n"
             "[\n"
@@ -446,8 +451,19 @@ class CompanyDiscoveryCollector(BaseCollector):
                 profile.founded_year = int(fy_digits) if fy_digits else None
                 
                 ec = str(legacy_map.get("Employee Count", ""))
-                ec_digits = re.sub(r'[^0-9]', '', ec)
-                profile.employee_count = int(ec_digits) if ec_digits else None
+                ec_match = re.search(r'(\d+(?:,\d+)*(?:\.\d+)?)\s*([kKmMbB]?)', ec)
+                if ec_match:
+                    base_num = float(ec_match.group(1).replace(',', ''))
+                    multiplier = ec_match.group(2).upper()
+                    if multiplier == 'K':
+                        base_num *= 1_000
+                    elif multiplier == 'M':
+                        base_num *= 1_000_000
+                    elif multiplier == 'B':
+                        base_num *= 1_000_000_000
+                    profile.employee_count = int(base_num)
+                else:
+                    profile.employee_count = None
                 
                 profile.founders = legacy_map.get("Founders", "N/A")
                 profile.revenue_estimate = legacy_map.get("Revenue", "Not Disclosed")
@@ -471,10 +487,12 @@ class CompanyDiscoveryCollector(BaseCollector):
             profile.products = []
             profile.services = []
             
-            ceo = self._extract_ceo(fallback_text) or "N/A"
+            ceo = self._extract_ceo(fallback_text) or profile.founders or "Not Disclosed"
             funding = self._extract_funding(fallback_text) or "Not Disclosed"
             valuation = self._extract_valuation(fallback_text) or "Not Disclosed"
-            profit = "Not Disclosed"
+            
+            profit_fact = next((f for f in facts if f.get("fact_name") == "Profit/Loss"), None) if 'facts' in locals() else None
+            profit = profit_fact.get("fact_value") if profit_fact else "Not Disclosed"
             
             # Ensure facts are saved for UI
             self.db.query(CompanyFact).filter(CompanyFact.company_id == self.company_id).delete()
@@ -521,6 +539,10 @@ class CompanyDiscoveryCollector(BaseCollector):
             async with httpx.AsyncClient(timeout=8.0, follow_redirects=True) as client:
                 resp = await client.get(url, headers=self.headers)
                 if resp.status_code == 200:
+                    content_type = resp.headers.get("Content-Type", "").lower()
+                    if "application/pdf" in content_type or url.lower().endswith(".pdf"):
+                        logger.warning(f"Skipping PDF URL to avoid binary garbage: {url}")
+                        return ""
                     soup = BeautifulSoup(resp.text, "html.parser")
                     # Remove scripts, styles, and boilerplate
                     for element in soup(["script", "style", "nav", "footer", "header"]):
@@ -861,6 +883,10 @@ class WebsiteCrawlerCollector(BaseCollector):
         try:
             resp = await client.get(url, headers=self.headers)
             if resp.status_code == 200:
+                content_type = resp.headers.get("Content-Type", "").lower()
+                if "application/pdf" in content_type or url.lower().endswith(".pdf"):
+                    logger.warning(f"Skipping PDF URL to avoid binary garbage: {url}")
+                    return (url, None)
                 return (url, resp)
         except Exception as e:
             logger.warning(f"Failed to fetch {url}: {e}")

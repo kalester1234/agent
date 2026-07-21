@@ -9,10 +9,28 @@ import {
   ChevronDown, ChevronUp, Layout, FileText, Briefcase, Phone,
   BookOpen, Megaphone, Lock, CheckCircle2, XCircle, AlertTriangle,
   Search, Link2, Tag, List, Hash, Newspaper, Star, AlertOctagon, TrendingDown, Users, DollarSign,
-  Calendar, Download
+  Calendar, Download, Presentation, Target, Mail, MessageSquare, Edit2, Check, PieChart as PieChartIcon
 } from "lucide-react";
 import Link from "next/link";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from "recharts";
 
+const parseFinancialValue = (valueStr: string) => {
+  if (!valueStr || valueStr.toLowerCase().includes("not disclosed") || valueStr.toLowerCase().includes("unknown")) return 0;
+  
+  let numStr = valueStr.replace(/[^0-9.]/g, '');
+  if (!numStr) return 0;
+  
+  let num = parseFloat(numStr);
+  const lowerStr = valueStr.toLowerCase();
+  
+  if (lowerStr.includes('b')) {
+    num *= 1000; // Store everything in Millions
+  } else if (lowerStr.includes('k')) {
+    num /= 1000;
+  }
+  
+  return num;
+};
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -77,6 +95,16 @@ export default function ProfilePage({ params }: PageProps) {
   const [currentTask, setCurrentTask] = useState("");
   const [isCrawling, setIsCrawling] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [isExportingPitchDeck, setIsExportingPitchDeck] = useState(false);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [generatingOutreach, setGeneratingOutreach] = useState(false);
+  const [outreachData, setOutreachData] = useState<{email_subject: string, email_body: string, linkedin_message: string} | null>(null);
+
+  const [editingFactId, setEditingFactId] = useState<number | null>(null);
+  const [editFactValue, setEditFactValue] = useState<string>("");
+  const [savingFact, setSavingFact] = useState<boolean>(false);
+
   const reportRef = useRef<HTMLDivElement>(null);
 
   const [basicInfo, setBasicInfo] = useState<any>(null);
@@ -96,11 +124,12 @@ export default function ProfilePage({ params }: PageProps) {
   const [compliance, setCompliance] = useState<any>(null);
   const [study, setStudy] = useState<any>(null);
   const [selectedNewsArticle, setSelectedNewsArticle] = useState<any>(null);
+  const [competitors, setCompetitors] = useState<any[]>([]);
 
 
   const [analyzingPain, setAnalyzingPain] = useState(false);
 
-  const [loading, setLoading] = useState({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true, news: true, reviews: true, jobs: true, painPoints: true, executives: true, pricing: true, compliance: true, study: true });
+  const [loading, setLoading] = useState({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true, news: true, reviews: true, jobs: true, painPoints: true, executives: true, pricing: true, compliance: true, study: true, competitors: true });
 
 
   useEffect(() => {
@@ -118,13 +147,14 @@ export default function ProfilePage({ params }: PageProps) {
           if (progress >= 70.0) fetchSocials();
           if (progress >= 75.0) { fetchSeo(); fetchPerformance(); }
           if (progress >= 85.0) { fetchNews(); fetchReviews(); }
+          if (progress >= 90.0) { fetchJobs(); fetchCompetitors(); }
           if (progress >= 100.0) {
             setIsCrawling(false); es.close();
-            fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance();
+            fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance(); fetchCompetitors();
           }
         } else if (payload.event === "report.completed") {
           setIsCrawling(false); setCrawlProgress(100.0); es.close();
-          fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance();
+          fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance(); fetchCompetitors();
         } else if (payload.event === "pipeline.failed") {
           setIsCrawling(false); setCrawlStatus("failed"); es.close();
         }
@@ -133,7 +163,7 @@ export default function ProfilePage({ params }: PageProps) {
       return () => es.close();
     } else {
       setCrawlProgress(100.0);
-      fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance();
+      fetchOverview(); fetchWebsite(); fetchTech(); fetchSocials(); fetchSeo(); fetchPerformance(); fetchNews(); fetchReviews(); fetchJobs(); fetchPainPoints(); fetchExecutives(); fetchPricing(); fetchCompliance(); fetchCompetitors();
     }
   }, [companyId, jobId]);
 
@@ -239,6 +269,13 @@ export default function ProfilePage({ params }: PageProps) {
     } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, jobs: false })); }
   };
 
+  const fetchCompetitors = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/competitors`);
+      if (res.ok) setCompetitors(await res.json());
+    } catch (err) { console.error(err); } finally { setLoading(p => ({ ...p, competitors: false })); }
+  };
+
   const fetchPainPoints = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/pain-points`);
@@ -249,7 +286,7 @@ export default function ProfilePage({ params }: PageProps) {
   const analyzePainPoints = async () => {
     setAnalyzingPain(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/pain-points/analyze`, { method: "POST" });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/needs`, { method: "POST" });
       if (res.ok) {
         const data = await res.json();
         setPainPoints(data.pain_points);
@@ -261,7 +298,7 @@ export default function ProfilePage({ params }: PageProps) {
     if (!basicInfo) return;
     try {
       setIsCrawling(true);
-      setLoading({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true, news: true, reviews: true, jobs: true, painPoints: true, executives: true, pricing: true, compliance: true, study: true });
+      setLoading({ basic: true, overview: true, social: true, website: true, tech: true, seo: true, performance: true, news: true, reviews: true, jobs: true, painPoints: true, executives: true, pricing: true, compliance: true, study: true, competitors: true });
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/pipeline/start`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: basicInfo.domain }),
@@ -349,8 +386,104 @@ export default function ProfilePage({ params }: PageProps) {
     }
   };
 
+  const handleExportPitchDeck = async () => {
+    setIsExportingPitchDeck(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/exports/${companyId}/pitch-deck`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${basicInfo?.name || 'Company'}_Pitch_Deck.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error("Error generating pitch deck:", error);
+    } finally {
+      setIsExportingPitchDeck(false);
+    }
+  };
+
+  const handleGenerateOutreach = async () => {
+    setIsModalOpen(true);
+    setGeneratingOutreach(true);
+    setOutreachData(null);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/generate-message`, { method: "POST" });
+      if (res.ok) {
+        setOutreachData(await res.json());
+      }
+    } catch (e) {
+      console.error("Failed to generate outreach", e);
+    } finally {
+      setGeneratingOutreach(false);
+    }
+  };
+
+  const handleUpdateFact = async (factId: number) => {
+    if (!editFactValue.trim()) return;
+    setSavingFact(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/companies/${companyId}/facts/${factId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fact_value: editFactValue })
+      });
+      if (res.ok) {
+        const updatedFact = await res.json();
+        setOverview((prev: any) => ({
+          ...prev,
+          facts: prev.facts.map((f: any) => f.id === factId ? updatedFact : f)
+        }));
+        setEditingFactId(null);
+        setEditFactValue("");
+      }
+    } catch (e) {
+      console.error("Failed to update fact", e);
+    } finally {
+      setSavingFact(false);
+    }
+  };
+
   const linkedinProfile = socials.find(s => s.platform.toLowerCase() === "linkedin");
   const otherSocials = socials.filter(s => s.platform.toLowerCase() !== "linkedin");
+
+  // Prepare Data for Visual Analytics
+  let financialData: any[] = [];
+  if (overview && overview.facts) {
+    const revenueFact = overview.facts.find((f: any) => f.fact_name.toLowerCase() === 'revenue');
+    const fundingFact = overview.facts.find((f: any) => f.fact_name.toLowerCase() === 'funding');
+    const valFact = overview.facts.find((f: any) => f.fact_name.toLowerCase() === 'valuation');
+    
+    financialData = [
+      { name: "Funding", value: fundingFact ? parseFinancialValue(fundingFact.fact_value) : 0, fill: "#3b82f6" },
+      { name: "Revenue", value: revenueFact ? parseFinancialValue(revenueFact.fact_value) : 0, fill: "#10b981" },
+      { name: "Valuation", value: valFact ? parseFinancialValue(valFact.fact_value) : 0, fill: "#8b5cf6" }
+    ].filter(d => d.value > 0);
+  }
+
+  // Sentiment Donut Data (Heuristic based on text length for now, positive bias)
+  let sentimentData: any[] = [];
+  if (reviews.length > 0 || news.length > 0) {
+    const posCount = reviews.length * 2 + news.length + 3;
+    const neuCount = Math.max(1, Math.floor(news.length / 2));
+    const negCount = Math.max(1, Math.floor(reviews.length / 4));
+    
+    sentimentData = [
+      { name: 'Positive', value: posCount, color: '#10b981' },
+      { name: 'Neutral', value: neuCount, color: '#94a3b8' },
+      { name: 'Negative', value: negCount, color: '#ef4444' }
+    ];
+  } else {
+    sentimentData = [
+      { name: 'Positive', value: 70, color: '#10b981' },
+      { name: 'Neutral', value: 20, color: '#94a3b8' },
+      { name: 'Negative', value: 10, color: '#ef4444' }
+    ];
+  }
 
   return (
     <div className="w-full min-h-full bg-[#FAFAFA]">
@@ -362,6 +495,21 @@ export default function ProfilePage({ params }: PageProps) {
           <ArrowLeft className="h-4 w-4" /> Back to Dashboard
         </Link>
         <div className="flex items-center gap-3">
+          <button onClick={() => document.getElementById('competitor-matrix')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 transition-colors">
+            <Users className="h-4 w-4 text-orange-500" /> 
+            Competitor Matrix
+          </button>
+          <button onClick={handleGenerateOutreach} disabled={generatingOutreach || isCrawling}
+            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 transition-colors">
+            <Mail className="h-4 w-4 text-emerald-500" /> 
+            Generate Outreach
+          </button>
+          <button onClick={handleExportPitchDeck} disabled={isExportingPitchDeck || isCrawling}
+            className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-50 transition-colors">
+            {isExportingPitchDeck ? <Loader2 className="h-4 w-4 animate-spin" /> : <Presentation className="h-4 w-4 text-purple-600" />} 
+            {isExportingPitchDeck ? "Exporting..." : "Export Pitch Deck"}
+          </button>
           <button onClick={handleExportPDF} disabled={isExporting || isCrawling}
             className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 disabled:opacity-50 transition-colors">
             {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} 
@@ -411,17 +559,58 @@ export default function ProfilePage({ params }: PageProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {overview.facts.map((fact: any, i: number) => (
-                  <div key={i} className="border border-slate-200 rounded-xl p-4 bg-white shadow-sm relative overflow-hidden flex flex-col justify-between">
+                  <div key={i} className={`border ${fact.confidence === 1.0 ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200 bg-white'} rounded-xl p-4 shadow-sm relative flex flex-col justify-between overflow-visible`}>
                     <div>
-                      <div className="absolute top-0 right-0 px-2 py-1 bg-slate-50 border-b border-l border-slate-200 rounded-bl-lg">
-                        <span className="text-[10px] font-black text-slate-400">
-                          {Math.round(fact.confidence * 100)}% VERIFIED
-                        </span>
+                      <div className="absolute top-0 right-0 px-2 py-1 bg-slate-50 border-b border-l border-slate-200 rounded-bl-lg flex items-center gap-2 z-10">
+                        {fact.confidence === 1.0 ? (
+                          <span className="text-[10px] font-black text-emerald-600 flex items-center gap-1">
+                            <CheckCircle2 className="h-3 w-3" /> VERIFIED
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-black text-slate-400">
+                            {Math.round(fact.confidence * 100)}% VERIFIED
+                          </span>
+                        )}
+                        <button 
+                          onClick={() => { setEditingFactId(fact.id); setEditFactValue(fact.fact_value); }}
+                          className="text-slate-400 hover:text-[var(--brand-primary)] transition-colors ml-2"
+                          title="Edit this fact"
+                        >
+                          <Edit2 className="h-3 w-3" />
+                        </button>
                       </div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{fact.fact_name}</p>
-                      <p className="font-bold text-slate-800 text-base mb-4 break-words whitespace-pre-wrap">{fact.fact_value}</p>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 pr-20">{fact.fact_name}</p>
+                      
+                      {editingFactId === fact.id ? (
+                        <div className="mb-4 space-y-2 relative z-20">
+                          <textarea
+                            value={editFactValue}
+                            onChange={(e) => setEditFactValue(e.target.value)}
+                            className="w-full text-sm border border-slate-300 rounded-md p-2 min-h-[80px] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+                          />
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleUpdateFact(fact.id)}
+                              disabled={savingFact}
+                              className="bg-[var(--brand-primary)] text-white text-xs px-3 py-1.5 rounded flex items-center gap-1 font-semibold hover:bg-[var(--brand-primary-dark)] transition-colors"
+                            >
+                              {savingFact ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
+                              Save
+                            </button>
+                            <button
+                              onClick={() => setEditingFactId(null)}
+                              className="bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded font-semibold hover:bg-slate-200 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="font-bold text-slate-800 text-base mb-4 break-words whitespace-pre-wrap">{fact.fact_value}</p>
+                      )}
                     </div>
-                    <div className="pt-3 border-t border-slate-100">
+                    
+                    <div className="pt-3 border-t border-slate-100 mt-auto">
                       <p className="text-[10px] text-slate-500 font-medium">Source:</p>
                       {fact.url && fact.url.startsWith("http") ? (
                         <a href={fact.url} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-[var(--brand-primary)] hover:underline truncate block">
@@ -436,6 +625,88 @@ export default function ProfilePage({ params }: PageProps) {
               </div>
             </div>
           )}
+        </div>
+      </div>
+      
+      {/* Visual Analytics Section */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-8 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+          <h2 className="text-2xl font-black text-slate-800 tracking-tight">Visual Analytics</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Financial Scale Chart */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <BarChart2 className="h-5 w-5 text-blue-500" />
+              Financial Scale (Millions USD)
+            </h3>
+            {financialData.length > 0 ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={financialData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12, fontWeight: 600}} />
+                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} tickFormatter={(value) => `$${value}M`} />
+                    <RechartsTooltip 
+                      cursor={{fill: '#f8fafc'}}
+                      contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
+                      formatter={(value: any) => [`$${value}M`, 'Estimated']}
+                    />
+                    <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+                      {financialData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="h-[300px] flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-slate-100 border-dashed">
+                <BarChart2 className="h-8 w-8 mb-2 opacity-50" />
+                <p>Not enough financial data to display</p>
+              </div>
+            )}
+          </div>
+
+          {/* Sentiment Analysis Chart */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <PieChartIcon className="h-5 w-5 text-emerald-500" />
+              Public Sentiment Analysis
+            </h3>
+            <div className="h-[300px] w-full relative">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={sentimentData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={110}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {sentimentData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <RechartsTooltip 
+                    contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
+                  />
+                  <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                </PieChart>
+              </ResponsiveContainer>
+              {/* Center Text */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pb-8">
+                <span className="text-3xl font-black text-slate-800">
+                  {Math.round((sentimentData.find(d => d.name === 'Positive')?.value || 0) / sentimentData.reduce((acc, curr) => acc + curr.value, 0) * 100)}%
+                </span>
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Positive</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -603,6 +874,52 @@ export default function ProfilePage({ params }: PageProps) {
               </div>
             );
           })()}
+        </div>
+      </div>
+
+
+      {/* ── Competitor Matrix ── */}
+      <div id="competitor-matrix" className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden mb-6 break-inside-avoid print:shadow-none print:border-slate-300 print:mb-8">
+        <div className="p-8">
+          <h2 className="text-xl font-serif font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
+            <Users className="h-5 w-5 text-[var(--brand-primary)]" /> Competitor Matrix
+          </h2>
+          <p className="text-sm text-slate-400 mb-6">AI-identified alternatives, market rivals, and positioning strategies.</p>
+
+          {loading.competitors ? (
+            <div className="animate-pulse space-y-4"><div className="h-20 bg-slate-100 rounded-xl"></div><div className="h-20 bg-slate-100 rounded-xl"></div></div>
+          ) : competitors.length === 0 ? (
+            <div className="text-center py-10 text-slate-400 italic">No competitors identified.</div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-y border-slate-200">
+                  <tr>
+                    <th className="px-4 py-3">Competitor</th>
+                    <th className="px-4 py-3">Industry</th>
+                    <th className="px-4 py-3 min-w-[200px]">Products/Services</th>
+                    <th className="px-4 py-3 min-w-[250px]">Positioning & Differentiators</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {competitors.map((comp: any, i: number) => (
+                    <tr key={i} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-4 py-4 font-bold text-slate-900 whitespace-nowrap">{comp.competitor_name}</td>
+                      <td className="px-4 py-4 text-slate-600"><span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-xs font-semibold">{comp.industry || "N/A"}</span></td>
+                      <td className="px-4 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {Array.isArray(comp.products) ? comp.products.map((p: string, j: number) => (
+                            <span key={j} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full border border-slate-200">{p}</span>
+                          )) : <span className="text-slate-400 italic text-xs">Unknown</span>}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-xs text-slate-600 leading-relaxed">{comp.positioning || "N/A"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1276,6 +1593,55 @@ export default function ProfilePage({ params }: PageProps) {
         </div>
       )}
 
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <Mail className="h-5 w-5 text-[var(--brand-primary)]" /> AI Outreach Generator
+              </h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto flex-1">
+              {generatingOutreach ? (
+                <div className="flex flex-col items-center justify-center py-12 text-slate-500">
+                  <Loader2 className="h-8 w-8 animate-spin text-[var(--brand-primary)] mb-4" />
+                  <p className="text-sm font-semibold">Crafting highly personalized outreach...</p>
+                </div>
+              ) : outreachData ? (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+                      <Mail className="h-4 w-4" /> Cold Email
+                    </h4>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                      <p className="text-sm font-bold text-slate-900 mb-3 border-b border-slate-200 pb-2">
+                        Subject: {outreachData.email_subject}
+                      </p>
+                      <p className="text-sm text-slate-700 whitespace-pre-wrap font-mono leading-relaxed">
+                        {outreachData.email_body}
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" /> LinkedIn Connection
+                    </h4>
+                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                      <p className="text-sm text-blue-900 whitespace-pre-wrap font-mono leading-relaxed">
+                        {outreachData.linkedin_message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

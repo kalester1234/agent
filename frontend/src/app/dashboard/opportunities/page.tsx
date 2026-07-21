@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Target, AlertTriangle, TrendingUp, Filter, Users, Database, Loader2 } from "lucide-react";
+import { Target, AlertTriangle, TrendingUp, Filter, Users, Database, Loader2, Mail, MessageSquare, X } from "lucide-react";
 
 interface Opportunity {
   id: number;
@@ -23,6 +23,28 @@ export default function OpportunitiesPage() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [pipeline, setPipeline] = useState<PipelineStage[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedOpp, setSelectedOpp] = useState<Opportunity | null>(null);
+  const [outreachData, setOutreachData] = useState<{email_subject: string, email_body: string, linkedin_message: string} | null>(null);
+  const [generatingOutreach, setGeneratingOutreach] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGenerateOutreach = async (opp: Opportunity) => {
+    setSelectedOpp(opp);
+    setIsModalOpen(true);
+    setGeneratingOutreach(true);
+    setOutreachData(null);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/opportunities/${opp.id}/generate-message`, { method: "POST" });
+      if (res.ok) {
+        setOutreachData(await res.json());
+      }
+    } catch (e) {
+      console.error("Failed to generate outreach", e);
+    } finally {
+      setGeneratingOutreach(false);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,9 +149,15 @@ export default function OpportunitiesPage() {
                         <h4 className="text-lg font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors">
                           {opp.title}
                         </h4>
-                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
                           {opp.desc}
                         </p>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleGenerateOutreach(opp); }}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100 transition-colors"
+                        >
+                          <Mail className="h-3 w-3" /> Generate Outreach
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -172,13 +200,66 @@ export default function OpportunitiesPage() {
             <p className="text-xs font-medium text-[var(--text-secondary)] leading-relaxed mb-4">
               Focus your enterprise outreach on the 14 targets currently in the Strategy phase. They have a 78% higher conversion probability based on recent AI market signals.
             </p>
-            <button className="w-full py-2 bg-white border border-[var(--border-default)] rounded-lg text-xs font-bold text-[var(--text-primary)] hover:border-[var(--brand-primary)] transition-colors">
-              Generate Outreach Report
+            <button 
+              onClick={() => filteredOpportunities.length > 0 && handleGenerateOutreach(filteredOpportunities[0])}
+              disabled={generatingOutreach || filteredOpportunities.length === 0}
+              className="w-full py-2 bg-white border border-[var(--border-default)] rounded-lg text-xs font-bold text-[var(--text-primary)] hover:border-[var(--brand-primary)] transition-colors disabled:opacity-50">
+              {generatingOutreach ? "Generating..." : "Generate Outreach Report"}
             </button>
           </div>
 
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <Mail className="h-5 w-5 text-[var(--brand-primary)]" /> AI Outreach Generator
+              </h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto flex-1">
+              {generatingOutreach ? (
+                <div className="flex flex-col items-center justify-center py-12 text-slate-500">
+                  <Loader2 className="h-8 w-8 animate-spin text-[var(--brand-primary)] mb-4" />
+                  <p className="text-sm font-semibold">Crafting highly personalized outreach...</p>
+                </div>
+              ) : outreachData ? (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+                      <Mail className="h-4 w-4" /> Cold Email
+                    </h4>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                      <p className="text-sm font-bold text-slate-900 mb-3 border-b border-slate-200 pb-2">
+                        Subject: {outreachData.email_subject}
+                      </p>
+                      <p className="text-sm text-slate-700 whitespace-pre-wrap font-mono leading-relaxed">
+                        {outreachData.email_body}
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" /> LinkedIn Connection
+                    </h4>
+                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                      <p className="text-sm text-blue-900 whitespace-pre-wrap font-mono leading-relaxed">
+                        {outreachData.linkedin_message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
