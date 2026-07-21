@@ -98,6 +98,7 @@ Data Context:
         
         # Clear old pain points
         db.query(PainPoint).filter(PainPoint.company_id == company_id).delete()
+        db.commit()
         
         saved_points = []
         for pp_data in result.pain_points:

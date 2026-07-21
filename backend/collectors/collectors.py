@@ -294,6 +294,8 @@ class CompanyDiscoveryCollector(BaseCollector):
         if not profile:
             profile = CompanyProfile(company_id=self.company_id)
             self.db.add(profile)
+            self.db.commit()
+            self.db.refresh(profile)
 
         profile.description = description
 
@@ -411,6 +413,7 @@ class CompanyDiscoveryCollector(BaseCollector):
 
                 # Delete old facts
                 self.db.query(CompanyFact).filter(CompanyFact.company_id == self.company_id).delete()
+                self.db.commit()
                 
                 legacy_map = {}
                 
@@ -502,6 +505,7 @@ class CompanyDiscoveryCollector(BaseCollector):
             
             # Ensure facts are saved for UI
             self.db.query(CompanyFact).filter(CompanyFact.company_id == self.company_id).delete()
+            self.db.commit()
             
             fallback_facts = [
                 {"fact_name": "Employee Count", "fact_value": str(profile.employee_count) if profile.employee_count else "Not Disclosed"},
@@ -1146,6 +1150,7 @@ class TechDetectorCollector(BaseCollector):
 
         # Clear existing stack
         self.db.query(TechnologyStack).filter(TechnologyStack.company_id == self.company_id).delete()
+        self.db.commit()
 
         detected: set = set()
         techs = []
@@ -1543,6 +1548,7 @@ class NewsCollector(BaseCollector):
     async def run(self) -> List[NewsArticle]:
         logger.info(f"Running News Collector for {self.company.name}")
         self.db.query(NewsArticle).filter(NewsArticle.company_id == self.company_id).delete()
+        self.db.commit()
         articles = []
         try:
             import urllib.parse
@@ -1629,6 +1635,7 @@ class SocialCollector(BaseCollector):
         logger.info(f"Running Social Collector for {self.company.name}")
         
         self.db.query(SocialProfile).filter(SocialProfile.company_id == self.company_id).delete()
+        self.db.commit()
         
         platforms = {
             "linkedin.com": ("LinkedIn", 12500),
@@ -1779,6 +1786,7 @@ class ReviewCollector(BaseCollector):
         snippets = await self._perform_web_search(search_query)
 
         self.db.query(Review).filter(Review.company_id == self.company_id).delete()
+        self.db.commit()
 
         reviews = []
         if snippets:
@@ -1848,6 +1856,7 @@ class HiringCollector(BaseCollector):
         snippets = await self._perform_web_search(search_query)
 
         self.db.query(Job).filter(Job.company_id == self.company_id).delete()
+        self.db.commit()
         jobs = []
 
         if snippets:
@@ -1892,6 +1901,7 @@ class CompetitorCollector(BaseCollector):
         snippets = await self._perform_web_search(search_query)
 
         self.db.query(Competitor).filter(Competitor.company_id == self.company_id).delete()
+        self.db.commit()
         competitors = []
 
         if snippets:
@@ -1932,6 +1942,7 @@ class FinancialCollector(BaseCollector):
         snippets = await self._perform_web_search(search_query)
 
         self.db.query(Funding).filter(Funding.company_id == self.company_id).delete()
+        self.db.commit()
         fundings = []
 
         if snippets:
@@ -1968,6 +1979,7 @@ class StudyCollector(BaseCollector):
         from backend.models.models import CompanyStudy, NewsArticle
         
         self.db.query(CompanyStudy).filter(CompanyStudy.company_id == self.company_id).delete()
+        self.db.commit()
         
         # Gather context
         news = self.db.query(NewsArticle).filter(NewsArticle.company_id == self.company_id).all()
@@ -2038,6 +2050,7 @@ class OpportunityCollector(BaseCollector):
         from backend.models.models import Opportunity, CompanyStudy, PainPoint, NewsArticle
         
         self.db.query(Opportunity).filter(Opportunity.company_id == self.company_id).delete()
+        self.db.commit()
         
         # Gather Context
         study = self.db.query(CompanyStudy).filter(CompanyStudy.company_id == self.company_id).first()
